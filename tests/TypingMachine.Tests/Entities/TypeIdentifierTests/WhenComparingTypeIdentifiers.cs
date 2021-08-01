@@ -61,5 +61,32 @@ namespace TypingMachine.Tests.Entities.TypeIdentifierTests
 
             firstIdentifier.Should().NotBe(otherIdentifier);
         }
+
+        [Fact]
+        public void GivenEntityComparedWithItself_ReturnEqual()
+        {
+            var firstIdentifier = TypeIdentifier.Create("Service", new List<TypeIdentifier>
+            {
+                TypeIdentifier.Create("T1", new List<TypeIdentifier>()),
+                TypeIdentifier.Create("T2", new List<TypeIdentifier>())
+            });
+            var otherIdentifier = firstIdentifier;
+
+            (firstIdentifier == otherIdentifier)
+                .Should().BeTrue();
+        }
+
+        [Fact]
+        public void GivenEntityAndNull_ReturnEqual()
+        {
+            var firstIdentifier = TypeIdentifier.Create("Service", new List<TypeIdentifier>
+            {
+                TypeIdentifier.Create("T1", new List<TypeIdentifier>()),
+                TypeIdentifier.Create("T2", new List<TypeIdentifier>())
+            });
+
+            (firstIdentifier == null)
+                .Should().BeFalse();
+        }
     }
 }

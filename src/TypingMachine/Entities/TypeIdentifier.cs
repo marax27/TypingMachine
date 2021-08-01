@@ -32,7 +32,7 @@ namespace TypingMachine.Entities
         public string GetFullName()
         {
             var parameters = Parameters.Count > 0
-                ? "<" + string.Join(",", Parameters.Select(p => p.GetFullName())) + ">"
+                ? "<" + string.Join(", ", Parameters.Select(p => p.GetFullName())) + ">"
                 : "";
             return Name + parameters;
         }
