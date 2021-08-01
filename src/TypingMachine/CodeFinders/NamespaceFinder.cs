@@ -2,12 +2,11 @@
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using TypingMachine.Abstractions;
 using TypingMachine.Entities;
 
 namespace TypingMachine.CodeFinders
 {
-    public class NamespaceFinder : ICodeFinder<NamespaceEntity>
+    public class NamespaceFinder
     {
         public NamespaceEntity FindFor(SyntaxNode node)
         {
