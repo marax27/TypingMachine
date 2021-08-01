@@ -13,14 +13,14 @@ namespace TypingMachine.Tests.NamespaceEntityTests
             var sut = NamespaceEntity.Create(new List<string> {"ProjectName"});
 
             var actualValue = sut.GetFullName();
-                
+
             actualValue.Should().Be("ProjectName");
         }
 
         [Fact]
         public void Given2Sections_ReturnExpectedName()
         {
-            var sut = NamespaceEntity.Create(new List<string> { "ProjectName", "Infrastructure" });
+            var sut = NamespaceEntity.Create(new List<string> {"ProjectName", "Infrastructure"});
 
             var actualValue = sut.GetFullName();
 
@@ -30,7 +30,7 @@ namespace TypingMachine.Tests.NamespaceEntityTests
         [Fact]
         public void Given3Sections_ReturnExpectedName()
         {
-            var sut = NamespaceEntity.Create(new List<string> { "TypingMachine", "Application", "Features" });
+            var sut = NamespaceEntity.Create(new List<string> {"TypingMachine", "Application", "Features"});
 
             var actualValue = sut.GetFullName();
 

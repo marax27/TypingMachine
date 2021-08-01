@@ -62,7 +62,8 @@ namespace TypingMachine.Tests.NamespaceEntityTests
             };
 
             act.Should().Throw<ArgumentOutOfRangeException>()
-                .Which.Message.Should().Contain("No sections provided. To represent root-level namespace, use NoNamespace.");
+                .Which.Message.Should()
+                .Contain("No sections provided. To represent root-level namespace, use NoNamespace.");
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using FluentAssertions;
+﻿using FluentAssertions;
 using TypingMachine.Entities;
 using Xunit;
 
@@ -7,9 +6,9 @@ namespace TypingMachine.Tests.NamespaceEntityTests
 {
     public class WhenComparingNamespaceEntities
     {
-        private string[] GivenSampleSections => new[] { "ProjectName", "Application", "Services" };
-        private string[] GivenOtherSections => new[] { "ProjectName", "Infrastructure", "Database" };
-        private string[] GivenMoreDetailedSections = new[] {"ProjectName", "Application", "Services", "Hello"};
+        private static string[] GivenSampleSections => new[] {"ProjectName", "Application", "Services"};
+        private static string[] GivenOtherSections => new[] {"ProjectName", "Infrastructure", "Database"};
+        private static string[] GivenMoreDetailedSections => new[] {"ProjectName", "Application", "Services", "Hello"};
 
 
         [Fact]
