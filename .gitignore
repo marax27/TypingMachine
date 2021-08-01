@@ -1,5 +1,7 @@
 .vscode
 
+StrykerOutput/
+
 # User-specific files
 *.rsuser
 *.suo
