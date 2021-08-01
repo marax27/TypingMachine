@@ -1,0 +1,8 @@
+{
+    "stryker-config":
+    {
+        "solution": "../../TypingMachine.sln/",
+        "project": "../../src/TypingMachine/TypingMachine.csproj",
+        "mutation-level": "Advanced"
+    }
+}
