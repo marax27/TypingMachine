@@ -4,7 +4,7 @@ using FluentAssertions;
 using TypingMachine.Entities;
 using Xunit;
 
-namespace TypingMachine.Tests.NamespaceEntityTests
+namespace TypingMachine.Tests.Entities.NamespaceEntityTests
 {
     public class WhenCreatingNamespaceEntity
     {
