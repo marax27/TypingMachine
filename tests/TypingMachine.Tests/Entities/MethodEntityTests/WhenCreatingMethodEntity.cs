@@ -59,8 +59,10 @@ namespace TypingMachine.Tests.Entities.MethodEntityTests
                 var entity = MethodEntity.Create(givenName, GivenSampleType, new List<TypeIdentifier>());
             };
 
-            act.Should().Throw<ArgumentOutOfRangeException>()
-                .Which.ParamName.Should().Be("name");
+            var thrownException = act.Should().Throw<ArgumentOutOfRangeException>().Which;
+
+            thrownException.ParamName.Should().Be("name");
+            thrownException.Message.Should().Contain("Method name is empty or whitespace-only.");
         }
 
         [Fact]
