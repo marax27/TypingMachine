@@ -6,7 +6,7 @@ namespace TypingMachine.Entities
 {
     public class NamespaceEntity : IEquatable<NamespaceEntity>
     {
-        public ICollection<string> Sections { get; }
+        public IReadOnlyList<string> Sections { get; }
 
         public string GetFullName()
         {
@@ -14,12 +14,12 @@ namespace TypingMachine.Entities
             return string.IsNullOrEmpty(result) ? "<root>" : result;
         }
 
-        private NamespaceEntity(ICollection<string> sections)
+        private NamespaceEntity(IReadOnlyList<string> sections)
         {
             Sections = sections;
         }
 
-        public static NamespaceEntity Create(ICollection<string> sections)
+        public static NamespaceEntity Create(IReadOnlyList<string> sections)
         {
             if (sections == null)
                 throw new ArgumentNullException(nameof(sections));
