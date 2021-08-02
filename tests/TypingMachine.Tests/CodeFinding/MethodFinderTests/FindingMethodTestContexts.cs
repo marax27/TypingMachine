@@ -6,7 +6,10 @@ namespace TypingMachine.Tests.CodeFinding.MethodFinderTests
     public interface IFindingMethodTestContext
     {
         string GivenSource { get; }
-        MethodEntity ExpectedResult { get; }
+
+        string ExpectedMethodName { get; }
+        TypeIdentifier ExpectedReturnType { get; }
+        List<TypeIdentifier> ExpectedArgumentTypes { get; }
     }
 
     class SimpleMethodContext : IFindingMethodTestContext
@@ -22,15 +25,17 @@ class MathService
 }
 ";
 
-        public MethodEntity ExpectedResult =>
-            MethodEntity.Create(
-                "GetSquared",
-                TypeIdentifier.Create("float", new List<TypeIdentifier>()),
-                new List<TypeIdentifier>
+        public string ExpectedMethodName
+            => "GetSquared";
+
+        public TypeIdentifier ExpectedReturnType
+            => TypeIdentifier.Create("float", new List<TypeIdentifier>());
+
+        public List<TypeIdentifier> ExpectedArgumentTypes
+            => new List<TypeIdentifier>
                 {
                     TypeIdentifier.Create("int", new List<TypeIdentifier>())
-                }
-            );
+                };
     }
 
     class MultipleArgumentsContext : IFindingMethodTestContext
@@ -44,11 +49,14 @@ class SecondService
 }
 ";
 
-        public MethodEntity ExpectedResult =>
-            MethodEntity.Create(
-                "Process",
-                TypeIdentifier.Create("void", new List<TypeIdentifier>()),
-                new List<TypeIdentifier>
+        public string ExpectedMethodName
+            => "Process";
+
+        public TypeIdentifier ExpectedReturnType
+            => TypeIdentifier.Create("void", new List<TypeIdentifier>());
+
+        public List<TypeIdentifier> ExpectedArgumentTypes
+            => new List<TypeIdentifier>
                 {
                     TypeIdentifier.Create("IFunctor", new List<TypeIdentifier>()),
                     TypeIdentifier.Create("double", new List<TypeIdentifier>()),
@@ -56,7 +64,6 @@ class SecondService
                     {
                         TypeIdentifier.Create("int", new List<TypeIdentifier>())
                     })
-                }
-            );
+                };
     }
 }

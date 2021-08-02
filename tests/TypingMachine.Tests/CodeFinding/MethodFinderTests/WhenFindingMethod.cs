@@ -13,18 +13,45 @@ namespace TypingMachine.Tests.CodeFinding.MethodFinderTests
     {
         [Theory]
         [ClassData(typeof(TestContexts))]
-        public void GivenSampleSource_ReturnExpectedField(IFindingMethodTestContext context)
+        public void GivenSampleSource_MethodHasExpectedName(IFindingMethodTestContext context)
         {
-            var givenMethodNode = CSharpSyntaxTree.ParseText(context.GivenSource)
-                .GetRoot()
-                .DescendantNodes().OfType<MethodDeclarationSyntax>()
-                .Single();
+            var givenMethodNode = GetMethodNode(context);
             var sut = new MethodFinder();
 
             var actualResult = sut.FindFor(givenMethodNode);
 
-            actualResult.Should().BeEquivalentTo(context.ExpectedResult);
+            actualResult.Name.Should().Be(context.ExpectedMethodName);
         }
+
+        [Theory]
+        [ClassData(typeof(TestContexts))]
+        public void GivenSampleSource_MethodHasExpectedReturnType(IFindingMethodTestContext context)
+        {
+            var givenMethodNode = GetMethodNode(context);
+            var sut = new MethodFinder();
+
+            var actualResult = sut.FindFor(givenMethodNode);
+
+            actualResult.ReturnType.Should().Be(context.ExpectedReturnType);
+        }
+
+        [Theory]
+        [ClassData(typeof(TestContexts))]
+        public void GivenSampleSource_MethodHasExpectedArgumentTypes(IFindingMethodTestContext context)
+        {
+            var givenMethodNode = GetMethodNode(context);
+            var sut = new MethodFinder();
+
+            var actualResult = sut.FindFor(givenMethodNode);
+
+            actualResult.ArgumentTypes.Should().BeEquivalentTo(context.ExpectedArgumentTypes);
+        }
+
+        private MethodDeclarationSyntax GetMethodNode(IFindingMethodTestContext context)
+            => CSharpSyntaxTree.ParseText(context.GivenSource)
+                .GetRoot()
+                .DescendantNodes().OfType<MethodDeclarationSyntax>()
+                .Single();
 
         private class TestContexts : IEnumerable<object[]>
         {
