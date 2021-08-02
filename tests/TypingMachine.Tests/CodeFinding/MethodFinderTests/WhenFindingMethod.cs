@@ -44,7 +44,8 @@ namespace TypingMachine.Tests.CodeFinding.MethodFinderTests
 
             var actualResult = sut.FindFor(givenMethodNode);
 
-            actualResult.ArgumentTypes.Should().BeEquivalentTo(context.ExpectedArgumentTypes);
+            actualResult.ArgumentTypes
+                .Should().BeEquivalentTo(context.ExpectedArgumentTypes, options => options.WithStrictOrdering());
         }
 
         private MethodDeclarationSyntax GetMethodNode(IFindingMethodTestContext context)

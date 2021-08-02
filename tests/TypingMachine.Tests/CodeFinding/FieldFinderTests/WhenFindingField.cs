@@ -25,7 +25,7 @@ namespace TypingMachine.Tests.CodeFinding.FieldFinderTests
 
             var actualResult = sut.FindFor(givenNodes).ToList();
 
-            actualResult.Should().BeEquivalentTo(context.ExpectedResult);
+            actualResult.Should().BeEquivalentTo(context.ExpectedResult, options => options.WithStrictOrdering());
         }
 
         private class TestContexts : IEnumerable<object[]>

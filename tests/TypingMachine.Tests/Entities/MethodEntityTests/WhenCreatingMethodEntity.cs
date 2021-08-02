@@ -25,6 +25,8 @@ namespace TypingMachine.Tests.Entities.MethodEntityTests
         [Fact]
         public void GivenValidParameters_ContainExpectedValues()
         {
+            var expectedArgumentTypes = new List<TypeIdentifier> {GivenOtherType, GivenSampleType};
+
             var entity = MethodEntity.Create(
                 "Foo",
                 GivenSampleType,
@@ -33,7 +35,8 @@ namespace TypingMachine.Tests.Entities.MethodEntityTests
 
             entity.Name.Should().Be("Foo");
             entity.ReturnType.Should().Be(GivenSampleType);
-            entity.ArgumentTypes.Should().BeEquivalentTo(GivenOtherType, GivenSampleType);
+            entity.ArgumentTypes
+                .Should().BeEquivalentTo(expectedArgumentTypes, options => options.WithStrictOrdering());
         }
 
         [Fact]
