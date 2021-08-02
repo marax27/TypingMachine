@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TypingMachine.Entities;
+using TypingMachine.Tests.Utilities;
 
 namespace TypingMachine.Tests.CodeWalking.TypeWalkerTests
 {
@@ -23,7 +24,7 @@ namespace Application.Services
             => new List<TypeEntity>
             {
                 new InterfaceEntity(
-                    TypeIdentifier.Create("IHelloService", new List<TypeIdentifier>()),
+                    "IHelloService".AsSimpleTypeId(),
                     new List<MethodEntity>(),
                     new List<TypeIdentifier>()
                 )
@@ -46,17 +47,13 @@ namespace Application.Services
 
         private IReadOnlyCollection<TypeEntity> GetExpectedResult()
         {
-            var inParameter = TypeIdentifier.Create("TIn", new List<TypeIdentifier>());
-            var outParameter = TypeIdentifier.Create("TOut", new List<TypeIdentifier>());
+            var inParameter = "TIn".AsSimpleTypeId();
+            var outParameter = "TOut".AsSimpleTypeId();
 
             return new List<TypeEntity>
             {
                 new InterfaceEntity(
-                    TypeIdentifier.Create("IFunctor", new List<TypeIdentifier>
-                    {
-                        inParameter,
-                        outParameter,
-                    }),
+                    "IFunctor".AsGenericTypeId("TIn", "TOut"),
                     new List<MethodEntity>
                     {
                         MethodEntity.Create(
@@ -81,17 +78,17 @@ interface IQueryHandler<TQuery, TResult> : IHandler<TQuery, TResult> {}
 
         private IReadOnlyCollection<TypeEntity> GetExpectedResult()
         {
-            var queryParameter = TypeIdentifier.Create("TQuery", new List<TypeIdentifier>());
-            var resultParameter = TypeIdentifier.Create("TResult", new List<TypeIdentifier>());
+            var queryParameter = "TQuery".AsSimpleTypeId();
+            var resultParameter = "TResult".AsSimpleTypeId();
 
             return new List<TypeEntity>
             {
                 new InterfaceEntity(
-                    TypeIdentifier.Create("IQueryHandler", new List<TypeIdentifier> {queryParameter, resultParameter}),
+                    "IQueryHandler".AsGenericTypeId("TQuery", "TResult"),
                     new List<MethodEntity>(),
                     new List<TypeIdentifier>
                     {
-                        TypeIdentifier.Create("IHandler", new List<TypeIdentifier> {queryParameter, resultParameter})
+                        "IHandler".AsGenericTypeId("TQuery", "TResult")
                     }
                 )
             };

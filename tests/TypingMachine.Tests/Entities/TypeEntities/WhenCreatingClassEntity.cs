@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using TypingMachine.Entities;
+using TypingMachine.Tests.Utilities;
 using Xunit;
 
 namespace TypingMachine.Tests.Entities.TypeEntities
@@ -63,24 +64,24 @@ namespace TypingMachine.Tests.Entities.TypeEntities
             act.Should().Throw<ArgumentNullException>().Which.ParamName.Should().Be("fields");
         }
 
-        private TypeIdentifier GivenIdentifier => TypeIdentifier.Create("IService", new List<TypeIdentifier>());
+        private TypeIdentifier GivenIdentifier => "IService".AsSimpleTypeId();
 
         private IReadOnlyList<MethodEntity> GivenMethods => new List<MethodEntity>
         {
             MethodEntity.Create(
                 "Calculate",
-                TypeIdentifier.Create("int", new List<TypeIdentifier>()),
+                "int".AsSimpleTypeId(),
                 new List<TypeIdentifier>() )
         };
 
         private IReadOnlyList<TypeIdentifier> GivenBaseTypes => new List<TypeIdentifier>
         {
-            TypeIdentifier.Create("T", new List<TypeIdentifier>())
+            "T".AsSimpleTypeId()
         };
 
         private IReadOnlyList<FieldEntity> GivenFields => new List<FieldEntity>
         {
-            FieldEntity.Create("_logger", TypeIdentifier.Create("Logger", new List<TypeIdentifier>()))
+            FieldEntity.Create("_logger", "Logger".AsSimpleTypeId())
         };
     }
 }

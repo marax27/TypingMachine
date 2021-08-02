@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using TypingMachine.Entities;
+using TypingMachine.Tests.Utilities;
 using Xunit;
 
 namespace TypingMachine.Tests.Entities.TypeEntities
@@ -52,19 +53,19 @@ namespace TypingMachine.Tests.Entities.TypeEntities
             act.Should().Throw<ArgumentNullException>().Which.ParamName.Should().Be("baseTypes");
         }
 
-        private TypeIdentifier GivenIdentifier => TypeIdentifier.Create("IQueryHandler", new List<TypeIdentifier>());
+        private TypeIdentifier GivenIdentifier => "IQueryHandler".AsSimpleTypeId();
 
         private IReadOnlyList<MethodEntity> GivenMethods => new List<MethodEntity>
         {
             MethodEntity.Create(
                 "Calculate",
-                TypeIdentifier.Create("int", new List<TypeIdentifier>()),
+                "int".AsSimpleTypeId(),
                 new List<TypeIdentifier>() )
         };
 
         private IReadOnlyList<TypeIdentifier> GivenBaseTypes => new List<TypeIdentifier>
         {
-            TypeIdentifier.Create("IService", new List<TypeIdentifier>())
+            "IService".AsSimpleTypeId()
         };
     }
 }

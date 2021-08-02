@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using TypingMachine.Entities;
+using TypingMachine.Tests.Utilities;
 using Xunit;
 
 namespace TypingMachine.Tests.Entities.TypeIdentifierTests
@@ -24,7 +25,7 @@ namespace TypingMachine.Tests.Entities.TypeIdentifierTests
         [Fact]
         public void GivenZeroParameters_ContainExpectedName()
         {
-            var entity = TypeIdentifier.Create("IService", new List<TypeIdentifier>());
+            var entity = "IService".AsSimpleTypeId();
 
             entity.Name.Should().Be("IService");
         }
@@ -32,7 +33,7 @@ namespace TypingMachine.Tests.Entities.TypeIdentifierTests
         [Fact]
         public void GivenZeroParameters_ContainZeroParameters()
         {
-            var entity = TypeIdentifier.Create("IService", new List<TypeIdentifier>());
+            var entity = "IService".AsSimpleTypeId();
 
             entity.Parameters.Should().BeEquivalentTo(new List<TypeIdentifier>());
         }
@@ -42,10 +43,7 @@ namespace TypingMachine.Tests.Entities.TypeIdentifierTests
         {
             var givenParameterName = "NestedType";
 
-            var entity = TypeIdentifier.Create("IService", new List<TypeIdentifier>
-            {
-                TypeIdentifier.Create(givenParameterName, new List<TypeIdentifier>())
-            });
+            var entity = "IService".AsGenericTypeId(givenParameterName);
 
             entity.Parameters.Should().HaveCount(1);
             entity.Parameters.Single().Name.Should().Be(givenParameterName);
@@ -71,7 +69,7 @@ namespace TypingMachine.Tests.Entities.TypeIdentifierTests
         {
             Action act = () =>
             {
-                var entity = TypeIdentifier.Create(givenName, new List<TypeIdentifier>());
+                var entity = givenName.AsSimpleTypeId();
             };
 
             var thrownException = act.Should().Throw<ArgumentException>().Which;
@@ -89,7 +87,7 @@ namespace TypingMachine.Tests.Entities.TypeIdentifierTests
         {
             Action act = () =>
             {
-                var entity = TypeIdentifier.Create(givenName, new List<TypeIdentifier>());
+                var entity = givenName.AsSimpleTypeId();
             };
 
             var thrownException = act.Should().Throw<ArgumentException>().Which;

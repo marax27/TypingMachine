@@ -2,6 +2,7 @@
 using Moq;
 using TypingMachine.Abstractions;
 using TypingMachine.Entities;
+using TypingMachine.Tests.Utilities;
 using Xunit;
 
 namespace TypingMachine.Tests.TypeVisitorTests
@@ -12,7 +13,7 @@ namespace TypingMachine.Tests.TypeVisitorTests
         public void GivenClassEntity_VisitClassExactlyOnce()
         {
             var givenEntity = new ClassEntity(
-                TypeIdentifier.Create("ConcreteClass", new List<TypeIdentifier>()),
+                "ConcreteClass".AsSimpleTypeId(),
                 new List<MethodEntity>(),
                 new List<TypeIdentifier>(),
                 new List<FieldEntity>()
@@ -28,7 +29,7 @@ namespace TypingMachine.Tests.TypeVisitorTests
         public void GivenInterfaceEntity_VisitInterfaceExactlyOnce()
         {
             var givenEntity = new InterfaceEntity(
-                TypeIdentifier.Create("IExampleProvider", new List<TypeIdentifier>()),
+                "IExampleProvider".AsSimpleTypeId(),
                 new List<MethodEntity>(),
                 new List<TypeIdentifier>()
             );

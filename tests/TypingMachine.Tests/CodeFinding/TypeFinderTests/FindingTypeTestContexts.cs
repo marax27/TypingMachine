@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TypingMachine.Entities;
+using TypingMachine.Tests.Utilities;
 
 namespace TypingMachine.Tests.CodeFinding.TypeFinderTests
 {
@@ -13,24 +14,21 @@ namespace TypingMachine.Tests.CodeFinding.TypeFinderTests
     {
         public string GivenSource => "IQueryHandler";
         public TypeIdentifier ExpectedResult =>
-            TypeIdentifier.Create("IQueryHandler", new List<TypeIdentifier>());
+            "IQueryHandler".AsSimpleTypeId();
     }
 
     class PredefinedTypeContext : IFindingTypeTestContext
     {
         public string GivenSource => "string";
         public TypeIdentifier ExpectedResult =>
-            TypeIdentifier.Create("string", new List<TypeIdentifier>());
+            "string".AsSimpleTypeId();
     }
 
     class GenericTypeWithSingleParameterContext : IFindingTypeTestContext
     {
         public string GivenSource => "IEnumerable<float>";
         public TypeIdentifier ExpectedResult =>
-            TypeIdentifier.Create("IEnumerable", new List<TypeIdentifier>
-            {
-                TypeIdentifier.Create("float", new List<TypeIdentifier>())
-            });
+            "IEnumerable".AsGenericTypeId("float");
     }
 
     class GenericTypeWithNestedParametersContext : IFindingTypeTestContext
@@ -39,16 +37,9 @@ namespace TypingMachine.Tests.CodeFinding.TypeFinderTests
         public TypeIdentifier ExpectedResult =>
             TypeIdentifier.Create("BaseService", new List<TypeIdentifier>
             {
-                TypeIdentifier.Create("int", new List<TypeIdentifier>()),
-                TypeIdentifier.Create("ILogger", new List<TypeIdentifier>
-                {
-                    TypeIdentifier.Create("ApiController", new List<TypeIdentifier>())
-                }),
-                TypeIdentifier.Create("IFunctor", new List<TypeIdentifier>
-                {
-                    TypeIdentifier.Create("TIn", new List<TypeIdentifier>()),
-                    TypeIdentifier.Create("TOut", new List<TypeIdentifier>()),
-                })
+                "int".AsSimpleTypeId(),
+                "ILogger".AsGenericTypeId("ApiController"),
+                "IFunctor".AsGenericTypeId("TIn", "TOut")
             });
     }
 }
