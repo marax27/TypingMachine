@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FluentAssertions;
 using TypingMachine.Entities;
 
 namespace TypingMachine.Tests.CodeFinding.FieldFinderTests
