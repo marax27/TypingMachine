@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TypingMachine.Entities;
+using TypingMachine.Tests.Utilities;
 
 namespace TypingMachine.Tests.CodeFinding.MethodFinderTests
 {
@@ -29,12 +30,12 @@ class MathService
             => "GetSquared";
 
         public TypeIdentifier ExpectedReturnType
-            => TypeIdentifier.Create("float", new List<TypeIdentifier>());
+            => "float".AsSimpleTypeId();
 
         public List<TypeIdentifier> ExpectedArgumentTypes
             => new List<TypeIdentifier>
                 {
-                    TypeIdentifier.Create("int", new List<TypeIdentifier>())
+                    "int".AsSimpleTypeId()
                 };
     }
 
@@ -53,17 +54,14 @@ class SecondService
             => "Process";
 
         public TypeIdentifier ExpectedReturnType
-            => TypeIdentifier.Create("void", new List<TypeIdentifier>());
+            => "void".AsSimpleTypeId();
 
         public List<TypeIdentifier> ExpectedArgumentTypes
             => new List<TypeIdentifier>
                 {
-                    TypeIdentifier.Create("IFunctor", new List<TypeIdentifier>()),
-                    TypeIdentifier.Create("double", new List<TypeIdentifier>()),
-                    TypeIdentifier.Create("IEnumerable", new List<TypeIdentifier>
-                    {
-                        TypeIdentifier.Create("int", new List<TypeIdentifier>())
-                    })
+                    "IFunctor".AsSimpleTypeId(),
+                    "double".AsSimpleTypeId(),
+                    "IEnumerable".AsGenericTypeId("int")
                 };
     }
 }

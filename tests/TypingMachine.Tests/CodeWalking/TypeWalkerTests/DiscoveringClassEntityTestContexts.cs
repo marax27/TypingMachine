@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TypingMachine.Entities;
+using TypingMachine.Tests.Utilities;
 
 namespace TypingMachine.Tests.CodeWalking.TypeWalkerTests
 {
@@ -22,7 +23,7 @@ namespace Controllers
             => new List<ClassEntity>
             {
                 new ClassEntity(
-                    TypeIdentifier.Create("HelloController", new List<TypeIdentifier>()), 
+                    "HelloController".AsSimpleTypeId(), 
                     new List<MethodEntity>(),
                     new List<TypeIdentifier>(),
                     new List<FieldEntity>()
@@ -46,15 +47,12 @@ namespace Controllers
             => new List<ClassEntity>
             {
                 new ClassEntity(
-                    TypeIdentifier.Create("HelloController", new List<TypeIdentifier>()),
+                    "HelloController".AsSimpleTypeId(),
                     new List<MethodEntity>(),
                     new List<TypeIdentifier>
                     {
-                        TypeIdentifier.Create("IController", new List<TypeIdentifier>()),
-                        TypeIdentifier.Create("BaseController", new List<TypeIdentifier>
-                        {
-                            TypeIdentifier.Create("Context", new List<TypeIdentifier>())
-                        })
+                        "IController".AsSimpleTypeId(),
+                        "BaseController".AsGenericTypeId("Context")
                     },
                     new List<FieldEntity>()
                 )
@@ -83,21 +81,18 @@ namespace Controllers
             => new List<ClassEntity>
             {
                 new ClassEntity(
-                    TypeIdentifier.Create("HelloController", new List<TypeIdentifier>()),
+                    "HelloController".AsSimpleTypeId(),
                     new List<MethodEntity>(),
                     new List<TypeIdentifier>(),
                     new List<FieldEntity>
                     {
                         FieldEntity.Create(
                             "magicValue",
-                            TypeIdentifier.Create("int", new List<TypeIdentifier>())
+                            "int".AsSimpleTypeId()
                         ),
                         FieldEntity.Create(
                             "_logger",
-                            TypeIdentifier.Create("ILogger", new List<TypeIdentifier>
-                            {
-                                TypeIdentifier.Create("HelloController", new List<TypeIdentifier>())
-                            })
+                            "ILogger".AsGenericTypeId("HelloController")
                         )
                     }
                 )

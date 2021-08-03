@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TypingMachine.Entities;
+using TypingMachine.Tests.Utilities;
 
 namespace TypingMachine.Tests.CodeFinding.FieldFinderTests
 {
@@ -28,10 +29,7 @@ namespace Application.Controllers
         public IEnumerable<FieldEntity> ExpectedResult
             => new List<FieldEntity>
             {
-                FieldEntity.Create("_logger", TypeIdentifier.Create("ILogger", new List<TypeIdentifier>
-                {
-                    TypeIdentifier.Create("HelloController", new List<TypeIdentifier>())
-                }))
+                FieldEntity.Create("_logger", "ILogger".AsGenericTypeId("HelloController"))
             };
     }
 
@@ -56,13 +54,9 @@ namespace Application.Controllers
         public IEnumerable<FieldEntity> ExpectedResult
             => new List<FieldEntity>
             {
-                FieldEntity.Create("_first", TypeIdentifier.Create("int", new List<TypeIdentifier>())),
-                FieldEntity.Create("second", TypeIdentifier.Create("string", new List<TypeIdentifier>())),
-                FieldEntity.Create("third", TypeIdentifier.Create("IService", new List<TypeIdentifier>
-                {
-                    TypeIdentifier.Create("int", new List<TypeIdentifier>()),
-                    TypeIdentifier.Create("int", new List<TypeIdentifier>()),
-                })),
+                FieldEntity.Create("_first", "int".AsSimpleTypeId()),
+                FieldEntity.Create("second", "string".AsSimpleTypeId()),
+                FieldEntity.Create("third", "IService".AsGenericTypeId("int", "int")),
             };
     }
 
@@ -87,9 +81,9 @@ namespace Application.Controllers
         public IEnumerable<FieldEntity> ExpectedResult
             => new List<FieldEntity>
             {
-                FieldEntity.Create("a", TypeIdentifier.Create("int", new List<TypeIdentifier>())),
-                FieldEntity.Create("b", TypeIdentifier.Create("int", new List<TypeIdentifier>())),
-                FieldEntity.Create("c", TypeIdentifier.Create("int", new List<TypeIdentifier>())),
+                FieldEntity.Create("a", "int".AsSimpleTypeId()),
+                FieldEntity.Create("b", "int".AsSimpleTypeId()),
+                FieldEntity.Create("c", "int".AsSimpleTypeId()),
             };
     }
 }

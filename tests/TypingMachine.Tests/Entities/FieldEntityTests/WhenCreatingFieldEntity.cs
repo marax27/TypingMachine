@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using TypingMachine.Entities;
+using TypingMachine.Tests.Utilities;
 using Xunit;
 
 namespace TypingMachine.Tests.Entities.FieldEntityTests
@@ -9,7 +10,7 @@ namespace TypingMachine.Tests.Entities.FieldEntityTests
     public class WhenCreatingFieldEntity
     {
         private TypeIdentifier GivenSampleType
-            => TypeIdentifier.Create("IService", new List<TypeIdentifier>());
+            => "IService".AsSimpleTypeId();
 
         [Fact]
         public void GivenValidParameters_ContainExpectedName()

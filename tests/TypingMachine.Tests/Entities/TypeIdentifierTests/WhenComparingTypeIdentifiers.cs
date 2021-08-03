@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using TypingMachine.Entities;
+using TypingMachine.Tests.Utilities;
 using Xunit;
 
 namespace TypingMachine.Tests.Entities.TypeIdentifierTests
@@ -10,8 +11,8 @@ namespace TypingMachine.Tests.Entities.TypeIdentifierTests
         [Fact]
         public void GivenIdenticalNameAndZeroParameters_ReturnEqual()
         {
-            var firstIdentifier = TypeIdentifier.Create("Service", new List<TypeIdentifier>());
-            var otherIdentifier = TypeIdentifier.Create("Service", new List<TypeIdentifier>());
+            var firstIdentifier = "Service".AsSimpleTypeId();
+            var otherIdentifier = "Service".AsSimpleTypeId();
 
             firstIdentifier.Should().Be(otherIdentifier);
         }
@@ -19,16 +20,8 @@ namespace TypingMachine.Tests.Entities.TypeIdentifierTests
         [Fact]
         public void GivenIdenticalNameAndSampleParameters_ReturnEqual()
         {
-            var firstIdentifier = TypeIdentifier.Create("Service", new List<TypeIdentifier>
-            {
-                TypeIdentifier.Create("T1", new List<TypeIdentifier>()),
-                TypeIdentifier.Create("T2", new List<TypeIdentifier>())
-            });
-            var otherIdentifier = TypeIdentifier.Create("Service", new List<TypeIdentifier>
-            {
-                TypeIdentifier.Create("T1", new List<TypeIdentifier>()),
-                TypeIdentifier.Create("T2", new List<TypeIdentifier>())
-            });
+            var firstIdentifier = "Service".AsGenericTypeId("T1", "T2");
+            var otherIdentifier = "Service".AsGenericTypeId("T1", "T2");
 
             firstIdentifier.Should().Be(otherIdentifier);
         }
@@ -36,8 +29,8 @@ namespace TypingMachine.Tests.Entities.TypeIdentifierTests
         [Fact]
         public void GivenDifferentName_ReturnNotEqual()
         {
-            var firstIdentifier = TypeIdentifier.Create("IService", new List<TypeIdentifier>());
-            var otherIdentifier = TypeIdentifier.Create("Service", new List<TypeIdentifier>());
+            var firstIdentifier = "IService".AsSimpleTypeId();
+            var otherIdentifier = "Service".AsSimpleTypeId();
 
             firstIdentifier.Should().NotBe(otherIdentifier);
         }
@@ -47,16 +40,13 @@ namespace TypingMachine.Tests.Entities.TypeIdentifierTests
         {
             var firstIdentifier = TypeIdentifier.Create("Service", new List<TypeIdentifier>
             {
-                TypeIdentifier.Create("IEnumerable", new List<TypeIdentifier>
-                {
-                    TypeIdentifier.Create("int", new List<TypeIdentifier>())
-                }),
-                TypeIdentifier.Create("T", new List<TypeIdentifier>())
+                "IEnumerable".AsGenericTypeId("int"),
+                "T".AsSimpleTypeId()
             });
             var otherIdentifier = TypeIdentifier.Create("Service", new List<TypeIdentifier>
             {
-                TypeIdentifier.Create("IEnumerable", new List<TypeIdentifier>()),
-                TypeIdentifier.Create("T", new List<TypeIdentifier>())
+                "IEnumerable".AsSimpleTypeId(),
+                "T".AsSimpleTypeId()
             });
 
             firstIdentifier.Should().NotBe(otherIdentifier);
@@ -65,11 +55,7 @@ namespace TypingMachine.Tests.Entities.TypeIdentifierTests
         [Fact]
         public void GivenEntityComparedWithItself_ReturnEqual()
         {
-            var firstIdentifier = TypeIdentifier.Create("Service", new List<TypeIdentifier>
-            {
-                TypeIdentifier.Create("T1", new List<TypeIdentifier>()),
-                TypeIdentifier.Create("T2", new List<TypeIdentifier>())
-            });
+            var firstIdentifier = "Service".AsGenericTypeId("T1", "T2");
             var otherIdentifier = firstIdentifier;
 
             (firstIdentifier == otherIdentifier)
@@ -79,11 +65,7 @@ namespace TypingMachine.Tests.Entities.TypeIdentifierTests
         [Fact]
         public void GivenEntityAndNull_ReturnEqual()
         {
-            var firstIdentifier = TypeIdentifier.Create("Service", new List<TypeIdentifier>
-            {
-                TypeIdentifier.Create("T1", new List<TypeIdentifier>()),
-                TypeIdentifier.Create("T2", new List<TypeIdentifier>())
-            });
+            var firstIdentifier = "Service".AsGenericTypeId("T1", "T2");
 
             (firstIdentifier == null)
                 .Should().BeFalse();

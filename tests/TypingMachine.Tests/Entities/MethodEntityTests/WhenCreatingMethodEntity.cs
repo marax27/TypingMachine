@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using TypingMachine.Entities;
+using TypingMachine.Tests.Utilities;
 using Xunit;
 
 namespace TypingMachine.Tests.Entities.MethodEntityTests
 {
     public class WhenCreatingMethodEntity
     {
-        private TypeIdentifier GivenSampleType => TypeIdentifier.Create("int", new List<TypeIdentifier>());
-        private TypeIdentifier GivenOtherType => TypeIdentifier.Create("IService", new List<TypeIdentifier>());
+        private TypeIdentifier GivenSampleType => "int".AsSimpleTypeId();
+        private TypeIdentifier GivenOtherType => "IService".AsSimpleTypeId();
 
         [Fact]
         public void GivenValidParameters_CreateEntity()
