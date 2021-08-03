@@ -34,6 +34,9 @@ namespace TypingMachine.Tests.CodeFinding.TypeFinderTests
                 new object[] {new PredefinedTypeContext()},
                 new object[] {new GenericTypeWithSingleParameterContext()},
                 new object[] {new GenericTypeWithNestedParametersContext()},
+                new object[] {new NullableTypeContext()},
+                new object[] {new OneDimensionalArrayTypeContext()},
+                new object[] {new ThreeDimensionalArrayTypeContext()},
             };
 
             public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();

@@ -42,4 +42,22 @@ namespace TypingMachine.Tests.CodeFinding.TypeFinderTests
                 "IFunctor".AsGenericTypeId("TIn", "TOut")
             });
     }
+
+    class NullableTypeContext : IFindingTypeTestContext
+    {
+        public string GivenSource => "string?";
+        public TypeIdentifier ExpectedResult => "string".AsSimpleTypeId();
+    }
+
+    class OneDimensionalArrayTypeContext : IFindingTypeTestContext
+    {
+        public string GivenSource => "int[]";
+        public TypeIdentifier ExpectedResult => "int".AsSimpleTypeId();
+    }
+
+    class ThreeDimensionalArrayTypeContext : IFindingTypeTestContext
+    {
+        public string GivenSource => "double[][][]";
+        public TypeIdentifier ExpectedResult => "double".AsSimpleTypeId();
+    }
 }

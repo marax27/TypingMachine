@@ -9,14 +9,27 @@ namespace TypingMachine.CodeFinders
     {
         public TypeIdentifier FindFor(TypeSyntax typeNode)
         {
-            if (typeNode is GenericNameSyntax node)
-            {
-                var name = node.Identifier.ValueText;
-                var parameters = node.TypeArgumentList.Arguments.Select(FindFor);
-                return TypeIdentifier.Create(name, parameters.ToList());
+            switch (typeNode)
+            { 
+                case GenericNameSyntax genericNode:
+                {
+                    var name = genericNode.Identifier.ValueText;
+                    var parameters = genericNode.TypeArgumentList.Arguments.Select(FindFor);
+                    return TypeIdentifier.Create(name, parameters.ToList());
+                }
+                case NullableTypeSyntax nullableNode:
+                {
+                    return FindFor(nullableNode.ElementType);
+                }
+                case ArrayTypeSyntax arrayNode:
+                {
+                    return FindFor(arrayNode.ElementType);
+                }
+                default:
+                {
+                    return TypeIdentifier.Create(typeNode.ToString(), new List<TypeIdentifier>());
+                }
             }
-
-            return TypeIdentifier.Create(typeNode.ToString(), new List<TypeIdentifier>());
         }
     }
 }
