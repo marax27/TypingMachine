@@ -7,8 +7,8 @@ namespace TypingMachine.Tests.Entities.UsingEntityTests
 {
     public class WhenCreatingUsingEntity
     {
-        private NamespaceEntity SampleNamespace
-            => NamespaceEntity.Create(new[] {"Application", "ApiGateway", "Controllers"});
+        private NamespaceIdentifier SampleNamespace
+            => NamespaceIdentifier.Create(new[] {"Application", "ApiGateway", "Controllers"});
 
         [Fact]
         public void GivenSampleNamespace_ContainExpectedNamespace()
@@ -24,7 +24,7 @@ namespace TypingMachine.Tests.Entities.UsingEntityTests
         [Fact]
         public void GivenNoNamespace_ThrowExpectedException()
         {
-            var givenNamespace = NamespaceEntity.NoNamespace;
+            var givenNamespace = NamespaceIdentifier.NoNamespace;
 
             Action act = () =>
             {

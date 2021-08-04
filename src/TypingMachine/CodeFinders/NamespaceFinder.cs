@@ -8,7 +8,7 @@ namespace TypingMachine.CodeFinders
 {
     public class NamespaceFinder
     {
-        public NamespaceEntity FindFor(SyntaxNode node)
+        public NamespaceIdentifier FindFor(SyntaxNode node)
         {
             var foundSections = new List<string>();
 
@@ -26,8 +26,8 @@ namespace TypingMachine.CodeFinders
 
             foundSections.Reverse();
             return foundSections.Count > 0
-                ? NamespaceEntity.Create(foundSections)
-                : NamespaceEntity.NoNamespace;
+                ? NamespaceIdentifier.Create(foundSections)
+                : NamespaceIdentifier.NoNamespace;
         }
 
         private NamespaceDeclarationSyntax? GetNamespaceNode(SyntaxNode node)

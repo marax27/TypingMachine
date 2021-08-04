@@ -2,9 +2,9 @@
 using TypingMachine.Entities;
 using Xunit;
 
-namespace TypingMachine.Tests.Entities.NamespaceEntityTests
+namespace TypingMachine.Tests.Entities.NamespaceIdentifierTests
 {
-    public class WhenComparingNamespaceEntities
+    public class WhenComparingNamespaceIdentifiers
     {
         private static string[] GivenSampleSections => new[] {"ProjectName", "Application", "Services"};
         private static string[] GivenOtherSections => new[] {"ProjectName", "Infrastructure", "Database"};
@@ -14,8 +14,8 @@ namespace TypingMachine.Tests.Entities.NamespaceEntityTests
         [Fact]
         public void GivenIdenticalSections_TheyAreEqual()
         {
-            var firstEntity = NamespaceEntity.Create(GivenSampleSections);
-            var otherEntity = NamespaceEntity.Create(GivenSampleSections);
+            var firstEntity = NamespaceIdentifier.Create(GivenSampleSections);
+            var otherEntity = NamespaceIdentifier.Create(GivenSampleSections);
 
             (firstEntity == otherEntity)
                 .Should().BeTrue();
@@ -24,8 +24,8 @@ namespace TypingMachine.Tests.Entities.NamespaceEntityTests
         [Fact]
         public void GivenIdenticalSections_TheyAreNotUnequal()
         {
-            var firstEntity = NamespaceEntity.Create(GivenSampleSections);
-            var otherEntity = NamespaceEntity.Create(GivenSampleSections);
+            var firstEntity = NamespaceIdentifier.Create(GivenSampleSections);
+            var otherEntity = NamespaceIdentifier.Create(GivenSampleSections);
 
             (firstEntity != otherEntity)
                 .Should().BeFalse();
@@ -34,8 +34,8 @@ namespace TypingMachine.Tests.Entities.NamespaceEntityTests
         [Fact]
         public void GivenDifferentSections_TheyAreNotEqual()
         {
-            var firstEntity = NamespaceEntity.Create(GivenSampleSections);
-            var otherEntity = NamespaceEntity.Create(GivenOtherSections);
+            var firstEntity = NamespaceIdentifier.Create(GivenSampleSections);
+            var otherEntity = NamespaceIdentifier.Create(GivenOtherSections);
 
             (firstEntity == otherEntity)
                 .Should().BeFalse();
@@ -44,8 +44,8 @@ namespace TypingMachine.Tests.Entities.NamespaceEntityTests
         [Fact]
         public void GivenDifferentSections_TheyAreUnequal()
         {
-            var firstEntity = NamespaceEntity.Create(GivenSampleSections);
-            var otherEntity = NamespaceEntity.Create(GivenOtherSections);
+            var firstEntity = NamespaceIdentifier.Create(GivenSampleSections);
+            var otherEntity = NamespaceIdentifier.Create(GivenOtherSections);
 
             (firstEntity != otherEntity)
                 .Should().BeTrue();
@@ -54,8 +54,8 @@ namespace TypingMachine.Tests.Entities.NamespaceEntityTests
         [Fact]
         public void GivenPartiallyMatchingSections_TheyAreNotEqual()
         {
-            var firstEntity = NamespaceEntity.Create(GivenSampleSections);
-            var otherEntity = NamespaceEntity.Create(GivenMoreDetailedSections);
+            var firstEntity = NamespaceIdentifier.Create(GivenSampleSections);
+            var otherEntity = NamespaceIdentifier.Create(GivenMoreDetailedSections);
 
             (firstEntity == otherEntity)
                 .Should().BeFalse();
@@ -64,8 +64,8 @@ namespace TypingMachine.Tests.Entities.NamespaceEntityTests
         [Fact]
         public void GivenPartiallyMatchingSections_TheyAreUnequal()
         {
-            var firstEntity = NamespaceEntity.Create(GivenSampleSections);
-            var otherEntity = NamespaceEntity.Create(GivenMoreDetailedSections);
+            var firstEntity = NamespaceIdentifier.Create(GivenSampleSections);
+            var otherEntity = NamespaceIdentifier.Create(GivenMoreDetailedSections);
 
             (firstEntity != otherEntity)
                 .Should().BeTrue();
@@ -74,7 +74,7 @@ namespace TypingMachine.Tests.Entities.NamespaceEntityTests
         [Fact]
         public void GivenEntityComparedWithItself_TheyAreEqual()
         {
-            var firstEntity = NamespaceEntity.Create(GivenSampleSections);
+            var firstEntity = NamespaceIdentifier.Create(GivenSampleSections);
             var otherEntity = firstEntity;
 
             (firstEntity == otherEntity)
@@ -86,7 +86,7 @@ namespace TypingMachine.Tests.Entities.NamespaceEntityTests
         [Fact]
         public void GivenEntityAndNull_TheyAreNotEqual()
         {
-            var entity = NamespaceEntity.Create(GivenSampleSections);
+            var entity = NamespaceIdentifier.Create(GivenSampleSections);
 
             (entity == null)
                 .Should().BeFalse();
@@ -97,26 +97,26 @@ namespace TypingMachine.Tests.Entities.NamespaceEntityTests
         [Fact]
         public void GivenSampleSectionsAndNoNamespace_TheyAreNotEqual()
         {
-            var entity = NamespaceEntity.Create(GivenSampleSections);
+            var entity = NamespaceIdentifier.Create(GivenSampleSections);
 
-            (entity == NamespaceEntity.NoNamespace)
+            (entity == NamespaceIdentifier.NoNamespace)
                 .Should().BeFalse();
         }
 
         [Fact]
         public void GivenSampleSectionsAndNoNamespace_TheyAreUnequal()
         {
-            var entity = NamespaceEntity.Create(GivenSampleSections);
+            var entity = NamespaceIdentifier.Create(GivenSampleSections);
 
-            (entity != NamespaceEntity.NoNamespace)
+            (entity != NamespaceIdentifier.NoNamespace)
                 .Should().BeTrue();
         }
 
         [Fact]
         public void Given2InstancesOfNoNamespace_TheyAreEqual()
         {
-            var firstEntity = NamespaceEntity.NoNamespace;
-            var otherEntity = NamespaceEntity.NoNamespace;
+            var firstEntity = NamespaceIdentifier.NoNamespace;
+            var otherEntity = NamespaceIdentifier.NoNamespace;
 
             (firstEntity == otherEntity)
                 .Should().BeTrue();

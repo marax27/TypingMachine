@@ -4,9 +4,9 @@ using FluentAssertions;
 using TypingMachine.Entities;
 using Xunit;
 
-namespace TypingMachine.Tests.Entities.NamespaceEntityTests
+namespace TypingMachine.Tests.Entities.NamespaceIdentifierTests
 {
-    public class WhenCreatingNamespaceEntity
+    public class WhenCreatingNamespaceIdentifier
     {
         private string[] GivenSections => new[] {"ProjectName", "Application", "Services"};
 
@@ -15,7 +15,7 @@ namespace TypingMachine.Tests.Entities.NamespaceEntityTests
         {
             Action act = () =>
             {
-                var entity = NamespaceEntity.Create(GivenSections);
+                var entity = NamespaceIdentifier.Create(GivenSections);
             };
 
             act.Should().NotThrow();
@@ -24,7 +24,7 @@ namespace TypingMachine.Tests.Entities.NamespaceEntityTests
         [Fact]
         public void GivenValidSections_ContainExpectedNumberOfSections()
         {
-            var entity = NamespaceEntity.Create(GivenSections);
+            var entity = NamespaceIdentifier.Create(GivenSections);
 
             entity.Sections.Should().HaveCount(3);
         }
@@ -34,7 +34,7 @@ namespace TypingMachine.Tests.Entities.NamespaceEntityTests
         {
             Action act = () =>
             {
-                var entity = NamespaceEntity.Create(null!);
+                var entity = NamespaceIdentifier.Create(null!);
             };
 
             act.Should().Throw<ArgumentNullException>()
@@ -46,7 +46,7 @@ namespace TypingMachine.Tests.Entities.NamespaceEntityTests
         {
             Action act = () =>
             {
-                var entity = NamespaceEntity.Create(new List<string>());
+                var entity = NamespaceIdentifier.Create(new List<string>());
             };
 
             act.Should().Throw<ArgumentOutOfRangeException>()
@@ -58,7 +58,7 @@ namespace TypingMachine.Tests.Entities.NamespaceEntityTests
         {
             Action act = () =>
             {
-                var entity = NamespaceEntity.Create(new List<string>());
+                var entity = NamespaceIdentifier.Create(new List<string>());
             };
 
             act.Should().Throw<ArgumentOutOfRangeException>()
