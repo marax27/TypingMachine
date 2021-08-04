@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TypingMachine.Entities;
+using TypingMachine.Tests.Utilities;
 
 namespace TypingMachine.Tests.CodeWalking.UsingWalkerTests
 {
@@ -36,7 +37,7 @@ namespace Application.Controllers
         public IReadOnlyCollection<UsingEntity> ExpectedResult
             => new List<UsingEntity>
             {
-                UsingEntity.Create(NamespaceEntity.Create(new []{"System", "Data"}))
+                UsingEntity.Create("System.Data".AsNamespace())
             };
     }
 
@@ -57,9 +58,9 @@ namespace Application.Controllers
         public IReadOnlyCollection<UsingEntity> ExpectedResult
             => new List<UsingEntity>
             {
-                UsingEntity.Create(NamespaceEntity.Create(new []{"System"})),
-                UsingEntity.Create(NamespaceEntity.Create(new []{"System", "Collections", "Generic"})),
-                UsingEntity.Create(NamespaceEntity.Create(new []{"Application", "Utilities"}))
+                UsingEntity.Create("System".AsNamespace()),
+                UsingEntity.Create("System.Collections.Generic".AsNamespace()),
+                UsingEntity.Create("Application.Utilities".AsNamespace())
             };
     }
 }
