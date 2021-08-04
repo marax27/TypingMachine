@@ -63,4 +63,30 @@ namespace Application.Controllers
                 UsingEntity.Create("Application.Utilities".AsNamespace())
             };
     }
+
+    class StaticImportContext : IDiscoveringUsingEntitiesTestContext
+    {
+        public string GivenSource => @"
+using static System.Console;
+
+namespace EmptyNamespace {}
+";
+
+        public IReadOnlyCollection<UsingEntity> ExpectedResult
+            => new List<UsingEntity>
+            {
+                UsingEntity.Create("System.Console".AsNamespace()),
+            };
+    }
+
+    class AliasDirectiveContext : IDiscoveringUsingEntitiesTestContext
+    {
+        public string GivenSource => "using Project = Organization.ProjectName.Project;";
+
+        public IReadOnlyCollection<UsingEntity> ExpectedResult
+            => new List<UsingEntity>
+            {
+                UsingEntity.Create("Organization.ProjectName.Project".AsNamespace()),
+            };
+    }
 }

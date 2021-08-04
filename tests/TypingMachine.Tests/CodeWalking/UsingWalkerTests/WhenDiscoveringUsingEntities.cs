@@ -28,6 +28,8 @@ namespace TypingMachine.Tests.CodeWalking.UsingWalkerTests
                 new object[] {new ZeroUsingDirectivesContext()},
                 new object[] {new OneUsingDirectiveContext()},
                 new object[] {new ThreeUsingDirectivesContext()},
+                new object[] {new StaticImportContext()},
+                new object[] {new AliasDirectiveContext()},
             };
 
             public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();
