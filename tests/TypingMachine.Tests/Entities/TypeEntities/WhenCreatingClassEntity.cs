@@ -85,6 +85,22 @@ namespace TypingMachine.Tests.Entities.TypeEntities
             act.Should().Throw<ArgumentNullException>().Which.ParamName.Should().Be("fields");
         }
 
+        [Fact]
+        public void GivenNullNamespace_ThrowExpectedException()
+        {
+            Action act = () =>
+            {
+                var entity = new ClassBuilder()
+                    .WithFields(null)
+                    .WithBaseTypes(GivenBaseTypes)
+                    .WithMethods(GivenMethods)
+                    .WithNamespace(null)
+                    .Build(GivenIdentifier);
+            };
+
+            act.Should().Throw<ArgumentNullException>().Which.ParamName.Should().Be("namespaceId");
+        }
+
         private TypeIdentifier GivenIdentifier => "IService".AsSimpleTypeId();
 
         private IReadOnlyList<MethodEntity> GivenMethods => new List<MethodEntity>

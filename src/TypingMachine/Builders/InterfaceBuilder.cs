@@ -7,6 +7,7 @@ namespace TypingMachine.Builders
     {
         private IReadOnlyList<MethodEntity> _methods = new List<MethodEntity>();
         private IReadOnlyList<TypeIdentifier> _baseTypes = new List<TypeIdentifier>();
+        private NamespaceIdentifier _namespaceId = NamespaceIdentifier.NoNamespace;
 
         public InterfaceBuilder WithMethods(IReadOnlyList<MethodEntity> methods)
         {
@@ -20,7 +21,13 @@ namespace TypingMachine.Builders
             return this;
         }
 
+        public InterfaceBuilder WithNamespace(NamespaceIdentifier namespaceId)
+        {
+            _namespaceId = namespaceId;
+            return this;
+        }
+
         public InterfaceEntity Build(TypeIdentifier typeIdentifier)
-            => new(typeIdentifier, _methods, _baseTypes);
+            => new(typeIdentifier, _namespaceId, _methods, _baseTypes);
     }
 }
