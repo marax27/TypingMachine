@@ -1,0 +1,9 @@
+name: Unit Tests
+on: push
+jobs:
+  tests:
+    name: Unit Test Suite
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: dotnet test
