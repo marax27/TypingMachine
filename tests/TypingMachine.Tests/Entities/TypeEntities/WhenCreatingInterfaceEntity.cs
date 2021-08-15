@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
+using TypingMachine.Builders;
 using TypingMachine.Entities;
 using TypingMachine.Tests.Utilities;
 using Xunit;
@@ -14,7 +15,10 @@ namespace TypingMachine.Tests.Entities.TypeEntities
         {
             Action act = () =>
             {
-                var entity = new InterfaceEntity(GivenIdentifier, GivenMethods, GivenBaseTypes);
+                var entity = new InterfaceBuilder()
+                    .WithMethods(GivenMethods)
+                    .WithBaseTypes(GivenBaseTypes)
+                    .Build(GivenIdentifier);
             };
 
             act.Should().NotThrow();
@@ -25,7 +29,10 @@ namespace TypingMachine.Tests.Entities.TypeEntities
         {
             Action act = () =>
             {
-                var entity = new InterfaceEntity(null, GivenMethods, GivenBaseTypes);
+                var entity = new InterfaceBuilder()
+                    .WithMethods(GivenMethods)
+                    .WithBaseTypes(GivenBaseTypes)
+                    .Build(null);
             };
 
             act.Should().Throw<ArgumentNullException>().Which.ParamName.Should().Be("identifier");
@@ -36,7 +43,10 @@ namespace TypingMachine.Tests.Entities.TypeEntities
         {
             Action act = () =>
             {
-                var entity = new InterfaceEntity(GivenIdentifier, null, GivenBaseTypes);
+                var entity = new InterfaceBuilder()
+                    .WithMethods(null)
+                    .WithBaseTypes(GivenBaseTypes)
+                    .Build(GivenIdentifier);
             };
 
             act.Should().Throw<ArgumentNullException>().Which.ParamName.Should().Be("methods");
@@ -47,10 +57,43 @@ namespace TypingMachine.Tests.Entities.TypeEntities
         {
             Action act = () =>
             {
-                var entity = new InterfaceEntity(GivenIdentifier, GivenMethods, null);
+                var entity = new InterfaceBuilder()
+                    .WithMethods(GivenMethods)
+                    .WithBaseTypes(null)
+                    .Build(GivenIdentifier);
             };
 
             act.Should().Throw<ArgumentNullException>().Which.ParamName.Should().Be("baseTypes");
+        }
+
+        [Fact]
+        public void GivenNullNamespace_ThrowExpectedException()
+        {
+            Action act = () =>
+            {
+                var entity = new InterfaceBuilder()
+                    .WithMethods(GivenMethods)
+                    .WithBaseTypes(GivenBaseTypes)
+                    .WithNamespace(null)
+                    .Build(GivenIdentifier);
+            };
+
+            act.Should().Throw<ArgumentNullException>().Which.ParamName.Should().Be("namespaceId");
+        }
+
+        [Fact]
+        public void GivenNullUsingDirectives_ThrowExpectedException()
+        {
+            Action act = () =>
+            {
+                var entity = new InterfaceBuilder()
+                    .WithMethods(GivenMethods)
+                    .WithBaseTypes(GivenBaseTypes)
+                    .WithUsingDirectives(null)
+                    .Build(GivenIdentifier);
+            };
+
+            act.Should().Throw<ArgumentNullException>().Which.ParamName.Should().Be("usingDirectives");
         }
 
         private TypeIdentifier GivenIdentifier => "IQueryHandler".AsSimpleTypeId();

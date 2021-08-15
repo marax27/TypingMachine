@@ -5,7 +5,8 @@ namespace TypingMachine.Entities
 {
     public class InterfaceEntity : TypeEntity
     {
-        public InterfaceEntity(TypeIdentifier identifier, IReadOnlyList<MethodEntity> methods, IReadOnlyList<TypeIdentifier> baseTypes) : base(identifier, methods, baseTypes)
+        public InterfaceEntity(TypeIdentifier identifier, NamespaceIdentifier namespaceId, IReadOnlyList<MethodEntity> methods, IReadOnlyList<TypeIdentifier> baseTypes, IReadOnlyCollection<UsingEntity> usingDirectives)
+            : base(identifier, namespaceId, methods, baseTypes, usingDirectives)
         {
         }
 

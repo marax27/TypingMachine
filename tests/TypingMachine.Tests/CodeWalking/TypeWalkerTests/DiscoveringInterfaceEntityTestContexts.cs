@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TypingMachine.Builders;
 using TypingMachine.Entities;
 using TypingMachine.Tests.Utilities;
 
@@ -13,33 +14,23 @@ namespace TypingMachine.Tests.CodeWalking.TypeWalkerTests
 
     class EmptyInterfaceContext : IDiscoveringInterfaceEntityTestContext
     {
-        public string GivenSource => @"
-namespace Application.Services
-{
-    protected interface IHelloService {}
-}
+        public string GivenSource => @"protected interface IHelloService {}
 ";
 
         public IReadOnlyCollection<TypeEntity> ExpectedResult
             => new List<TypeEntity>
             {
-                new InterfaceEntity(
-                    "IHelloService".AsSimpleTypeId(),
-                    new List<MethodEntity>(),
-                    new List<TypeIdentifier>()
-                )
+                new InterfaceBuilder()
+                    .Build("IHelloService".AsSimpleTypeId())
             };
     }
 
     class GenericInterfaceContext : IDiscoveringInterfaceEntityTestContext
     {
         public string GivenSource => @"
-namespace Application.Services
+protected interface IFunctor<TIn, TOut>
 {
-    protected interface IFunctor<TIn, TOut>
-    {
-        TOut Compute(TIn arg);
-    }
+    TOut Compute(TIn arg);
 }
 ";
 
@@ -52,18 +43,18 @@ namespace Application.Services
 
             return new List<TypeEntity>
             {
-                new InterfaceEntity(
-                    "IFunctor".AsGenericTypeId("TIn", "TOut"),
-                    new List<MethodEntity>
-                    {
-                        MethodEntity.Create(
-                            "Compute",
-                            outParameter,
-                            new List<TypeIdentifier> {inParameter}
-                        )
-                    },
-                    new List<TypeIdentifier>()
-                )
+                new InterfaceBuilder()
+                    .WithMethods(
+                        new List<MethodEntity>
+                        {
+                            MethodEntity.Create(
+                                "Compute",
+                                outParameter,
+                                new List<TypeIdentifier> {inParameter}
+                            )
+                        }
+                    )
+                    .Build("IFunctor".AsGenericTypeId("TIn", "TOut"))
             };
         }
     }
@@ -83,15 +74,53 @@ interface IQueryHandler<TQuery, TResult> : IHandler<TQuery, TResult> {}
 
             return new List<TypeEntity>
             {
-                new InterfaceEntity(
-                    "IQueryHandler".AsGenericTypeId("TQuery", "TResult"),
-                    new List<MethodEntity>(),
-                    new List<TypeIdentifier>
-                    {
-                        "IHandler".AsGenericTypeId("TQuery", "TResult")
-                    }
-                )
+                new InterfaceBuilder()
+                    .WithBaseTypes(
+                        new List<TypeIdentifier>
+                        {
+                            "IHandler".AsGenericTypeId("TQuery", "TResult")
+                        }
+                    )
+                    .Build("IQueryHandler".AsGenericTypeId("TQuery", "TResult"))
             };
         }
+    }
+
+    class InterfaceInNamespaceContext : IDiscoveringInterfaceEntityTestContext
+    {
+        public string GivenSource => @"
+namespace Business.Domain.Abstractions
+{
+    interface IQuery<TIn> {}
+}
+";
+
+        public IReadOnlyCollection<TypeEntity> ExpectedResult => new List<TypeEntity>
+        {
+            new InterfaceBuilder()
+                .WithNamespace("Business.Domain.Abstractions".AsNamespace())
+                .Build("IQuery".AsGenericTypeId("TIn"))
+        };
+    }
+
+    class InterfaceWithSeveralUsingDirectivesContext : IDiscoveringInterfaceEntityTestContext
+    {
+        public string GivenSource => @"
+using Something.Local;
+
+public interface IService {}
+";
+
+        public IReadOnlyCollection<TypeEntity> ExpectedResult => new List<InterfaceEntity>
+        {
+            new InterfaceBuilder()
+                .WithUsingDirectives(
+                    new List<UsingEntity>
+                    {
+                        UsingEntity.Create("Something.Local".AsNamespace()),
+                    }
+                )
+                .Build("IService".AsSimpleTypeId())
+        };
     }
 }

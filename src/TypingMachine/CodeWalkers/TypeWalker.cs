@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using TypingMachine.Builders;
 using TypingMachine.CodeFinders;
 using TypingMachine.Entities;
 
@@ -13,13 +14,16 @@ namespace TypingMachine.CodeWalkers
         private readonly TypeFinder _typeFinder = new();
         private readonly MethodFinder _methodFinder = new();
         private readonly FieldFinder _fieldFinder = new();
-
+        private readonly NamespaceFinder _namespaceFinder = new();
+        private readonly UsingWalker _usingWalker = new();
 
         private ICollection<TypeEntity> _types;
+        private IReadOnlyCollection<UsingEntity> _usingDirectives;
 
         public IReadOnlyCollection<TypeEntity> FindAll(SyntaxNode rootNode)
         {
             _types = new HashSet<TypeEntity>();
+            _usingDirectives = _usingWalker.FindAll(rootNode);
             Visit(rootNode);
             return _types.ToHashSet();
         }
@@ -28,27 +32,29 @@ namespace TypingMachine.CodeWalkers
         {
             base.VisitClassDeclaration(node);
 
-            _types.Add(
-                new ClassEntity(
-                    CreateIdentifier(node),
-                    FindMethods(node),
-                    FindBaseTypes(node),
-                    FindFields(node)
-                )
-            );
+            var newClass = new ClassBuilder()
+                .WithMethods(FindMethods(node))
+                .WithBaseTypes(FindBaseTypes(node))
+                .WithFields(FindFields(node))
+                .WithNamespace(FindNamespace(node))
+                .WithUsingDirectives(_usingDirectives)
+                .Build(CreateIdentifier(node));
+
+            _types.Add(newClass);
         }
 
         public override void VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
         {
             base.VisitInterfaceDeclaration(node);
 
-            _types.Add(
-                new InterfaceEntity(
-                    CreateIdentifier(node),
-                    FindMethods(node),
-                    FindBaseTypes(node)
-                )
-            );
+            var newInterface = new InterfaceBuilder()
+                .WithMethods(FindMethods(node))
+                .WithBaseTypes(FindBaseTypes(node))
+                .WithNamespace(FindNamespace(node))
+                .WithUsingDirectives(_usingDirectives)
+                .Build(CreateIdentifier(node));
+
+            _types.Add(newInterface);
         }
 
         private TypeIdentifier CreateIdentifier(TypeDeclarationSyntax node)
@@ -83,6 +89,11 @@ namespace TypingMachine.CodeWalkers
             return _fieldFinder
                 .FindFor(fieldNodes)
                 .ToList();
+        }
+
+        private NamespaceIdentifier FindNamespace(SyntaxNode node)
+        {
+            return _namespaceFinder.FindFor(node);
         }
     }
 }

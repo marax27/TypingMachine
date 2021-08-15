@@ -5,7 +5,7 @@ namespace TypingMachine.Tests.CodeFinding.NamespaceFinderTests
     public interface IFindingNamespaceTestContext
     {
         string GivenSource { get; }
-        NamespaceEntity ExpectedResult { get; }
+        NamespaceIdentifier ExpectedResult { get; }
     }
 
     class SampleContext : IFindingNamespaceTestContext
@@ -21,7 +21,7 @@ namespace Corporation.ProjectName.Gui
 }
 ";
 
-        public NamespaceEntity ExpectedResult => NamespaceEntity.Create(new[] { "Corporation", "ProjectName", "Gui" });
+        public NamespaceIdentifier ExpectedResult => NamespaceIdentifier.Create(new[] { "Corporation", "ProjectName", "Gui" });
     }
 
     class TwoNamespacesSideBySideContext : IFindingNamespaceTestContext
@@ -41,7 +41,7 @@ namespace OtherNamespace
 }
 ";
 
-        public NamespaceEntity ExpectedResult => NamespaceEntity.Create(new[] { "OtherNamespace" });
+        public NamespaceIdentifier ExpectedResult => NamespaceIdentifier.Create(new[] { "OtherNamespace" });
     }
 
     class NodeOutsideNamespaceContext : IFindingNamespaceTestContext
@@ -58,7 +58,7 @@ namespace IrrelevantNamespace
 }
 ";
 
-        public NamespaceEntity ExpectedResult => NamespaceEntity.NoNamespace;
+        public NamespaceIdentifier ExpectedResult => NamespaceIdentifier.NoNamespace;
     }
 
     class SampleNestedContext : IFindingNamespaceTestContext
@@ -83,7 +83,7 @@ namespace Corporation.ImportantProject
     }
 }
 ";
-        public NamespaceEntity ExpectedResult
-            => NamespaceEntity.Create(new[] { "Corporation", "ImportantProject", "Example" });
+        public NamespaceIdentifier ExpectedResult
+            => NamespaceIdentifier.Create(new[] { "Corporation", "ImportantProject", "Example" });
     }
 }

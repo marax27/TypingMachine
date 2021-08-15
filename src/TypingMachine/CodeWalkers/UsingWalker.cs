@@ -25,7 +25,7 @@ namespace TypingMachine.CodeWalkers
         {
             base.VisitUsingDirective(node);
 
-            var ns = NamespaceEntity.Create(node.Name.ToString().Split('.'));
+            var ns = NamespaceIdentifier.Create(node.Name.ToString().Split('.'));
             _usingEntities.Add(UsingEntity.Create(ns));
         }
     }
