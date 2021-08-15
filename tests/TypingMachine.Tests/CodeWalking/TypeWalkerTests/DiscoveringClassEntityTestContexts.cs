@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TypingMachine.Builders;
 using TypingMachine.Entities;
 using TypingMachine.Tests.Utilities;
 
@@ -22,12 +23,8 @@ namespace Controllers
         public IReadOnlyCollection<ClassEntity> ExpectedResult
             => new List<ClassEntity>
             {
-                new ClassEntity(
-                    "HelloController".AsSimpleTypeId(), 
-                    new List<MethodEntity>(),
-                    new List<TypeIdentifier>(),
-                    new List<FieldEntity>()
-                )
+                new ClassBuilder()
+                    .Build("HelloController".AsSimpleTypeId())
             };
     }
 
@@ -46,16 +43,15 @@ namespace Controllers
         public IReadOnlyCollection<ClassEntity> ExpectedResult
             => new List<ClassEntity>
             {
-                new ClassEntity(
-                    "HelloController".AsSimpleTypeId(),
-                    new List<MethodEntity>(),
-                    new List<TypeIdentifier>
-                    {
-                        "IController".AsSimpleTypeId(),
-                        "BaseController".AsGenericTypeId("Context")
-                    },
-                    new List<FieldEntity>()
-                )
+                new ClassBuilder()
+                    .WithBaseTypes(
+                        new List<TypeIdentifier>
+                        {
+                            "IController".AsSimpleTypeId(),
+                            "BaseController".AsGenericTypeId("Context")
+                        }
+                    )
+                    .Build("HelloController".AsSimpleTypeId())
             };
     }
 
@@ -80,22 +76,21 @@ namespace Controllers
         public IReadOnlyCollection<ClassEntity> ExpectedResult
             => new List<ClassEntity>
             {
-                new ClassEntity(
-                    "HelloController".AsSimpleTypeId(),
-                    new List<MethodEntity>(),
-                    new List<TypeIdentifier>(),
-                    new List<FieldEntity>
-                    {
-                        FieldEntity.Create(
-                            "magicValue",
-                            "int".AsSimpleTypeId()
-                        ),
-                        FieldEntity.Create(
-                            "_logger",
-                            "ILogger".AsGenericTypeId("HelloController")
-                        )
-                    }
-                )
+                new ClassBuilder()
+                    .WithFields(
+                        new List<FieldEntity>
+                        {
+                            FieldEntity.Create(
+                                "magicValue",
+                                "int".AsSimpleTypeId()
+                            ),
+                            FieldEntity.Create(
+                                "_logger",
+                                "ILogger".AsGenericTypeId("HelloController")
+                            )
+                        }
+                    )
+                    .Build("HelloController".AsSimpleTypeId())
             };
     }
 }

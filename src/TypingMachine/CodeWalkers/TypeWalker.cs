@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using TypingMachine.Builders;
 using TypingMachine.CodeFinders;
 using TypingMachine.Entities;
 
@@ -28,27 +29,25 @@ namespace TypingMachine.CodeWalkers
         {
             base.VisitClassDeclaration(node);
 
-            _types.Add(
-                new ClassEntity(
-                    CreateIdentifier(node),
-                    FindMethods(node),
-                    FindBaseTypes(node),
-                    FindFields(node)
-                )
-            );
+            var newClass = new ClassBuilder()
+                .WithMethods(FindMethods(node))
+                .WithBaseTypes(FindBaseTypes(node))
+                .WithFields(FindFields(node))
+                .Build(CreateIdentifier(node));
+
+            _types.Add(newClass);
         }
 
         public override void VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
         {
             base.VisitInterfaceDeclaration(node);
 
-            _types.Add(
-                new InterfaceEntity(
-                    CreateIdentifier(node),
-                    FindMethods(node),
-                    FindBaseTypes(node)
-                )
-            );
+            var newInterface = new InterfaceBuilder()
+                .WithMethods(FindMethods(node))
+                .WithBaseTypes(FindBaseTypes(node))
+                .Build(CreateIdentifier(node));
+
+            _types.Add(newInterface);
         }
 
         private TypeIdentifier CreateIdentifier(TypeDeclarationSyntax node)

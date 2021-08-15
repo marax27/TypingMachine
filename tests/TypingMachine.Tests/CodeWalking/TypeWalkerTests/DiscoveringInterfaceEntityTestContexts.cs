@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TypingMachine.Builders;
 using TypingMachine.Entities;
 using TypingMachine.Tests.Utilities;
 
@@ -23,11 +24,8 @@ namespace Application.Services
         public IReadOnlyCollection<TypeEntity> ExpectedResult
             => new List<TypeEntity>
             {
-                new InterfaceEntity(
-                    "IHelloService".AsSimpleTypeId(),
-                    new List<MethodEntity>(),
-                    new List<TypeIdentifier>()
-                )
+                new InterfaceBuilder()
+                    .Build("IHelloService".AsSimpleTypeId())
             };
     }
 
@@ -52,18 +50,18 @@ namespace Application.Services
 
             return new List<TypeEntity>
             {
-                new InterfaceEntity(
-                    "IFunctor".AsGenericTypeId("TIn", "TOut"),
-                    new List<MethodEntity>
-                    {
-                        MethodEntity.Create(
-                            "Compute",
-                            outParameter,
-                            new List<TypeIdentifier> {inParameter}
-                        )
-                    },
-                    new List<TypeIdentifier>()
-                )
+                new InterfaceBuilder()
+                    .WithMethods(
+                        new List<MethodEntity>
+                        {
+                            MethodEntity.Create(
+                                "Compute",
+                                outParameter,
+                                new List<TypeIdentifier> {inParameter}
+                            )
+                        }
+                    )
+                    .Build("IFunctor".AsGenericTypeId("TIn", "TOut"))
             };
         }
     }
@@ -83,14 +81,14 @@ interface IQueryHandler<TQuery, TResult> : IHandler<TQuery, TResult> {}
 
             return new List<TypeEntity>
             {
-                new InterfaceEntity(
-                    "IQueryHandler".AsGenericTypeId("TQuery", "TResult"),
-                    new List<MethodEntity>(),
-                    new List<TypeIdentifier>
-                    {
-                        "IHandler".AsGenericTypeId("TQuery", "TResult")
-                    }
-                )
+                new InterfaceBuilder()
+                    .WithBaseTypes(
+                        new List<TypeIdentifier>
+                        {
+                            "IHandler".AsGenericTypeId("TQuery", "TResult")
+                        }
+                    )
+                    .Build("IQueryHandler".AsGenericTypeId("TQuery", "TResult"))
             };
         }
     }

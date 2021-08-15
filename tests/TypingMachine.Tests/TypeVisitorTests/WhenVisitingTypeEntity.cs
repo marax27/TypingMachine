@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Moq;
 using TypingMachine.Abstractions;
+using TypingMachine.Builders;
 using TypingMachine.Entities;
 using TypingMachine.Tests.Utilities;
 using Xunit;
@@ -12,12 +13,8 @@ namespace TypingMachine.Tests.TypeVisitorTests
         [Fact]
         public void GivenClassEntity_VisitClassExactlyOnce()
         {
-            var givenEntity = new ClassEntity(
-                "ConcreteClass".AsSimpleTypeId(),
-                new List<MethodEntity>(),
-                new List<TypeIdentifier>(),
-                new List<FieldEntity>()
-            );
+            var givenEntity = new ClassBuilder()
+                .Build("ConcreteClass".AsSimpleTypeId());
             var typeVisitor = new Mock<ITypeVisitor>();
 
             givenEntity.Accept(typeVisitor.Object);
@@ -28,11 +25,8 @@ namespace TypingMachine.Tests.TypeVisitorTests
         [Fact]
         public void GivenInterfaceEntity_VisitInterfaceExactlyOnce()
         {
-            var givenEntity = new InterfaceEntity(
-                "IExampleProvider".AsSimpleTypeId(),
-                new List<MethodEntity>(),
-                new List<TypeIdentifier>()
-            );
+            var givenEntity = new InterfaceBuilder()
+                .Build("IExampleProvider".AsSimpleTypeId());
             var typeVisitor = new Mock<ITypeVisitor>();
 
             givenEntity.Accept(typeVisitor.Object);
