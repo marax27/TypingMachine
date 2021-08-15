@@ -13,12 +13,7 @@ namespace TypingMachine.Tests.CodeWalking.TypeWalkerTests
 
     class EmptyClassContext : IDiscoveringClassEntityTestContext
     {
-        public string GivenSource => @"
-namespace Controllers
-{
-    public class HelloController {}
-}
-";
+        public string GivenSource => @"public class HelloController {}";
 
         public IReadOnlyCollection<ClassEntity> ExpectedResult
             => new List<ClassEntity>
@@ -31,12 +26,9 @@ namespace Controllers
     class ClassWithMultipleBaseTypesContext : IDiscoveringClassEntityTestContext
     {
         public string GivenSource => @"
-namespace Controllers
+public class HelloController : IController, BaseController<Context>
 {
-    public class HelloController : IController, BaseController<Context>
-    {
-        public HelloController() {}
-    }
+    public HelloController() {}
 }
 ";
 
@@ -58,17 +50,13 @@ namespace Controllers
     class ClassWithFieldsContext : IDiscoveringClassEntityTestContext
     {
         public string GivenSource => @"
-namespace Controllers
+public class HelloController
 {
-    public class HelloController
+    public int magicValue = 123;
+    private readonly ILogger<HelloController> _logger;
+    public HelloController(ILogger<HelloController> logger)
     {
-        public int magicValue = 123;
-        private readonly ILogger<HelloController> _logger;
-
-        public HelloController(ILogger<HelloController> logger)
-        {
-            _logger = logger;
-        }
+        _logger = logger;
     }
 }
 ";

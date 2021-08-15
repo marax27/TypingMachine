@@ -14,11 +14,7 @@ namespace TypingMachine.Tests.CodeWalking.TypeWalkerTests
 
     class EmptyInterfaceContext : IDiscoveringInterfaceEntityTestContext
     {
-        public string GivenSource => @"
-namespace Application.Services
-{
-    protected interface IHelloService {}
-}
+        public string GivenSource => @"protected interface IHelloService {}
 ";
 
         public IReadOnlyCollection<TypeEntity> ExpectedResult
@@ -32,12 +28,9 @@ namespace Application.Services
     class GenericInterfaceContext : IDiscoveringInterfaceEntityTestContext
     {
         public string GivenSource => @"
-namespace Application.Services
+protected interface IFunctor<TIn, TOut>
 {
-    protected interface IFunctor<TIn, TOut>
-    {
-        TOut Compute(TIn arg);
-    }
+    TOut Compute(TIn arg);
 }
 ";
 
