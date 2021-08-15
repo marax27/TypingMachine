@@ -15,12 +15,15 @@ namespace TypingMachine.CodeWalkers
         private readonly MethodFinder _methodFinder = new();
         private readonly FieldFinder _fieldFinder = new();
         private readonly NamespaceFinder _namespaceFinder = new();
+        private readonly UsingWalker _usingWalker = new();
 
         private ICollection<TypeEntity> _types;
+        private IReadOnlyCollection<UsingEntity> _usingDirectives;
 
         public IReadOnlyCollection<TypeEntity> FindAll(SyntaxNode rootNode)
         {
             _types = new HashSet<TypeEntity>();
+            _usingDirectives = _usingWalker.FindAll(rootNode);
             Visit(rootNode);
             return _types.ToHashSet();
         }
@@ -34,6 +37,7 @@ namespace TypingMachine.CodeWalkers
                 .WithBaseTypes(FindBaseTypes(node))
                 .WithFields(FindFields(node))
                 .WithNamespace(FindNamespace(node))
+                .WithUsingDirectives(_usingDirectives)
                 .Build(CreateIdentifier(node));
 
             _types.Add(newClass);
@@ -47,6 +51,7 @@ namespace TypingMachine.CodeWalkers
                 .WithMethods(FindMethods(node))
                 .WithBaseTypes(FindBaseTypes(node))
                 .WithNamespace(FindNamespace(node))
+                .WithUsingDirectives(_usingDirectives)
                 .Build(CreateIdentifier(node));
 
             _types.Add(newInterface);

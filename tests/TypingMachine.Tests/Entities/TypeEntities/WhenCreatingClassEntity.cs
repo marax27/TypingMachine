@@ -101,6 +101,21 @@ namespace TypingMachine.Tests.Entities.TypeEntities
             act.Should().Throw<ArgumentNullException>().Which.ParamName.Should().Be("namespaceId");
         }
 
+        [Fact]
+        public void GivenNullUsingDirectives_ThrowExpectedException()
+        {
+            Action act = () =>
+            {
+                var entity = new ClassBuilder()
+                    .WithMethods(GivenMethods)
+                    .WithBaseTypes(GivenBaseTypes)
+                    .WithUsingDirectives(null)
+                    .Build(GivenIdentifier);
+            };
+
+            act.Should().Throw<ArgumentNullException>().Which.ParamName.Should().Be("usingDirectives");
+        }
+
         private TypeIdentifier GivenIdentifier => "IService".AsSimpleTypeId();
 
         private IReadOnlyList<MethodEntity> GivenMethods => new List<MethodEntity>

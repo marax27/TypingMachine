@@ -98,4 +98,29 @@ namespace Business.Controllers
                 .Build("HelloController".AsSimpleTypeId())
         };
     }
+
+    class ClassWithSeveralUsingDirectivesContext : IDiscoveringClassEntityTestContext
+    {
+        public string GivenSource => @"
+using System;
+using System.Collections.Generic;
+using Project.Core;
+
+class HelloController {}
+";
+
+        public IReadOnlyCollection<ClassEntity> ExpectedResult => new List<ClassEntity>
+        {
+            new ClassBuilder()
+                .WithUsingDirectives(
+                    new List<UsingEntity>
+                    {
+                        UsingEntity.Create("System".AsNamespace()),
+                        UsingEntity.Create("System.Collections.Generic".AsNamespace()),
+                        UsingEntity.Create("Project.Core".AsNamespace()),
+                    }
+                )
+                .Build("HelloController".AsSimpleTypeId())
+        };
+    }
 }

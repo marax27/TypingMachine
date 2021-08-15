@@ -102,4 +102,25 @@ namespace Business.Domain.Abstractions
                 .Build("IQuery".AsGenericTypeId("TIn"))
         };
     }
+
+    class InterfaceWithSeveralUsingDirectivesContext : IDiscoveringInterfaceEntityTestContext
+    {
+        public string GivenSource => @"
+using Something.Local;
+
+public interface IService {}
+";
+
+        public IReadOnlyCollection<TypeEntity> ExpectedResult => new List<InterfaceEntity>
+        {
+            new InterfaceBuilder()
+                .WithUsingDirectives(
+                    new List<UsingEntity>
+                    {
+                        UsingEntity.Create("Something.Local".AsNamespace()),
+                    }
+                )
+                .Build("IService".AsSimpleTypeId())
+        };
+    }
 }

@@ -8,8 +8,8 @@ namespace TypingMachine.Entities
     {
         public IReadOnlyList<FieldEntity> Fields { get; }
 
-        public ClassEntity(TypeIdentifier identifier, NamespaceIdentifier namespaceId, IReadOnlyList<MethodEntity> methods, IReadOnlyList<TypeIdentifier> baseTypes, IReadOnlyList<FieldEntity> fields)
-            : base(identifier, namespaceId, methods, baseTypes)
+        public ClassEntity(TypeIdentifier identifier, NamespaceIdentifier namespaceId, IReadOnlyList<MethodEntity> methods, IReadOnlyList<TypeIdentifier> baseTypes, IReadOnlyList<FieldEntity> fields, IReadOnlyCollection<UsingEntity> usingDirectives)
+            : base(identifier, namespaceId, methods, baseTypes, usingDirectives)
         {
             Fields = fields ?? throw new ArgumentNullException(nameof(fields));
         }
