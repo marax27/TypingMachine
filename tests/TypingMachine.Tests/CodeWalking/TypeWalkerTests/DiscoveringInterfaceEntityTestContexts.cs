@@ -85,4 +85,21 @@ interface IQueryHandler<TQuery, TResult> : IHandler<TQuery, TResult> {}
             };
         }
     }
+
+    class InterfaceInNamespaceContext : IDiscoveringInterfaceEntityTestContext
+    {
+        public string GivenSource => @"
+namespace Business.Domain.Abstractions
+{
+    interface IQuery<TIn> {}
+}
+";
+
+        public IReadOnlyCollection<TypeEntity> ExpectedResult => new List<TypeEntity>
+        {
+            new InterfaceBuilder()
+                .WithNamespace("Business.Domain.Abstractions".AsNamespace())
+                .Build("IQuery".AsGenericTypeId("TIn"))
+        };
+    }
 }

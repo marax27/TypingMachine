@@ -14,7 +14,7 @@ namespace TypingMachine.CodeWalkers
         private readonly TypeFinder _typeFinder = new();
         private readonly MethodFinder _methodFinder = new();
         private readonly FieldFinder _fieldFinder = new();
-
+        private readonly NamespaceFinder _namespaceFinder = new();
 
         private ICollection<TypeEntity> _types;
 
@@ -33,6 +33,7 @@ namespace TypingMachine.CodeWalkers
                 .WithMethods(FindMethods(node))
                 .WithBaseTypes(FindBaseTypes(node))
                 .WithFields(FindFields(node))
+                .WithNamespace(FindNamespace(node))
                 .Build(CreateIdentifier(node));
 
             _types.Add(newClass);
@@ -45,6 +46,7 @@ namespace TypingMachine.CodeWalkers
             var newInterface = new InterfaceBuilder()
                 .WithMethods(FindMethods(node))
                 .WithBaseTypes(FindBaseTypes(node))
+                .WithNamespace(FindNamespace(node))
                 .Build(CreateIdentifier(node));
 
             _types.Add(newInterface);
@@ -82,6 +84,11 @@ namespace TypingMachine.CodeWalkers
             return _fieldFinder
                 .FindFor(fieldNodes)
                 .ToList();
+        }
+
+        private NamespaceIdentifier FindNamespace(SyntaxNode node)
+        {
+            return _namespaceFinder.FindFor(node);
         }
     }
 }

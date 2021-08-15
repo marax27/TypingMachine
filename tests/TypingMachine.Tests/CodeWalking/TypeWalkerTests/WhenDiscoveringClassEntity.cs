@@ -28,6 +28,7 @@ namespace TypingMachine.Tests.CodeWalking.TypeWalkerTests
                 new object[] {new EmptyClassContext()},
                 new object[] {new ClassWithMultipleBaseTypesContext()},
                 new object[] {new ClassWithFieldsContext()},
+                new object[] {new ClassInNamespaceContext()},
             };
 
             public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();

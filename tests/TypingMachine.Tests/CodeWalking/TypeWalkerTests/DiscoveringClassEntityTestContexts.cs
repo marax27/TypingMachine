@@ -81,4 +81,21 @@ public class HelloController
                     .Build("HelloController".AsSimpleTypeId())
             };
     }
+
+    class ClassInNamespaceContext : IDiscoveringClassEntityTestContext
+    {
+        public string GivenSource => @"
+namespace Business.Controllers
+{
+    public class HelloController {}
+}
+";
+
+        public IReadOnlyCollection<ClassEntity> ExpectedResult => new List<ClassEntity>
+        {
+            new ClassBuilder()
+                .WithNamespace("Business.Controllers".AsNamespace())
+                .Build("HelloController".AsSimpleTypeId())
+        };
+    }
 }
