@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TypingMachine.Abstractions;
 
 namespace TypingMachine.Entities
@@ -13,6 +14,14 @@ namespace TypingMachine.Entities
         public IReadOnlyCollection<UsingEntity> UsingDirectives { get; }
 
         public abstract void Accept(ITypeVisitor visitor);
+
+        public TypeEntity? FindReferencedType(TypeIdentifier referencedTypeId, IEnumerable<TypeEntity> candidateTypes)
+        {
+            return candidateTypes
+                .Where(type => type.NamespaceId == NamespaceId
+                               || UsingDirectives.Any(u => u.UsedNamespace == type.NamespaceId))
+                .SingleOrDefault(type => type.Identifier == referencedTypeId);
+        }
 
         protected TypeEntity(TypeIdentifier identifier, NamespaceIdentifier namespaceId, IReadOnlyList<MethodEntity> methods, IReadOnlyList<TypeIdentifier> baseTypes, IReadOnlyCollection<UsingEntity> usingDirectives)
         {
