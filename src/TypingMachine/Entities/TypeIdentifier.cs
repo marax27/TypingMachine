@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TypingMachine.Abstractions;
 
 namespace TypingMachine.Entities
 {
-    public class TypeIdentifier : IEquatable<TypeIdentifier>
+    public class TypeIdentifier : ITypeIdentifier, IEquatable<TypeIdentifier>
     {
         public string Name { get; }
         public IReadOnlyList<TypeIdentifier> Parameters { get; }
+
+        public int Arity => Parameters.Count;
 
         private TypeIdentifier(string name, IReadOnlyList<TypeIdentifier> parameters)
         {
