@@ -39,7 +39,15 @@ namespace TypingMachine.Tests.Entities.TypeIdentifierTests
         }
 
         [Fact]
-        public void GivenOneParameters_ContainExpectedParameter()
+        public void GivenZeroParameters_ArityIsZero()
+        {
+            var entity = "IService".AsSimpleTypeId();
+
+            entity.Arity.Should().Be(0);
+        }
+
+        [Fact]
+        public void GivenOneParameter_ContainExpectedParameter()
         {
             var givenParameterName = "NestedType";
 
@@ -47,6 +55,16 @@ namespace TypingMachine.Tests.Entities.TypeIdentifierTests
 
             entity.Parameters.Should().HaveCount(1);
             entity.Parameters.Single().Name.Should().Be(givenParameterName);
+        }
+
+        [Fact]
+        public void GivenOneParameter_ArityIsOne()
+        {
+            var givenParameterName = "NestedType";
+
+            var entity = "IService".AsGenericTypeId(givenParameterName);
+
+            entity.Arity.Should().Be(1);
         }
 
         [Fact]
