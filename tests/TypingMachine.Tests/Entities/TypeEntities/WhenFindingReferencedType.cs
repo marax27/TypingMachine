@@ -92,6 +92,31 @@ namespace TypingMachine.Tests.Entities.TypeEntities
         }
 
         [Fact]
+        public void GivenReferencedGenericTypeId_ReturnExpectedType()
+        {
+            var sut = new ClassBuilder()
+                .WithNamespace(DomainNamespace)
+                .WithUsingDirectives(new List<UsingEntity>
+                {
+                    UsingEntity.Create(UtilitiesNamespace)
+                })
+                .Build("PlaceOrderCommandHandler".AsSimpleTypeId());
+            var givenReferencedTypeId = "IFunctor".AsGenericTypeId("string", "int");
+            var givenCandidates = new List<TypeEntity>
+            {
+                _helperServiceType,
+                _placeOrderCommandType,
+                _deleteOrderCommandType,
+                _deleteOrderCommandHandlerType,
+                _functorServiceType
+            };
+
+            var actualResult = sut.FindReferencedType(givenReferencedTypeId, givenCandidates);
+
+            actualResult.Should().BeSameAs(_functorServiceType);
+        }
+
+        [Fact]
         public void GivenSelfReferenceAndRootTypeNotOneOfCandidates_ReturnNull()
         {
             var sut = new ClassBuilder()
@@ -147,6 +172,10 @@ namespace TypingMachine.Tests.Entities.TypeEntities
         private readonly ClassEntity _helperServiceType = new ClassBuilder()
             .WithNamespace(UtilitiesNamespace)
             .Build("HelperService".AsSimpleTypeId());
+
+        private readonly InterfaceEntity _functorServiceType = new InterfaceBuilder()
+            .WithNamespace(UtilitiesNamespace)
+            .Build("IFunctor".AsGenericTypeId("TIn", "TOut"));
 
         private static NamespaceIdentifier DomainNamespace => "Application.Domain".AsNamespace();
         private static NamespaceIdentifier UtilitiesNamespace => "Application.Utilities".AsNamespace();

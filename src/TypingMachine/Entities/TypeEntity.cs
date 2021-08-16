@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TypingMachine.Abstractions;
+using TypingMachine.Utilities;
 
 namespace TypingMachine.Entities
 {
@@ -15,12 +16,16 @@ namespace TypingMachine.Entities
 
         public abstract void Accept(ITypeVisitor visitor);
 
-        public TypeEntity? FindReferencedType(TypeIdentifier referencedTypeId, IEnumerable<TypeEntity> candidateTypes)
+        public TypeEntity? FindReferencedType(ITypeIdentifier referencedTypeId, IReadOnlyCollection<TypeEntity> candidates)
         {
-            return candidateTypes
-                .Where(type => type.NamespaceId == NamespaceId
-                               || UsingDirectives.Any(u => u.UsedNamespace == type.NamespaceId))
-                .SingleOrDefault(type => type.Identifier == referencedTypeId);
+            var accessibleNamespaces = UsingDirectives
+                .Select(u => u.UsedNamespace)
+                .ConcatSingle(NamespaceId);
+
+            return candidates
+                .Where(type => accessibleNamespaces.Contains(type.NamespaceId))
+                .SingleOrDefault(type => type.Identifier.Name == referencedTypeId.Name 
+                                         && type.Identifier.Arity == referencedTypeId.Arity);
         }
 
         protected TypeEntity(TypeIdentifier identifier, NamespaceIdentifier namespaceId, IReadOnlyList<MethodEntity> methods, IReadOnlyList<TypeIdentifier> baseTypes, IReadOnlyCollection<UsingEntity> usingDirectives)
