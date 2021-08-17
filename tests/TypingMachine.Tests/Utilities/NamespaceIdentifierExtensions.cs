@@ -2,7 +2,7 @@
 
 namespace TypingMachine.Tests.Utilities
 {
-    static class NamespaceIdentifierExtensions
+    internal static class NamespaceIdentifierExtensions
     {
         public static NamespaceIdentifier AsNamespace(this string namespaceName)
         {
