@@ -10,6 +10,7 @@ namespace TypingMachine.Builders
         private IReadOnlyList<FieldEntity> _fields = new List<FieldEntity>();
         private NamespaceIdentifier _namespaceId = NamespaceIdentifier.NoNamespace;
         private IReadOnlyCollection<UsingEntity> _usingDirectives = new List<UsingEntity>();
+        private AccessModifier _accessModifier = AccessModifier.Internal;
 
         public ClassBuilder WithMethods(IReadOnlyList<MethodEntity> methods)
         {
@@ -41,7 +42,13 @@ namespace TypingMachine.Builders
             return this;
         }
 
+        public ClassBuilder WithAccess(AccessModifier accessModifier)
+        {
+            _accessModifier = accessModifier;
+            return this;
+        }
+
         public ClassEntity Build(TypeIdentifier typeIdentifier)
-            => new (typeIdentifier, _namespaceId, _methods, _baseTypes, _fields, _usingDirectives);
+            => new (typeIdentifier, _namespaceId, _methods, _baseTypes, _fields, _usingDirectives, _accessModifier);
     }
 }

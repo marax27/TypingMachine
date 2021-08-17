@@ -19,6 +19,7 @@ namespace TypingMachine.Tests.CodeWalking.TypeWalkerTests
             => new List<ClassEntity>
             {
                 new ClassBuilder()
+                    .WithAccess(AccessModifier.Public)
                     .Build("HelloController".AsSimpleTypeId())
             };
     }
@@ -43,6 +44,7 @@ public class HelloController : IController, BaseController<Context>
                             "BaseController".AsGenericTypeId("Context")
                         }
                     )
+                    .WithAccess(AccessModifier.Public)
                     .Build("HelloController".AsSimpleTypeId())
             };
     }
@@ -78,6 +80,7 @@ public class HelloController
                             )
                         }
                     )
+                    .WithAccess(AccessModifier.Public)
                     .Build("HelloController".AsSimpleTypeId())
             };
     }
@@ -95,6 +98,7 @@ namespace Business.Controllers
         {
             new ClassBuilder()
                 .WithNamespace("Business.Controllers".AsNamespace())
+                .WithAccess(AccessModifier.Public)
                 .Build("HelloController".AsSimpleTypeId())
         };
     }
@@ -120,6 +124,7 @@ class HelloController {}
                         UsingEntity.Create("Project.Core".AsNamespace()),
                     }
                 )
+                .WithAccess(AccessModifier.Internal)
                 .Build("HelloController".AsSimpleTypeId())
         };
     }
