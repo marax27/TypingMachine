@@ -100,10 +100,8 @@ namespace TypingMachine.Tests.Entities.TypeEntities
 
         private IReadOnlyList<MethodEntity> GivenMethods => new List<MethodEntity>
         {
-            MethodEntity.Create(
-                "Calculate",
-                "int".AsSimpleTypeId(),
-                new List<TypeIdentifier>() )
+            new MethodBuilder()
+                .Build("Calculate", "int".AsSimpleTypeId())
         };
 
         private IReadOnlyList<TypeIdentifier> GivenBaseTypes => new List<TypeIdentifier>

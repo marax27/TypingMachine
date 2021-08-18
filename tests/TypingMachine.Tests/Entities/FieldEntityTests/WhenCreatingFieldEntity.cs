@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
+using TypingMachine.Builders;
 using TypingMachine.Entities;
 using TypingMachine.Tests.Utilities;
 using Xunit;
@@ -15,7 +16,7 @@ namespace TypingMachine.Tests.Entities.FieldEntityTests
         [Fact]
         public void GivenValidParameters_ContainExpectedName()
         {
-            var entity = FieldEntity.Create("_service", GivenSampleType);
+            var entity = new FieldBuilder().Build("_service", GivenSampleType);
 
             entity.Name.Should().Be("_service");
         }
@@ -23,7 +24,7 @@ namespace TypingMachine.Tests.Entities.FieldEntityTests
         [Fact]
         public void GivenValidParameters_ContainExpectedType()
         {
-            var entity = FieldEntity.Create("_service", GivenSampleType);
+            var entity = new FieldBuilder().Build("_service", GivenSampleType);
 
             entity.Type.Should().Be(GivenSampleType);
         }
@@ -36,7 +37,7 @@ namespace TypingMachine.Tests.Entities.FieldEntityTests
         {
             Action act = () =>
             {
-                var entity = FieldEntity.Create(givenName, GivenSampleType);
+                var entity = new FieldBuilder().Build(givenName, GivenSampleType);
             };
 
             var thrownException = act.Should().Throw<ArgumentException>().Which;
@@ -50,7 +51,7 @@ namespace TypingMachine.Tests.Entities.FieldEntityTests
         {
             Action act = () =>
             {
-                var entity = FieldEntity.Create(null, GivenSampleType);
+                var entity = new FieldBuilder().Build(null, GivenSampleType);
             };
 
             act.Should().Throw<ArgumentNullException>()
@@ -62,7 +63,7 @@ namespace TypingMachine.Tests.Entities.FieldEntityTests
         {
             Action act = () =>
             {
-                var entity = FieldEntity.Create("_service", null);
+                var entity = new FieldBuilder().Build("_service", null);
             };
 
             act.Should().Throw<ArgumentNullException>()
@@ -74,7 +75,7 @@ namespace TypingMachine.Tests.Entities.FieldEntityTests
         {
             Action act = () =>
             {
-                var entity = FieldEntity.Create(null, null);
+                var entity = new FieldBuilder().Build(null, null);
             };
 
             act.Should().Throw<ArgumentNullException>();

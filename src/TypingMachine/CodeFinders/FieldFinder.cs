@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using TypingMachine.Builders;
 using TypingMachine.Entities;
 
 namespace TypingMachine.CodeFinders
@@ -30,7 +31,7 @@ namespace TypingMachine.CodeFinders
             {
                 var declaration = node.Declaration;
                 var fields = declaration.Variables
-                    .Select(variable => FieldEntity.Create(
+                    .Select(variable => new FieldBuilder().Build(
                             variable.Identifier.ValueText,
                             _typeFinder.FindFor(declaration.Type)
                         )

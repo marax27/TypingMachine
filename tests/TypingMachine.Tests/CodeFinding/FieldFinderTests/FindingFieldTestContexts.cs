@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TypingMachine.Builders;
 using TypingMachine.Entities;
 using TypingMachine.Tests.Utilities;
 
@@ -29,7 +30,7 @@ namespace Application.Controllers
         public IEnumerable<FieldEntity> ExpectedResult
             => new List<FieldEntity>
             {
-                FieldEntity.Create("_logger", "ILogger".AsGenericTypeId("HelloController"))
+                new FieldBuilder().Build("_logger", "ILogger".AsGenericTypeId("HelloController"))
             };
     }
 
@@ -54,9 +55,9 @@ namespace Application.Controllers
         public IEnumerable<FieldEntity> ExpectedResult
             => new List<FieldEntity>
             {
-                FieldEntity.Create("_first", "int".AsSimpleTypeId()),
-                FieldEntity.Create("second", "string".AsSimpleTypeId()),
-                FieldEntity.Create("third", "IService".AsGenericTypeId("int", "int")),
+                new FieldBuilder().Build("_first", "int".AsSimpleTypeId()),
+                new FieldBuilder().Build("second", "string".AsSimpleTypeId()),
+                new FieldBuilder().Build("third", "IService".AsGenericTypeId("int", "int")),
             };
     }
 
@@ -81,9 +82,9 @@ namespace Application.Controllers
         public IEnumerable<FieldEntity> ExpectedResult
             => new List<FieldEntity>
             {
-                FieldEntity.Create("a", "int".AsSimpleTypeId()),
-                FieldEntity.Create("b", "int".AsSimpleTypeId()),
-                FieldEntity.Create("c", "int".AsSimpleTypeId()),
+                new FieldBuilder().Build("a", "int".AsSimpleTypeId()),
+                new FieldBuilder().Build("b", "int".AsSimpleTypeId()),
+                new FieldBuilder().Build("c", "int".AsSimpleTypeId()),
             };
     }
 }

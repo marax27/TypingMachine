@@ -48,11 +48,9 @@ protected interface IFunctor<TIn, TOut>
                     .WithMethods(
                         new List<MethodEntity>
                         {
-                            MethodEntity.Create(
-                                "Compute",
-                                outParameter,
-                                new List<TypeIdentifier> {inParameter}
-                            )
+                            new MethodBuilder()
+                                .WithArgumentTypes(new []{inParameter})
+                                .Build("Compute", outParameter)
                         }
                     )
                     .WithAccess(AccessModifier.Protected)

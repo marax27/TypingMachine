@@ -70,11 +70,11 @@ public class HelloController
                     .WithFields(
                         new List<FieldEntity>
                         {
-                            FieldEntity.Create(
+                            new FieldBuilder().Build(
                                 "magicValue",
                                 "int".AsSimpleTypeId()
                             ),
-                            FieldEntity.Create(
+                            new FieldBuilder().Build(
                                 "_logger",
                                 "ILogger".AsGenericTypeId("HelloController")
                             )

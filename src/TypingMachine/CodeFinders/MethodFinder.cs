@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using TypingMachine.Builders;
 using TypingMachine.Entities;
 
 namespace TypingMachine.CodeFinders
@@ -16,7 +17,9 @@ namespace TypingMachine.CodeFinders
                 .Select(parameter => typeFinder.FindFor(parameter.Type))
                 .ToList();
 
-            return MethodEntity.Create(name, returnType, argumentTypes);
+            return new MethodBuilder()
+                .WithArgumentTypes(argumentTypes)
+                .Build(name, returnType);
         }
     }
 }
