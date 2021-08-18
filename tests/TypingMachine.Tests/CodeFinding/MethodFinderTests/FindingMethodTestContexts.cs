@@ -11,6 +11,7 @@ namespace TypingMachine.Tests.CodeFinding.MethodFinderTests
         string ExpectedMethodName { get; }
         TypeIdentifier ExpectedReturnType { get; }
         List<TypeIdentifier> ExpectedArgumentTypes { get; }
+        AccessModifier ExpectedAccess { get; }
     }
 
     class SimpleMethodContext : IFindingMethodTestContext
@@ -37,6 +38,8 @@ class MathService
                 {
                     "int".AsSimpleTypeId()
                 };
+
+        public AccessModifier ExpectedAccess => AccessModifier.Public;
     }
 
     class MultipleArgumentsContext : IFindingMethodTestContext
@@ -63,5 +66,28 @@ class SecondService
                     "double".AsSimpleTypeId(),
                     "IEnumerable".AsGenericTypeId("int")
                 };
+        public AccessModifier ExpectedAccess => AccessModifier.Protected;
+    }
+
+    class ImplicitAccessModifierContext : IFindingMethodTestContext
+    {
+        public string GivenSource => @"
+class OtherService
+{
+    int Process()
+    {
+    }
+}
+";
+
+        public string ExpectedMethodName
+            => "Process";
+
+        public TypeIdentifier ExpectedReturnType
+            => "int".AsSimpleTypeId();
+
+        public List<TypeIdentifier> ExpectedArgumentTypes
+            => new();
+        public AccessModifier ExpectedAccess => AccessModifier.Private;
     }
 }

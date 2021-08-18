@@ -48,6 +48,18 @@ namespace TypingMachine.Tests.CodeFinding.MethodFinderTests
                 .Should().BeEquivalentTo(context.ExpectedArgumentTypes, options => options.WithStrictOrdering());
         }
 
+        [Theory]
+        [ClassData(typeof(TestContexts))]
+        public void GivenSampleSource_MethodHasExpectedAccessModifier(IFindingMethodTestContext context)
+        {
+            var givenMethodNode = GetMethodNode(context);
+            var sut = new MethodFinder();
+
+            var actualResult = sut.FindFor(givenMethodNode);
+
+            actualResult.AccessModifier.Should().Be(context.ExpectedAccess);
+        }
+
         private MethodDeclarationSyntax GetMethodNode(IFindingMethodTestContext context)
             => CSharpSyntaxTree.ParseText(context.GivenSource)
                 .GetRoot()
@@ -60,6 +72,7 @@ namespace TypingMachine.Tests.CodeFinding.MethodFinderTests
             {
                 new object[] {new SimpleMethodContext()},
                 new object[] {new MultipleArgumentsContext()},
+                new object[] {new ImplicitAccessModifierContext()},
             };
 
             public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();

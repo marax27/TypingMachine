@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
+using TypingMachine.Builders;
 using TypingMachine.Entities;
 using TypingMachine.Tests.Utilities;
 using Xunit;
@@ -17,7 +18,9 @@ namespace TypingMachine.Tests.Entities.MethodEntityTests
         {
             Action act = () =>
             {
-                var entity = MethodEntity.Create("Foo", GivenSampleType, new List<TypeIdentifier> { GivenSampleType });
+                var entity = new MethodBuilder()
+                    .WithArgumentTypes(new[] {GivenSampleType})
+                    .Build("Foo", GivenSampleType);
             };
 
             act.Should().NotThrow();
@@ -28,11 +31,9 @@ namespace TypingMachine.Tests.Entities.MethodEntityTests
         {
             var expectedArgumentTypes = new List<TypeIdentifier> {GivenOtherType, GivenSampleType};
 
-            var entity = MethodEntity.Create(
-                "Foo",
-                GivenSampleType,
-                new List<TypeIdentifier> {GivenOtherType, GivenSampleType}
-            );
+            var entity = new MethodBuilder()
+                .WithArgumentTypes(new[] {GivenOtherType, GivenSampleType})
+                .Build("Foo", GivenSampleType);
 
             entity.Name.Should().Be("Foo");
             entity.ReturnType.Should().Be(GivenSampleType);
@@ -45,7 +46,8 @@ namespace TypingMachine.Tests.Entities.MethodEntityTests
         {
             Action act = () =>
             {
-                var entity = MethodEntity.Create(null, GivenSampleType, new List<TypeIdentifier>());
+                var entity = new MethodBuilder()
+                    .Build(null, GivenSampleType);
             };
 
             act.Should().Throw<ArgumentNullException>()
@@ -60,7 +62,8 @@ namespace TypingMachine.Tests.Entities.MethodEntityTests
         {
             Action act = () =>
             {
-                var entity = MethodEntity.Create(givenName, GivenSampleType, new List<TypeIdentifier>());
+                var entity = new MethodBuilder()
+                    .Build(givenName, GivenSampleType);
             };
 
             var thrownException = act.Should().Throw<ArgumentOutOfRangeException>().Which;
@@ -74,7 +77,8 @@ namespace TypingMachine.Tests.Entities.MethodEntityTests
         {
             Action act = () =>
             {
-                var entity = MethodEntity.Create("GetValue", null, new List<TypeIdentifier>());
+                var entity = new MethodBuilder()
+                    .Build("GetValue", null);
             };
 
             act.Should().Throw<ArgumentNullException>()
@@ -86,7 +90,9 @@ namespace TypingMachine.Tests.Entities.MethodEntityTests
         {
             Action act = () =>
             {
-                var entity = MethodEntity.Create("GetValue", GivenSampleType, null);
+                var entity = new MethodBuilder()
+                    .WithArgumentTypes(null)
+                    .Build("GetValue", GivenSampleType);
             };
 
             act.Should().Throw<ArgumentNullException>()

@@ -21,6 +21,7 @@ namespace TypingMachine.Tests.CodeWalking.TypeWalkerTests
             => new List<TypeEntity>
             {
                 new InterfaceBuilder()
+                    .WithAccess(AccessModifier.Protected)
                     .Build("IHelloService".AsSimpleTypeId())
             };
     }
@@ -47,13 +48,12 @@ protected interface IFunctor<TIn, TOut>
                     .WithMethods(
                         new List<MethodEntity>
                         {
-                            MethodEntity.Create(
-                                "Compute",
-                                outParameter,
-                                new List<TypeIdentifier> {inParameter}
-                            )
+                            new MethodBuilder()
+                                .WithArgumentTypes(new []{inParameter})
+                                .Build("Compute", outParameter)
                         }
                     )
+                    .WithAccess(AccessModifier.Protected)
                     .Build("IFunctor".AsGenericTypeId("TIn", "TOut"))
             };
         }
@@ -81,6 +81,7 @@ interface IQueryHandler<TQuery, TResult> : IHandler<TQuery, TResult> {}
                             "IHandler".AsGenericTypeId("TQuery", "TResult")
                         }
                     )
+                    .WithAccess(AccessModifier.Internal)
                     .Build("IQueryHandler".AsGenericTypeId("TQuery", "TResult"))
             };
         }
@@ -99,6 +100,7 @@ namespace Business.Domain.Abstractions
         {
             new InterfaceBuilder()
                 .WithNamespace("Business.Domain.Abstractions".AsNamespace())
+                .WithAccess(AccessModifier.Internal)
                 .Build("IQuery".AsGenericTypeId("TIn"))
         };
     }
@@ -120,6 +122,7 @@ public interface IService {}
                         UsingEntity.Create("Something.Local".AsNamespace()),
                     }
                 )
+                .WithAccess(AccessModifier.Public)
                 .Build("IService".AsSimpleTypeId())
         };
     }

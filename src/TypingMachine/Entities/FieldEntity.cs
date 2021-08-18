@@ -2,18 +2,19 @@
 
 namespace TypingMachine.Entities
 {
-    public class FieldEntity
+    public class FieldEntity : BaseTypeMember
     {
         public string Name { get; }
         public TypeIdentifier Type { get; }
 
-        private FieldEntity(string name, TypeIdentifier type)
+        private FieldEntity(string name, TypeIdentifier type, AccessModifier accessModifier)
+            : base(accessModifier)
         {
             Name = name;
             Type = type;
         }
 
-        public static FieldEntity Create(string name, TypeIdentifier type)
+        public static FieldEntity Create(string name, TypeIdentifier type, AccessModifier accessModifier)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
@@ -22,7 +23,7 @@ namespace TypingMachine.Entities
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
 
-            return new FieldEntity(name, type);
+            return new FieldEntity(name, type, accessModifier);
         }
     }
 }

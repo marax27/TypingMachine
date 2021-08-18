@@ -13,6 +13,7 @@ namespace TypingMachine.Entities
         public IReadOnlyList<MethodEntity> Methods { get; }
         public IReadOnlyList<TypeIdentifier> BaseTypes { get; }
         public IReadOnlyCollection<UsingEntity> UsingDirectives { get; }
+        public AccessModifier AccessModifier { get; }
 
         public abstract void Accept(ITypeVisitor visitor);
 
@@ -28,13 +29,14 @@ namespace TypingMachine.Entities
                                          && type.Identifier.Arity == referencedTypeId.Arity);
         }
 
-        protected TypeEntity(TypeIdentifier identifier, NamespaceIdentifier namespaceId, IReadOnlyList<MethodEntity> methods, IReadOnlyList<TypeIdentifier> baseTypes, IReadOnlyCollection<UsingEntity> usingDirectives)
+        protected TypeEntity(TypeIdentifier identifier, NamespaceIdentifier namespaceId, IReadOnlyList<MethodEntity> methods, IReadOnlyList<TypeIdentifier> baseTypes, IReadOnlyCollection<UsingEntity> usingDirectives, AccessModifier accessModifier)
         {
             Identifier = identifier ?? throw new ArgumentNullException(nameof(identifier));
             NamespaceId = namespaceId ?? throw new ArgumentNullException(nameof(namespaceId));
             Methods = methods ?? throw new ArgumentNullException(nameof(methods));
             BaseTypes = baseTypes ?? throw new ArgumentNullException(nameof(baseTypes));
             UsingDirectives = usingDirectives ?? throw new ArgumentNullException(nameof(usingDirectives));
+            AccessModifier = accessModifier;
         }
     }
 }

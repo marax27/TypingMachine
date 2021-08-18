@@ -120,10 +120,8 @@ namespace TypingMachine.Tests.Entities.TypeEntities
 
         private IReadOnlyList<MethodEntity> GivenMethods => new List<MethodEntity>
         {
-            MethodEntity.Create(
-                "Calculate",
-                "int".AsSimpleTypeId(),
-                new List<TypeIdentifier>() )
+            new MethodBuilder()
+                .Build("Calculate", "int".AsSimpleTypeId())
         };
 
         private IReadOnlyList<TypeIdentifier> GivenBaseTypes => new List<TypeIdentifier>
@@ -133,7 +131,7 @@ namespace TypingMachine.Tests.Entities.TypeEntities
 
         private IReadOnlyList<FieldEntity> GivenFields => new List<FieldEntity>
         {
-            FieldEntity.Create("_logger", "Logger".AsSimpleTypeId())
+            new FieldBuilder().Build("_logger", "Logger".AsSimpleTypeId())
         };
     }
 }

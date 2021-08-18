@@ -3,13 +3,14 @@ using System.Collections.Generic;
 
 namespace TypingMachine.Entities
 {
-    public class MethodEntity
+    public class MethodEntity : BaseTypeMember
     {
         public string Name { get; }
         public TypeIdentifier ReturnType { get; }
         public IReadOnlyList<TypeIdentifier> ArgumentTypes { get; }
 
-        private MethodEntity(string name, TypeIdentifier returnType, IReadOnlyList<TypeIdentifier> argumentTypes)
+        private MethodEntity(string name, TypeIdentifier returnType, IReadOnlyList<TypeIdentifier> argumentTypes, AccessModifier accessModifier)
+            : base(accessModifier)
         {
             Name = name;
             ReturnType = returnType;
@@ -17,7 +18,7 @@ namespace TypingMachine.Entities
         }
 
         public static MethodEntity Create(string name, TypeIdentifier returnType,
-            IReadOnlyList<TypeIdentifier> argumentTypes)
+            IReadOnlyList<TypeIdentifier> argumentTypes, AccessModifier accessModifier)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
@@ -28,7 +29,7 @@ namespace TypingMachine.Entities
             if (argumentTypes == null)
                 throw new ArgumentNullException(nameof(argumentTypes));
 
-            return new (name, returnType, argumentTypes);
+            return new (name, returnType, argumentTypes, accessModifier);
         }
     }
 }

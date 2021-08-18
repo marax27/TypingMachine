@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace TypingMachine.Utilities
 {
-    public static class CollectionExtensions
+    internal static class CollectionExtensions
     {
         public static IEnumerable<T> ConcatSingle<T>(this IEnumerable<T> source, T newItem)
         {

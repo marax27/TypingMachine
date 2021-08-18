@@ -4,7 +4,7 @@ using TypingMachine.Entities;
 
 namespace TypingMachine.Tests.Utilities
 {
-    public static class TypeIdentifierExtensions
+    internal static class TypeIdentifierExtensions
     {
         public static TypeIdentifier AsSimpleTypeId(this string typeName)
         {

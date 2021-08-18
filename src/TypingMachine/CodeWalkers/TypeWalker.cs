@@ -16,6 +16,7 @@ namespace TypingMachine.CodeWalkers
         private readonly FieldFinder _fieldFinder = new();
         private readonly NamespaceFinder _namespaceFinder = new();
         private readonly UsingWalker _usingWalker = new();
+        private readonly AccessModifierFinder _accessModifierFinder = new();
 
         private ICollection<TypeEntity> _types;
         private IReadOnlyCollection<UsingEntity> _usingDirectives;
@@ -37,6 +38,7 @@ namespace TypingMachine.CodeWalkers
                 .WithBaseTypes(FindBaseTypes(node))
                 .WithFields(FindFields(node))
                 .WithNamespace(FindNamespace(node))
+                .WithAccess(FindAccess(node))
                 .WithUsingDirectives(_usingDirectives)
                 .Build(CreateIdentifier(node));
 
@@ -51,6 +53,7 @@ namespace TypingMachine.CodeWalkers
                 .WithMethods(FindMethods(node))
                 .WithBaseTypes(FindBaseTypes(node))
                 .WithNamespace(FindNamespace(node))
+                .WithAccess(FindAccess(node))
                 .WithUsingDirectives(_usingDirectives)
                 .Build(CreateIdentifier(node));
 
@@ -94,6 +97,11 @@ namespace TypingMachine.CodeWalkers
         private NamespaceIdentifier FindNamespace(SyntaxNode node)
         {
             return _namespaceFinder.FindFor(node);
+        }
+
+        private AccessModifier FindAccess(MemberDeclarationSyntax node)
+        {
+            return _accessModifierFinder.FindFor(node, AccessModifier.Internal);
         }
     }
 }
