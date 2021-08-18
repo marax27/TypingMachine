@@ -26,19 +26,26 @@ namespace TypingMachine.CodeFinders
         private class FieldVisitor : CSharpSyntaxVisitor<IEnumerable<FieldEntity>>
         {
             private readonly TypeFinder _typeFinder = new();
+            private readonly AccessModifierFinder _accessModifierFinder = new();
 
             public override IEnumerable<FieldEntity>? VisitFieldDeclaration(FieldDeclarationSyntax node)
             {
                 var declaration = node.Declaration;
                 var fields = declaration.Variables
-                    .Select(variable => new FieldBuilder().Build(
-                            variable.Identifier.ValueText,
-                            _typeFinder.FindFor(declaration.Type)
-                        )
-                    )
+                    .Select(variable => ProcessVariable(variable, node))
                     .ToList();
 
                 return fields;
+            }
+
+            private FieldEntity ProcessVariable(VariableDeclaratorSyntax variable, FieldDeclarationSyntax field)
+            {
+                var access = _accessModifierFinder.FindFor(field, AccessModifier.Private);
+                var name = variable.Identifier.ValueText;
+                var type = _typeFinder.FindFor(field.Declaration.Type);
+                return new FieldBuilder()
+                    .WithAccess(access)
+                    .Build(name, type);
             }
         }
     }

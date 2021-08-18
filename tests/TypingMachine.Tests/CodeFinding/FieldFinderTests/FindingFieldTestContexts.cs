@@ -30,7 +30,9 @@ namespace Application.Controllers
         public IEnumerable<FieldEntity> ExpectedResult
             => new List<FieldEntity>
             {
-                new FieldBuilder().Build("_logger", "ILogger".AsGenericTypeId("HelloController"))
+                new FieldBuilder()
+                    .WithAccess(AccessModifier.Private)
+                    .Build("_logger", "ILogger".AsGenericTypeId("HelloController"))
             };
     }
 
@@ -55,9 +57,15 @@ namespace Application.Controllers
         public IEnumerable<FieldEntity> ExpectedResult
             => new List<FieldEntity>
             {
-                new FieldBuilder().Build("_first", "int".AsSimpleTypeId()),
-                new FieldBuilder().Build("second", "string".AsSimpleTypeId()),
-                new FieldBuilder().Build("third", "IService".AsGenericTypeId("int", "int")),
+                new FieldBuilder()
+                    .WithAccess(AccessModifier.Private)
+                    .Build("_first", "int".AsSimpleTypeId()),
+                new FieldBuilder()
+                    .WithAccess(AccessModifier.Protected)
+                    .Build("second", "string".AsSimpleTypeId()),
+                new FieldBuilder()
+                    .WithAccess(AccessModifier.Public)
+                    .Build("third", "IService".AsGenericTypeId("int", "int")),
             };
     }
 
@@ -82,9 +90,15 @@ namespace Application.Controllers
         public IEnumerable<FieldEntity> ExpectedResult
             => new List<FieldEntity>
             {
-                new FieldBuilder().Build("a", "int".AsSimpleTypeId()),
-                new FieldBuilder().Build("b", "int".AsSimpleTypeId()),
-                new FieldBuilder().Build("c", "int".AsSimpleTypeId()),
+                new FieldBuilder()
+                    .WithAccess(AccessModifier.Public)
+                    .Build("a", "int".AsSimpleTypeId()),
+                new FieldBuilder()
+                    .WithAccess(AccessModifier.Public)
+                    .Build("b", "int".AsSimpleTypeId()),
+                new FieldBuilder()
+                    .WithAccess(AccessModifier.Public)
+                    .Build("c", "int".AsSimpleTypeId()),
             };
     }
 }

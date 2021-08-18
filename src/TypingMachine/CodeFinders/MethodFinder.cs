@@ -7,6 +7,8 @@ namespace TypingMachine.CodeFinders
 {
     public class MethodFinder
     {
+        private readonly AccessModifierFinder _accessModifierFinder = new();
+
         public MethodEntity FindFor(MethodDeclarationSyntax methodNode)
         {
             var typeFinder = new TypeFinder();
@@ -19,6 +21,7 @@ namespace TypingMachine.CodeFinders
 
             return new MethodBuilder()
                 .WithArgumentTypes(argumentTypes)
+                .WithAccess(_accessModifierFinder.FindFor(methodNode, AccessModifier.Private))
                 .Build(name, returnType);
         }
     }

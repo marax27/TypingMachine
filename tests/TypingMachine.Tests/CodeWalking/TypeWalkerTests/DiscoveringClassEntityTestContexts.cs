@@ -70,14 +70,12 @@ public class HelloController
                     .WithFields(
                         new List<FieldEntity>
                         {
-                            new FieldBuilder().Build(
-                                "magicValue",
-                                "int".AsSimpleTypeId()
-                            ),
-                            new FieldBuilder().Build(
-                                "_logger",
-                                "ILogger".AsGenericTypeId("HelloController")
-                            )
+                            new FieldBuilder()
+                                .WithAccess(AccessModifier.Public)
+                                .Build("magicValue", "int".AsSimpleTypeId()),
+                            new FieldBuilder()
+                                .WithAccess(AccessModifier.Private)
+                                .Build("_logger", "ILogger".AsGenericTypeId("HelloController"))
                         }
                     )
                     .WithAccess(AccessModifier.Public)
