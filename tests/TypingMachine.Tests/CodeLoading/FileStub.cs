@@ -8,6 +8,6 @@ namespace TypingMachine.Tests.CodeLoading
         public string SourceCode { get; init; }
         public string RelativePath { get; init; }
 
-        public Task<string> ReadSourceAsync() => Task.FromResult(SourceCode);
+        public string ReadSource() => SourceCode;
     }
 }

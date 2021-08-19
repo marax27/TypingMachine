@@ -90,7 +90,7 @@ namespace TypingMachine.Tests.Entities.NamespaceIdentifierTests
 
             (entity == null)
                 .Should().BeFalse();
-            entity.Equals(null)
+            entity?.Equals(null)
                 .Should().BeFalse();
         }
 
