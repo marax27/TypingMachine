@@ -9,6 +9,10 @@ using TypingMachine.Entities;
 
 namespace TypingMachine.CodeWalkers
 {
+    /// <summary>
+    /// Walks over a syntax tree and returns all found types.
+    /// The class is not thread-safe - it should not be shared between threads.
+    /// </summary>
     public class TypeWalker : CSharpSyntaxWalker
     {
         private readonly TypeFinder _typeFinder = new();

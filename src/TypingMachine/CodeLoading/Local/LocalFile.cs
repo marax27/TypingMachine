@@ -1,24 +1,23 @@
 ﻿using System.IO;
-using System.Threading.Tasks;
 
-namespace TypingMachine.CodeLoading.FileSystem
+namespace TypingMachine.CodeLoading.Local
 {
-    public class FileSystemFile : IFile
+    public class LocalFile : IFile
     {
         private readonly string _rootPath;
 
         public string RelativePath { get; }
 
-        public FileSystemFile(string relativePath, string rootPath)
+        public LocalFile(string relativePath, string rootPath)
         {
             RelativePath = relativePath;
             _rootPath = rootPath;
         }
 
-        public Task<string> ReadSourceAsync()
+        public string ReadSource()
         {
             var filePath = Path.Join(_rootPath, RelativePath);
-            return File.ReadAllTextAsync(filePath);
+            return File.ReadAllText(filePath);
         }
     }
 }

@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
+using Moq;
 using TypingMachine.CodeLoading;
 using Xunit;
 
@@ -9,21 +10,27 @@ namespace TypingMachine.Tests.CodeLoading
     public class WhenDiscoveringTypesInCodeBase
     {
         [Fact]
-        public async Task GivenZeroFiles_ReturnZeroTypes()
+        public void GivenZeroFiles_ReturnZeroTypes()
         {
-            var sut = new HardCodedCodeBase(new List<IFile>());
+            var fileDiscovery = new Mock<IFileDiscovery>();
+            fileDiscovery.Setup(fd => fd.DiscoverSourceFiles())
+                .Returns(Array.Empty<IFile>());
+            var sut = new CodeBase(fileDiscovery.Object);
 
-            var resultTypes = await sut.DiscoverTypesAsync();
+            var resultTypes = sut.DiscoverTypes();
 
             resultTypes.Should().BeEmpty();
         }
 
         [Fact]
-        public async Task GivenSampleFiles_ReturnExpectedNumberOfTypes()
+        public void GivenSampleFiles_ReturnExpectedNumberOfTypes()
         {
-            var sut = new HardCodedCodeBase(GivenSampleCodeFiles);
+            var fileDiscovery = new Mock<IFileDiscovery>();
+            fileDiscovery.Setup(fd => fd.DiscoverSourceFiles())
+                .Returns(GivenSampleCodeFiles);
+            var sut = new CodeBase(fileDiscovery.Object);
 
-            var resultTypes = await sut.DiscoverTypesAsync();
+            var resultTypes = sut.DiscoverTypes();
 
             resultTypes.Should().HaveCount(4);
         }
