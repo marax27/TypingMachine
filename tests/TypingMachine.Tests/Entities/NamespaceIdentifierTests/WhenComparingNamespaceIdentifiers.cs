@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using TypingMachine.Entities;
+using TypingMachine.Domain;
 using Xunit;
 
 namespace TypingMachine.Tests.Entities.NamespaceIdentifierTests

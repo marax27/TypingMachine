@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TypingMachine.Entities
+namespace TypingMachine.Domain
 {
     public class NamespaceIdentifier : IEquatable<NamespaceIdentifier>
     {

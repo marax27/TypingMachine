@@ -4,7 +4,7 @@ using System.Linq;
 using TypingMachine.Abstractions;
 using TypingMachine.Utilities;
 
-namespace TypingMachine.Entities
+namespace TypingMachine.Domain
 {
     public abstract class TypeEntity
     {

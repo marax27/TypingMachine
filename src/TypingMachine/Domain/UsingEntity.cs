@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TypingMachine.Entities
+namespace TypingMachine.Domain
 {
     /// <summary>
     /// Represents a `using UsedNamespace;` directive.

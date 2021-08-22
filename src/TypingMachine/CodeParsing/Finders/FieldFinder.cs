@@ -4,10 +4,10 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using TypingMachine.Builders;
-using TypingMachine.Entities;
+using TypingMachine.Domain;
+using TypingMachine.Domain.Builders;
 
-namespace TypingMachine.CodeFinders
+namespace TypingMachine.CodeParsing.Finders
 {
     public class FieldFinder
     {

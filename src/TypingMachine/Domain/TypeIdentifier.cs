@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TypingMachine.Abstractions;
 
-namespace TypingMachine.Entities
+namespace TypingMachine.Domain
 {
     public class TypeIdentifier : ITypeIdentifier, IEquatable<TypeIdentifier>
     {

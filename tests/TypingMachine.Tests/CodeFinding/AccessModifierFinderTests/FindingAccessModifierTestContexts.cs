@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using TypingMachine.Entities;
+using TypingMachine.Domain;
 
 namespace TypingMachine.Tests.CodeFinding.AccessModifierFinderTests
 {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using TypingMachine.Entities;
+using TypingMachine.Domain;
 using TypingMachine.Tests.Utilities;
 
 namespace TypingMachine.Tests.CodeWalking.UsingWalkerTests

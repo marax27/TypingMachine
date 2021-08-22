@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TypingMachine.Entities;
+using TypingMachine.Domain;
 
 namespace TypingMachine.Tests.Utilities
 {

@@ -3,11 +3,11 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using TypingMachine.Builders;
-using TypingMachine.CodeFinders;
-using TypingMachine.Entities;
+using TypingMachine.CodeParsing.Finders;
+using TypingMachine.Domain;
+using TypingMachine.Domain.Builders;
 
-namespace TypingMachine.CodeWalkers
+namespace TypingMachine.CodeParsing.Walkers
 {
     /// <summary>
     /// Walks over a syntax tree and returns all found types.

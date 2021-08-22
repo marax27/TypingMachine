@@ -1,4 +1,4 @@
-﻿namespace TypingMachine.Entities
+﻿namespace TypingMachine.Domain
 {
     /// <summary>
     /// Contains common properties of all type members (fields, methods, properties etc.)

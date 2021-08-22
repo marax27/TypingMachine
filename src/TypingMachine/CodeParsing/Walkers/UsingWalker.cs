@@ -3,9 +3,9 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using TypingMachine.Entities;
+using TypingMachine.Domain;
 
-namespace TypingMachine.CodeWalkers
+namespace TypingMachine.CodeParsing.Walkers
 {
     /// <summary>
     /// Finds all `using` directives in provided syntax tree.

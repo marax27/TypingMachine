@@ -2,7 +2,7 @@
 using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using TypingMachine.CodeWalkers;
+using TypingMachine.CodeParsing.Walkers;
 using Xunit;
 
 namespace TypingMachine.Tests.CodeWalking.TypeWalkerTests

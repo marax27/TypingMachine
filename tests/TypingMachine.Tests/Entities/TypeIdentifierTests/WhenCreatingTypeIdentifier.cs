@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using TypingMachine.Entities;
+using TypingMachine.Domain;
 using TypingMachine.Tests.Utilities;
 using Xunit;
 
