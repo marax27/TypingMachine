@@ -1,4 +1,4 @@
-﻿using TypingMachine.Entities;
+﻿using TypingMachine.Domain;
 
 namespace TypingMachine.Abstractions
 {

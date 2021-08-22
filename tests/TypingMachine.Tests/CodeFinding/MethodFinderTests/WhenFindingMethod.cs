@@ -4,7 +4,7 @@ using System.Linq;
 using FluentAssertions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using TypingMachine.CodeFinders;
+using TypingMachine.CodeParsing.Finders;
 using Xunit;
 
 namespace TypingMachine.Tests.CodeFinding.MethodFinderTests

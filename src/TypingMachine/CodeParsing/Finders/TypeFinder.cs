@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using TypingMachine.Entities;
+using TypingMachine.Domain;
 
-namespace TypingMachine.CodeFinders
+namespace TypingMachine.CodeParsing.Finders
 {
     public class TypeFinder
     {

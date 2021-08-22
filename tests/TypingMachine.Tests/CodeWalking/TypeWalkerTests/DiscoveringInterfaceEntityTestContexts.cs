@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using TypingMachine.Builders;
-using TypingMachine.Entities;
+using TypingMachine.Domain;
+using TypingMachine.Domain.Builders;
 using TypingMachine.Tests.Utilities;
 
 namespace TypingMachine.Tests.CodeWalking.TypeWalkerTests

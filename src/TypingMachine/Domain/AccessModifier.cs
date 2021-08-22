@@ -1,4 +1,4 @@
-﻿namespace TypingMachine.Entities
+﻿namespace TypingMachine.Domain
 {
     public enum AccessModifier
     {

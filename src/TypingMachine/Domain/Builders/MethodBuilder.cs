@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using TypingMachine.Entities;
 
-namespace TypingMachine.Builders
+namespace TypingMachine.Domain.Builders
 {
     public class MethodBuilder
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TypingMachine.Entities
+namespace TypingMachine.Domain
 {
     public class MethodEntity : BaseTypeMember
     {

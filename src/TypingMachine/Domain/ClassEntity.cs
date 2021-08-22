@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TypingMachine.Abstractions;
 
-namespace TypingMachine.Entities
+namespace TypingMachine.Domain
 {
     public class ClassEntity : TypeEntity
     {

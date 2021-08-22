@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentAssertions;
-using TypingMachine.Builders;
-using TypingMachine.Entities;
+using TypingMachine.Domain;
+using TypingMachine.Domain.Builders;
 using TypingMachine.Tests.Utilities;
 using Xunit;
 

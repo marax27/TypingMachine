@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.CodeAnalysis.CSharp;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.CodeAnalysis.CSharp;
-using TypingMachine.CodeWalkers;
-using TypingMachine.Entities;
+using TypingMachine.CodeParsing.Walkers;
+using TypingMachine.Domain;
 
 namespace TypingMachine.CodeLoading
 {

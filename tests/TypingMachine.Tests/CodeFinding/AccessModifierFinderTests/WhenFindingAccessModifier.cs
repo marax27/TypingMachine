@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using FluentAssertions;
-using TypingMachine.CodeFinders;
+using TypingMachine.CodeParsing.Finders;
 using Xunit;
 
 namespace TypingMachine.Tests.CodeFinding.AccessModifierFinderTests
