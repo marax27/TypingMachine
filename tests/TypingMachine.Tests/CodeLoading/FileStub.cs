@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using TypingMachine.CodeLoading;
+﻿using TypingMachine.CodeLoading;
 
 namespace TypingMachine.Tests.CodeLoading
 {

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Moq;
+﻿using Moq;
 using TypingMachine.Abstractions;
 using TypingMachine.Domain;
 using TypingMachine.Domain.Builders;

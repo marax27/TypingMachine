@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
+using System;
+using System.Collections.Generic;
 using TypingMachine.CodeLoading;
 using Xunit;
 
