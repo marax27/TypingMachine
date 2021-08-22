@@ -1,10 +1,9 @@
 ﻿using FluentAssertions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using TypingMachine.CodeParsing.Finders;
+using TypingMachine.Tests.Utilities;
 using Xunit;
 
 namespace TypingMachine.Tests.CodeParsing.Finders.MethodFinderTests
@@ -12,7 +11,7 @@ namespace TypingMachine.Tests.CodeParsing.Finders.MethodFinderTests
     public class WhenFindingMethod
     {
         [Theory]
-        [ClassData(typeof(TestContexts))]
+        [ContextData(typeof(IFindingMethodTestContext))]
         public void GivenSampleSource_MethodHasExpectedName(IFindingMethodTestContext context)
         {
             var givenMethodNode = GetMethodNode(context);
@@ -24,7 +23,7 @@ namespace TypingMachine.Tests.CodeParsing.Finders.MethodFinderTests
         }
 
         [Theory]
-        [ClassData(typeof(TestContexts))]
+        [ContextData(typeof(IFindingMethodTestContext))]
         public void GivenSampleSource_MethodHasExpectedReturnType(IFindingMethodTestContext context)
         {
             var givenMethodNode = GetMethodNode(context);
@@ -36,7 +35,7 @@ namespace TypingMachine.Tests.CodeParsing.Finders.MethodFinderTests
         }
 
         [Theory]
-        [ClassData(typeof(TestContexts))]
+        [ContextData(typeof(IFindingMethodTestContext))]
         public void GivenSampleSource_MethodHasExpectedArgumentTypes(IFindingMethodTestContext context)
         {
             var givenMethodNode = GetMethodNode(context);
@@ -49,7 +48,7 @@ namespace TypingMachine.Tests.CodeParsing.Finders.MethodFinderTests
         }
 
         [Theory]
-        [ClassData(typeof(TestContexts))]
+        [ContextData(typeof(IFindingMethodTestContext))]
         public void GivenSampleSource_MethodHasExpectedAccessModifier(IFindingMethodTestContext context)
         {
             var givenMethodNode = GetMethodNode(context);
@@ -65,19 +64,5 @@ namespace TypingMachine.Tests.CodeParsing.Finders.MethodFinderTests
                 .GetRoot()
                 .DescendantNodes().OfType<MethodDeclarationSyntax>()
                 .Single();
-
-        private class TestContexts : IEnumerable<object[]>
-        {
-            private readonly IReadOnlyCollection<object[]> _data = new List<object[]>
-            {
-                new object[] {new SimpleMethodContext()},
-                new object[] {new MultipleArgumentsContext()},
-                new object[] {new ImplicitAccessModifierContext()},
-            };
-
-            public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        }
     }
 }

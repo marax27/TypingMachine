@@ -1,8 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.CodeAnalysis.CSharp;
-using System.Collections;
-using System.Collections.Generic;
 using TypingMachine.CodeParsing.Walkers;
+using TypingMachine.Tests.Utilities;
 using Xunit;
 
 namespace TypingMachine.Tests.CodeParsing.Walkers.TypeWalkerTests
@@ -10,7 +9,7 @@ namespace TypingMachine.Tests.CodeParsing.Walkers.TypeWalkerTests
     public class WhenDiscoveringInterfaceEntity
     {
         [Theory]
-        [ClassData(typeof(TestContexts))]
+        [ContextData(typeof(IDiscoveringInterfaceEntityTestContext))]
         public void GivenSampleSourceCode_ReturnExpectedNamespace(IDiscoveringInterfaceEntityTestContext context)
         {
             var givenRootNode = CSharpSyntaxTree.ParseText(context.GivenSource).GetRoot();
@@ -19,22 +18,6 @@ namespace TypingMachine.Tests.CodeParsing.Walkers.TypeWalkerTests
             var actualResult = sut.FindAll(givenRootNode);
 
             actualResult.Should().BeEquivalentTo(context.ExpectedResult);
-        }
-
-        private class TestContexts : IEnumerable<object[]>
-        {
-            private readonly IReadOnlyCollection<object[]> _data = new List<object[]>
-            {
-                new object[] {new EmptyInterfaceContext()},
-                new object[] {new GenericInterfaceContext()},
-                new object[] {new InterfaceWith1BaseTypeContext()},
-                new object[] {new InterfaceInNamespaceContext()},
-                new object[] {new InterfaceWithSeveralUsingDirectivesContext()},
-            };
-
-            public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
     }
 }

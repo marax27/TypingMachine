@@ -1,10 +1,9 @@
 ﻿using FluentAssertions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using TypingMachine.CodeParsing.Finders;
+using TypingMachine.Tests.Utilities;
 using Xunit;
 
 namespace TypingMachine.Tests.CodeParsing.Finders.FieldFinderTests
@@ -12,7 +11,7 @@ namespace TypingMachine.Tests.CodeParsing.Finders.FieldFinderTests
     public class WhenFindingField
     {
         [Theory]
-        [ClassData(typeof(TestContexts))]
+        [ContextData(typeof(IFindingFieldTestContext))]
         public void GivenSampleSource_ReturnExpectedField(IFindingFieldTestContext context)
         {
             var givenNodes = CSharpSyntaxTree.ParseText(context.GivenSource)
@@ -25,20 +24,6 @@ namespace TypingMachine.Tests.CodeParsing.Finders.FieldFinderTests
             var actualResult = sut.FindFor(givenNodes).ToList();
 
             actualResult.Should().BeEquivalentTo(context.ExpectedResult, options => options.WithStrictOrdering());
-        }
-
-        private class TestContexts : IEnumerable<object[]>
-        {
-            private readonly IReadOnlyCollection<object[]> _data = new List<object[]>
-            {
-                new object[] {new SampleFieldContext()},
-                new object[] {new MultipleFieldsContext() },
-                new object[] {new MultipleFieldsInOneLineContext() },
-            };
-
-            public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
     }
 }

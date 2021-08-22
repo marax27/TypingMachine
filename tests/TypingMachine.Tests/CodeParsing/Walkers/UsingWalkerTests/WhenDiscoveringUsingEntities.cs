@@ -1,8 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.CodeAnalysis.CSharp;
-using System.Collections;
-using System.Collections.Generic;
 using TypingMachine.CodeParsing.Walkers;
+using TypingMachine.Tests.Utilities;
 using Xunit;
 
 namespace TypingMachine.Tests.CodeParsing.Walkers.UsingWalkerTests
@@ -10,7 +9,7 @@ namespace TypingMachine.Tests.CodeParsing.Walkers.UsingWalkerTests
     public class WhenDiscoveringUsingEntities
     {
         [Theory]
-        [ClassData(typeof(TestContexts))]
+        [ContextData(typeof(IDiscoveringUsingEntitiesTestContext))]
         public void GivenSampleSourceCode_ReturnExpectedResult(IDiscoveringUsingEntitiesTestContext context)
         {
             var givenRootNode = CSharpSyntaxTree.ParseText(context.GivenSource).GetRoot();
@@ -19,22 +18,6 @@ namespace TypingMachine.Tests.CodeParsing.Walkers.UsingWalkerTests
             var actualResult = sut.FindAll(givenRootNode);
 
             actualResult.Should().BeEquivalentTo(context.ExpectedResult);
-        }
-
-        private class TestContexts : IEnumerable<object[]>
-        {
-            private readonly IReadOnlyCollection<object[]> _data = new List<object[]>
-            {
-                new object[] {new ZeroUsingDirectivesContext()},
-                new object[] {new OneUsingDirectiveContext()},
-                new object[] {new ThreeUsingDirectivesContext()},
-                new object[] {new StaticImportContext()},
-                new object[] {new AliasDirectiveContext()},
-            };
-
-            public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
     }
 }

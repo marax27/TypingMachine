@@ -1,10 +1,9 @@
 ﻿using FluentAssertions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using TypingMachine.CodeParsing.Finders;
+using TypingMachine.Tests.Utilities;
 using Xunit;
 
 namespace TypingMachine.Tests.CodeParsing.Finders.TypeFinderTests
@@ -12,7 +11,7 @@ namespace TypingMachine.Tests.CodeParsing.Finders.TypeFinderTests
     public class WhenFindingType
     {
         [Theory]
-        [ClassData(typeof(TestContexts))]
+        [ContextData(typeof(IFindingTypeTestContext))]
         public void GivenSampleSource_ReturnExpectedType(IFindingTypeTestContext context)
         {
             var givenNode = CSharpSyntaxTree.ParseText(context.GivenSource)
@@ -24,24 +23,6 @@ namespace TypingMachine.Tests.CodeParsing.Finders.TypeFinderTests
             var actualResult = sut.FindFor(givenNode);
 
             actualResult.Should().Be(context.ExpectedResult);
-        }
-
-        private class TestContexts : IEnumerable<object[]>
-        {
-            private readonly IReadOnlyCollection<object[]> _data = new List<object[]>
-            {
-                new object[] {new SimpleTypeContext()},
-                new object[] {new PredefinedTypeContext()},
-                new object[] {new GenericTypeWithSingleParameterContext()},
-                new object[] {new GenericTypeWithNestedParametersContext()},
-                new object[] {new NullableTypeContext()},
-                new object[] {new OneDimensionalArrayTypeContext()},
-                new object[] {new ThreeDimensionalArrayTypeContext()},
-            };
-
-            public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
     }
 }
