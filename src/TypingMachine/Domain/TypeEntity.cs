@@ -21,7 +21,7 @@ namespace TypingMachine.Domain
         {
             var accessibleNamespaces = UsingDirectives
                 .Select(u => u.UsedNamespace)
-                .ConcatSingle(NamespaceId);
+                .Concat(GetAncestorsAndSelf(NamespaceId));
 
             return candidates
                 .Where(type => accessibleNamespaces.Contains(type.NamespaceId))
@@ -37,6 +37,12 @@ namespace TypingMachine.Domain
             BaseTypes = baseTypes ?? throw new ArgumentNullException(nameof(baseTypes));
             UsingDirectives = usingDirectives ?? throw new ArgumentNullException(nameof(usingDirectives));
             AccessModifier = accessModifier;
+        }
+
+        private IEnumerable<NamespaceIdentifier> GetAncestorsAndSelf(NamespaceIdentifier ns)
+        {
+            for (var i = 1; i <= ns.Sections.Count; ++i)
+                yield return NamespaceIdentifier.Create(ns.Sections.Take(i).ToList());
         }
     }
 }
