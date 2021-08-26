@@ -15,7 +15,7 @@ namespace TypingMachine.Tests.Domain.TypeIdentifierTests
         {
             Action act = () =>
             {
-                var entity = TypeIdentifier.Create("IService", null);
+                var entity = Identifier.Create("IService", null);
             };
 
             act.Should().Throw<ArgumentNullException>()
@@ -35,7 +35,7 @@ namespace TypingMachine.Tests.Domain.TypeIdentifierTests
         {
             var entity = "IService".AsSimpleTypeId();
 
-            entity.Parameters.Should().BeEquivalentTo(new List<TypeIdentifier>());
+            entity.Parameters.Should().BeEquivalentTo(new List<Identifier>());
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace TypingMachine.Tests.Domain.TypeIdentifierTests
         {
             Action act = () =>
             {
-                var entity = TypeIdentifier.Create(null, new List<TypeIdentifier>());
+                var entity = Identifier.Create(null, new List<Identifier>());
             };
 
             act.Should().Throw<ArgumentNullException>()

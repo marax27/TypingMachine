@@ -7,7 +7,7 @@ namespace TypingMachine.CodeParsing.Finders
 {
     public class TypeFinder
     {
-        public TypeIdentifier FindFor(TypeSyntax typeNode)
+        public Identifier FindFor(TypeSyntax typeNode)
         {
             switch (typeNode)
             { 
@@ -15,7 +15,7 @@ namespace TypingMachine.CodeParsing.Finders
                 {
                     var name = genericNode.Identifier.ValueText;
                     var parameters = genericNode.TypeArgumentList.Arguments.Select(FindFor);
-                    return TypeIdentifier.Create(name, parameters.ToList());
+                    return Identifier.Create(name, parameters.ToList());
                 }
                 case NullableTypeSyntax nullableNode:
                 {
@@ -27,7 +27,7 @@ namespace TypingMachine.CodeParsing.Finders
                 }
                 default:
                 {
-                    return TypeIdentifier.Create(typeNode.ToString(), new List<TypeIdentifier>());
+                    return Identifier.Create(typeNode.ToString(), new List<Identifier>());
                 }
             }
         }

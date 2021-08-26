@@ -38,12 +38,12 @@ namespace TypingMachine.Tests.Domain.TypeIdentifierTests
         [Fact]
         public void GivenDifferentParameters_ReturnNotEqual()
         {
-            var firstIdentifier = TypeIdentifier.Create("Service", new List<TypeIdentifier>
+            var firstIdentifier = Identifier.Create("Service", new List<Identifier>
             {
                 "IEnumerable".AsGenericTypeId("int"),
                 "T".AsSimpleTypeId()
             });
-            var otherIdentifier = TypeIdentifier.Create("Service", new List<TypeIdentifier>
+            var otherIdentifier = Identifier.Create("Service", new List<Identifier>
             {
                 "IEnumerable".AsSimpleTypeId(),
                 "T".AsSimpleTypeId()

@@ -6,10 +6,10 @@ namespace TypingMachine.Domain
     public class MethodEntity : BaseTypeMember
     {
         public string Name { get; }
-        public TypeIdentifier ReturnType { get; }
-        public IReadOnlyList<TypeIdentifier> ArgumentTypes { get; }
+        public Identifier ReturnType { get; }
+        public IReadOnlyList<Identifier> ArgumentTypes { get; }
 
-        private MethodEntity(string name, TypeIdentifier returnType, IReadOnlyList<TypeIdentifier> argumentTypes, AccessModifier accessModifier)
+        private MethodEntity(string name, Identifier returnType, IReadOnlyList<Identifier> argumentTypes, AccessModifier accessModifier)
             : base(accessModifier)
         {
             Name = name;
@@ -17,8 +17,8 @@ namespace TypingMachine.Domain
             ArgumentTypes = argumentTypes;
         }
 
-        public static MethodEntity Create(string name, TypeIdentifier returnType,
-            IReadOnlyList<TypeIdentifier> argumentTypes, AccessModifier accessModifier)
+        public static MethodEntity Create(string name, Identifier returnType,
+            IReadOnlyList<Identifier> argumentTypes, AccessModifier accessModifier)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));

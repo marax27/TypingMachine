@@ -5,7 +5,7 @@ namespace TypingMachine.Domain.Builders
     public class ClassBuilder
     {
         private IReadOnlyList<MethodEntity> _methods = new List<MethodEntity>();
-        private IReadOnlyList<TypeIdentifier> _baseTypes = new List<TypeIdentifier>();
+        private IReadOnlyList<Identifier> _baseTypes = new List<Identifier>();
         private IReadOnlyList<FieldEntity> _fields = new List<FieldEntity>();
         private NamespaceIdentifier _namespaceId = NamespaceIdentifier.NoNamespace;
         private IReadOnlyCollection<UsingEntity> _usingDirectives = new List<UsingEntity>();
@@ -17,7 +17,7 @@ namespace TypingMachine.Domain.Builders
             return this;
         }
 
-        public ClassBuilder WithBaseTypes(IReadOnlyList<TypeIdentifier> baseTypes)
+        public ClassBuilder WithBaseTypes(IReadOnlyList<Identifier> baseTypes)
         {
             _baseTypes = baseTypes;
             return this;
@@ -47,7 +47,7 @@ namespace TypingMachine.Domain.Builders
             return this;
         }
 
-        public ClassEntity Build(TypeIdentifier typeIdentifier)
+        public ClassEntity Build(Identifier typeIdentifier)
             => new (typeIdentifier, _namespaceId, _methods, _baseTypes, _fields, _usingDirectives, _accessModifier);
     }
 }

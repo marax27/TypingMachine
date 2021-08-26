@@ -6,15 +6,15 @@ namespace TypingMachine.Tests.Utilities
 {
     internal static class TypeIdentifierExtensions
     {
-        public static TypeIdentifier AsSimpleTypeId(this string typeName)
+        public static Identifier AsSimpleTypeId(this string typeName)
         {
-            return TypeIdentifier.Create(typeName, new List<TypeIdentifier>());
+            return Identifier.Create(typeName, new List<Identifier>());
         }
 
-        public static TypeIdentifier AsGenericTypeId(this string typeName, params string[] parameters)
+        public static Identifier AsGenericTypeId(this string typeName, params string[] parameters)
         {
             var parameterEntities = parameters.Select(p => p.AsSimpleTypeId());
-            return TypeIdentifier.Create(typeName, parameterEntities.ToList());
+            return Identifier.Create(typeName, parameterEntities.ToList());
         }
     }
 }

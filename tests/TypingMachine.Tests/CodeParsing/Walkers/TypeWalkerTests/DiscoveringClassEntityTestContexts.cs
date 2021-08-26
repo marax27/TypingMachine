@@ -38,7 +38,7 @@ public class HelloController : IController, BaseController<Context>
             {
                 new ClassBuilder()
                     .WithBaseTypes(
-                        new List<TypeIdentifier>
+                        new List<Identifier>
                         {
                             "IController".AsSimpleTypeId(),
                             "BaseController".AsGenericTypeId("Context")

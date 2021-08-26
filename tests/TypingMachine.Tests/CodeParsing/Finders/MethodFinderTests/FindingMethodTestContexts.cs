@@ -9,8 +9,8 @@ namespace TypingMachine.Tests.CodeParsing.Finders.MethodFinderTests
         string GivenSource { get; }
 
         string ExpectedMethodName { get; }
-        TypeIdentifier ExpectedReturnType { get; }
-        List<TypeIdentifier> ExpectedArgumentTypes { get; }
+        Identifier ExpectedReturnType { get; }
+        List<Identifier> ExpectedArgumentTypes { get; }
         AccessModifier ExpectedAccess { get; }
     }
 
@@ -30,11 +30,11 @@ class MathService
         public string ExpectedMethodName
             => "GetSquared";
 
-        public TypeIdentifier ExpectedReturnType
+        public Identifier ExpectedReturnType
             => "float".AsSimpleTypeId();
 
-        public List<TypeIdentifier> ExpectedArgumentTypes
-            => new List<TypeIdentifier>
+        public List<Identifier> ExpectedArgumentTypes
+            => new List<Identifier>
                 {
                     "int".AsSimpleTypeId()
                 };
@@ -56,11 +56,11 @@ class SecondService
         public string ExpectedMethodName
             => "Process";
 
-        public TypeIdentifier ExpectedReturnType
+        public Identifier ExpectedReturnType
             => "void".AsSimpleTypeId();
 
-        public List<TypeIdentifier> ExpectedArgumentTypes
-            => new List<TypeIdentifier>
+        public List<Identifier> ExpectedArgumentTypes
+            => new List<Identifier>
                 {
                     "IFunctor".AsSimpleTypeId(),
                     "double".AsSimpleTypeId(),
@@ -83,11 +83,37 @@ class OtherService
         public string ExpectedMethodName
             => "Process";
 
-        public TypeIdentifier ExpectedReturnType
+        public Identifier ExpectedReturnType
             => "int".AsSimpleTypeId();
 
-        public List<TypeIdentifier> ExpectedArgumentTypes
+        public List<Identifier> ExpectedArgumentTypes
             => new();
         public AccessModifier ExpectedAccess => AccessModifier.Private;
+    }
+
+    class GenericMethodContext : IFindingMethodTestContext
+    {
+        public string GivenSource => @"
+class SomeService
+{
+    public IEnumerable<T> GenerateSequence<T>() where T : new()
+    {
+        for (int i = 0; i < 5; ++i)
+            yield return new T();
+    }
+}
+";
+
+        public string ExpectedMethodName
+            => "GenerateSequence";
+
+        public Identifier ExpectedReturnType
+            => "IEnumerable".AsGenericTypeId("T");
+
+        public List<Identifier> ExpectedArgumentTypes
+            => new();
+
+        public AccessModifier ExpectedAccess
+            => AccessModifier.Public;
     }
 }

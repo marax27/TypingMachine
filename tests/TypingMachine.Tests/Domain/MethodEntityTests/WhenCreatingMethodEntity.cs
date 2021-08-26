@@ -10,8 +10,8 @@ namespace TypingMachine.Tests.Domain.MethodEntityTests
 {
     public class WhenCreatingMethodEntity
     {
-        private TypeIdentifier GivenSampleType => "int".AsSimpleTypeId();
-        private TypeIdentifier GivenOtherType => "IService".AsSimpleTypeId();
+        private Identifier GivenSampleType => "int".AsSimpleTypeId();
+        private Identifier GivenOtherType => "IService".AsSimpleTypeId();
 
         [Fact]
         public void GivenValidParameters_CreateEntity()
@@ -29,7 +29,7 @@ namespace TypingMachine.Tests.Domain.MethodEntityTests
         [Fact]
         public void GivenValidParameters_ContainExpectedValues()
         {
-            var expectedArgumentTypes = new List<TypeIdentifier> {GivenOtherType, GivenSampleType};
+            var expectedArgumentTypes = new List<Identifier> {GivenOtherType, GivenSampleType};
 
             var entity = new MethodBuilder()
                 .WithArgumentTypes(new[] {GivenOtherType, GivenSampleType})

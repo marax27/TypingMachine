@@ -76,7 +76,7 @@ interface IQueryHandler<TQuery, TResult> : IHandler<TQuery, TResult> {}
             {
                 new InterfaceBuilder()
                     .WithBaseTypes(
-                        new List<TypeIdentifier>
+                        new List<Identifier>
                         {
                             "IHandler".AsGenericTypeId("TQuery", "TResult")
                         }
