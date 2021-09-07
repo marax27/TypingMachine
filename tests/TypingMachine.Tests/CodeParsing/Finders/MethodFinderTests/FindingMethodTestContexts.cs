@@ -31,12 +31,12 @@ class MathService
             => "GetSquared";
 
         public Identifier ExpectedReturnType
-            => "float".AsSimpleTypeId();
+            => "float".AsSimpleId();
 
         public List<Identifier> ExpectedArgumentTypes
             => new List<Identifier>
                 {
-                    "int".AsSimpleTypeId()
+                    "int".AsSimpleId()
                 };
 
         public AccessModifier ExpectedAccess => AccessModifier.Public;
@@ -57,14 +57,14 @@ class SecondService
             => "Process";
 
         public Identifier ExpectedReturnType
-            => "void".AsSimpleTypeId();
+            => "void".AsSimpleId();
 
         public List<Identifier> ExpectedArgumentTypes
             => new List<Identifier>
                 {
-                    "IFunctor".AsSimpleTypeId(),
-                    "double".AsSimpleTypeId(),
-                    "IEnumerable".AsGenericTypeId("int")
+                    "IFunctor".AsSimpleId(),
+                    "double".AsSimpleId(),
+                    "IEnumerable".AsGenericId("int")
                 };
         public AccessModifier ExpectedAccess => AccessModifier.Protected;
     }
@@ -84,7 +84,7 @@ class OtherService
             => "Process";
 
         public Identifier ExpectedReturnType
-            => "int".AsSimpleTypeId();
+            => "int".AsSimpleId();
 
         public List<Identifier> ExpectedArgumentTypes
             => new();
@@ -108,7 +108,7 @@ class SomeService
             => "GenerateSequence";
 
         public Identifier ExpectedReturnType
-            => "IEnumerable".AsGenericTypeId("T");
+            => "IEnumerable".AsGenericId("T");
 
         public List<Identifier> ExpectedArgumentTypes
             => new();

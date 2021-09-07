@@ -14,8 +14,8 @@ namespace TypingMachine.Tests.Domain.TypeEntities
         {
             var sut = new ClassBuilder()
                 .WithNamespace(ChildNamespace)
-                .Build("SampleEntityBuilder".AsSimpleTypeId());
-            var givenReferencedTypeId = "SampleEntity".AsSimpleTypeId();
+                .Build("SampleEntityBuilder".AsSimpleId());
+            var givenReferencedTypeId = "SampleEntity".AsSimpleId();
             var givenCandidates = new List<TypeEntity> {_sampleEntityType};
 
             var actualResult = sut.FindReferencedType(givenReferencedTypeId, givenCandidates);
@@ -25,7 +25,7 @@ namespace TypingMachine.Tests.Domain.TypeEntities
 
         private readonly ClassEntity _sampleEntityType = new ClassBuilder()
             .WithNamespace(ParentNamespace)
-            .Build("SampleEntity".AsSimpleTypeId());
+            .Build("SampleEntity".AsSimpleId());
 
         private static NamespaceIdentifier ParentNamespace => "Application.Domain".AsNamespace();
         private static NamespaceIdentifier ChildNamespace => "Application.Domain.Creation.EntityBuilders".AsNamespace();

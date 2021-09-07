@@ -32,7 +32,7 @@ namespace Application.Controllers
             {
                 new FieldBuilder()
                     .WithAccess(AccessModifier.Private)
-                    .Build("_logger", "ILogger".AsGenericTypeId("HelloController"))
+                    .Build("_logger", "ILogger".AsGenericId("HelloController"))
             };
     }
 
@@ -59,13 +59,13 @@ namespace Application.Controllers
             {
                 new FieldBuilder()
                     .WithAccess(AccessModifier.Private)
-                    .Build("_first", "int".AsSimpleTypeId()),
+                    .Build("_first", "int".AsSimpleId()),
                 new FieldBuilder()
                     .WithAccess(AccessModifier.Protected)
-                    .Build("second", "string".AsSimpleTypeId()),
+                    .Build("second", "string".AsSimpleId()),
                 new FieldBuilder()
                     .WithAccess(AccessModifier.Public)
-                    .Build("third", "IService".AsGenericTypeId("int", "int")),
+                    .Build("third", "IService".AsGenericId("int", "int")),
             };
     }
 
@@ -92,13 +92,13 @@ namespace Application.Controllers
             {
                 new FieldBuilder()
                     .WithAccess(AccessModifier.Public)
-                    .Build("a", "int".AsSimpleTypeId()),
+                    .Build("a", "int".AsSimpleId()),
                 new FieldBuilder()
                     .WithAccess(AccessModifier.Public)
-                    .Build("b", "int".AsSimpleTypeId()),
+                    .Build("b", "int".AsSimpleId()),
                 new FieldBuilder()
                     .WithAccess(AccessModifier.Public)
-                    .Build("c", "int".AsSimpleTypeId()),
+                    .Build("c", "int".AsSimpleId()),
             };
     }
 }

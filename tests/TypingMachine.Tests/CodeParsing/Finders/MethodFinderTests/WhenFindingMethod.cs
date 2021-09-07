@@ -19,7 +19,7 @@ namespace TypingMachine.Tests.CodeParsing.Finders.MethodFinderTests
 
             var actualResult = sut.FindFor(givenMethodNode);
 
-            actualResult.Name.Should().Be(context.ExpectedMethodName);
+            actualResult.Identifier.Name.Should().Be(context.ExpectedMethodName);
         }
 
         [Theory]

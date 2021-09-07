@@ -14,21 +14,21 @@ namespace TypingMachine.Tests.CodeParsing.Finders.TypeFinderTests
     {
         public string GivenSource => "IQueryHandler";
         public Identifier ExpectedResult =>
-            "IQueryHandler".AsSimpleTypeId();
+            "IQueryHandler".AsSimpleId();
     }
 
     class PredefinedTypeContext : IFindingTypeTestContext
     {
         public string GivenSource => "string";
         public Identifier ExpectedResult =>
-            "string".AsSimpleTypeId();
+            "string".AsSimpleId();
     }
 
     class GenericTypeWithSingleParameterContext : IFindingTypeTestContext
     {
         public string GivenSource => "IEnumerable<float>";
         public Identifier ExpectedResult =>
-            "IEnumerable".AsGenericTypeId("float");
+            "IEnumerable".AsGenericId("float");
     }
 
     class GenericTypeWithNestedParametersContext : IFindingTypeTestContext
@@ -37,27 +37,27 @@ namespace TypingMachine.Tests.CodeParsing.Finders.TypeFinderTests
         public Identifier ExpectedResult =>
             Identifier.Create("BaseService", new List<Identifier>
             {
-                "int".AsSimpleTypeId(),
-                "ILogger".AsGenericTypeId("ApiController"),
-                "IFunctor".AsGenericTypeId("TIn", "TOut")
+                "int".AsSimpleId(),
+                "ILogger".AsGenericId("ApiController"),
+                "IFunctor".AsGenericId("TIn", "TOut")
             });
     }
 
     class NullableTypeContext : IFindingTypeTestContext
     {
         public string GivenSource => "string?";
-        public Identifier ExpectedResult => "string".AsSimpleTypeId();
+        public Identifier ExpectedResult => "string".AsSimpleId();
     }
 
     class OneDimensionalArrayTypeContext : IFindingTypeTestContext
     {
         public string GivenSource => "int[]";
-        public Identifier ExpectedResult => "int".AsSimpleTypeId();
+        public Identifier ExpectedResult => "int".AsSimpleId();
     }
 
     class ThreeDimensionalArrayTypeContext : IFindingTypeTestContext
     {
         public string GivenSource => "double[][][]";
-        public Identifier ExpectedResult => "double".AsSimpleTypeId();
+        public Identifier ExpectedResult => "double".AsSimpleId();
     }
 }

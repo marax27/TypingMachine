@@ -19,9 +19,9 @@ namespace TypingMachine.Domain.Builders
             return this;
         }
 
-        public MethodEntity Build(string name, Identifier returnType)
+        public MethodEntity Build(Identifier methodIdentifier, Identifier returnType)
         {
-            return MethodEntity.Create(name, returnType, _argumentTypes, _accessModifier);
+            return MethodEntity.Create(methodIdentifier, returnType, _argumentTypes, _accessModifier);
         }
     }
 }

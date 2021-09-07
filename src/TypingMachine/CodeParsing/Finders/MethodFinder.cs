@@ -19,10 +19,12 @@ namespace TypingMachine.CodeParsing.Finders
                 .Select(parameter => typeFinder.FindFor(parameter.Type))
                 .ToList();
 
+            var methodIdentifier = Identifier.Create(name, new Identifier[]{});
+
             return new MethodBuilder()
                 .WithArgumentTypes(argumentTypes)
                 .WithAccess(_accessModifierFinder.FindFor(methodNode, AccessModifier.Private))
-                .Build(name, returnType);
+                .Build(methodIdentifier, returnType);
         }
     }
 }
