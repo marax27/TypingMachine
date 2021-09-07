@@ -8,7 +8,7 @@ namespace TypingMachine.Tests.CodeParsing.Finders.MethodFinderTests
     {
         string GivenSource { get; }
 
-        string ExpectedMethodName { get; }
+        Identifier ExpectedMethodIdentifier { get; }
         Identifier ExpectedReturnType { get; }
         List<Identifier> ExpectedArgumentTypes { get; }
         AccessModifier ExpectedAccess { get; }
@@ -27,8 +27,8 @@ class MathService
 }
 ";
 
-        public string ExpectedMethodName
-            => "GetSquared";
+        public Identifier ExpectedMethodIdentifier
+            => "GetSquared".AsSimpleId();
 
         public Identifier ExpectedReturnType
             => "float".AsSimpleId();
@@ -53,8 +53,8 @@ class SecondService
 }
 ";
 
-        public string ExpectedMethodName
-            => "Process";
+        public Identifier ExpectedMethodIdentifier
+            => "Process".AsSimpleId();
 
         public Identifier ExpectedReturnType
             => "void".AsSimpleId();
@@ -80,8 +80,8 @@ class OtherService
 }
 ";
 
-        public string ExpectedMethodName
-            => "Process";
+        public Identifier ExpectedMethodIdentifier
+            => "Process".AsSimpleId();
 
         public Identifier ExpectedReturnType
             => "int".AsSimpleId();
@@ -91,7 +91,7 @@ class OtherService
         public AccessModifier ExpectedAccess => AccessModifier.Private;
     }
 
-    class GenericMethodContext : IFindingMethodTestContext
+    class GenericMethodWith1ParameterContext : IFindingMethodTestContext
     {
         public string GivenSource => @"
 class SomeService
@@ -104,8 +104,8 @@ class SomeService
 }
 ";
 
-        public string ExpectedMethodName
-            => "GenerateSequence";
+        public Identifier ExpectedMethodIdentifier
+            => "GenerateSequence".AsGenericId("T");
 
         public Identifier ExpectedReturnType
             => "IEnumerable".AsGenericId("T");
@@ -115,5 +115,27 @@ class SomeService
 
         public AccessModifier ExpectedAccess
             => AccessModifier.Public;
+    }
+
+    class GenericMethodWith3ParametersContext : IFindingMethodTestContext
+    {
+        public string GivenSource => @"
+class ICalculator
+{
+    IFunctor<TIn, TOut> Run<TIn, TOut, TAdditional>();
+}
+";
+
+        public Identifier ExpectedMethodIdentifier
+            => "Run".AsGenericId("TIn", "TOut", "TAdditional");
+
+        public Identifier ExpectedReturnType
+            => "IFunctor".AsGenericId("TIn", "TOut");
+
+        public List<Identifier> ExpectedArgumentTypes
+            => new();
+
+        public AccessModifier ExpectedAccess
+            => AccessModifier.Private;
     }
 }
