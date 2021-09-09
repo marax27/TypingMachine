@@ -16,8 +16,8 @@ namespace TypingMachine.Tests.Domain.TypeEntities
             var sut = new ClassBuilder()
                 .WithNamespace(DomainNamespace)
                 .WithUsingDirectives(new List<UsingEntity>())
-                .Build("PlaceOrderCommandHandler".AsSimpleTypeId());
-            var givenReferencedTypeId = "PlaceOrderCommand".AsSimpleTypeId();
+                .Build("PlaceOrderCommandHandler".AsSimpleId());
+            var givenReferencedTypeId = "PlaceOrderCommand".AsSimpleId();
             var givenCandidates = Array.Empty<TypeEntity>();
 
             var actualResult = sut.FindReferencedType(givenReferencedTypeId, givenCandidates);
@@ -31,8 +31,8 @@ namespace TypingMachine.Tests.Domain.TypeEntities
             var sut = new ClassBuilder()
                 .WithNamespace(DomainNamespace)
                 .WithUsingDirectives(new List<UsingEntity>())
-                .Build("PlaceOrderCommandHandler".AsSimpleTypeId());
-            var givenReferencedTypeId = "PlaceOrderCommand".AsSimpleTypeId();
+                .Build("PlaceOrderCommandHandler".AsSimpleId());
+            var givenReferencedTypeId = "PlaceOrderCommand".AsSimpleId();
             var givenCandidates = new List<TypeEntity>
             {
                 _helperServiceType,
@@ -52,8 +52,8 @@ namespace TypingMachine.Tests.Domain.TypeEntities
             var sut = new ClassBuilder()
                 .WithNamespace(DomainNamespace)
                 .WithUsingDirectives(new List<UsingEntity>())
-                .Build("PlaceOrderCommandHandler".AsSimpleTypeId());
-            var givenReferencedTypeId = "HelperService".AsSimpleTypeId();
+                .Build("PlaceOrderCommandHandler".AsSimpleId());
+            var givenReferencedTypeId = "HelperService".AsSimpleId();
             var givenCandidates = new List<TypeEntity>
             {
                 _helperServiceType,
@@ -76,8 +76,8 @@ namespace TypingMachine.Tests.Domain.TypeEntities
                 {
                     UsingEntity.Create(UtilitiesNamespace)
                 })
-                .Build("PlaceOrderCommandHandler".AsSimpleTypeId());
-            var givenReferencedTypeId = "HelperService".AsSimpleTypeId();
+                .Build("PlaceOrderCommandHandler".AsSimpleId());
+            var givenReferencedTypeId = "HelperService".AsSimpleId();
             var givenCandidates = new List<TypeEntity>
             {
                 _helperServiceType,
@@ -100,8 +100,8 @@ namespace TypingMachine.Tests.Domain.TypeEntities
                 {
                     UsingEntity.Create(UtilitiesNamespace)
                 })
-                .Build("PlaceOrderCommandHandler".AsSimpleTypeId());
-            var givenReferencedTypeId = "IFunctor".AsGenericTypeId("string", "int");
+                .Build("PlaceOrderCommandHandler".AsSimpleId());
+            var givenReferencedTypeId = "IFunctor".AsGenericId("string", "int");
             var givenCandidates = new List<TypeEntity>
             {
                 _helperServiceType,
@@ -121,8 +121,8 @@ namespace TypingMachine.Tests.Domain.TypeEntities
         {
             var sut = new ClassBuilder()
                 .WithNamespace(DomainNamespace)
-                .Build("PlaceOrderCommandHandler".AsSimpleTypeId());
-            var givenReferencedTypeId = "PlaceOrderCommandHandler".AsSimpleTypeId();
+                .Build("PlaceOrderCommandHandler".AsSimpleId());
+            var givenReferencedTypeId = "PlaceOrderCommandHandler".AsSimpleId();
             var givenCandidates = new List<TypeEntity>
             {
                 _helperServiceType,
@@ -141,8 +141,8 @@ namespace TypingMachine.Tests.Domain.TypeEntities
         {
             var sut = new ClassBuilder()
                 .WithNamespace(DomainNamespace)
-                .Build("PlaceOrderCommandHandler".AsSimpleTypeId());
-            var givenReferencedTypeId = "PlaceOrderCommandHandler".AsSimpleTypeId();
+                .Build("PlaceOrderCommandHandler".AsSimpleId());
+            var givenReferencedTypeId = "PlaceOrderCommandHandler".AsSimpleId();
             var givenCandidates = new List<TypeEntity>
             {
                 _helperServiceType,
@@ -159,23 +159,23 @@ namespace TypingMachine.Tests.Domain.TypeEntities
 
         private readonly ClassEntity _placeOrderCommandType = new ClassBuilder()
             .WithNamespace(DomainNamespace)
-            .Build("PlaceOrderCommand".AsSimpleTypeId());
+            .Build("PlaceOrderCommand".AsSimpleId());
 
         private readonly ClassEntity _deleteOrderCommandType = new ClassBuilder()
             .WithNamespace(DomainNamespace)
-            .Build("DeleteOrderCommand".AsSimpleTypeId());
+            .Build("DeleteOrderCommand".AsSimpleId());
 
         private readonly ClassEntity _deleteOrderCommandHandlerType = new ClassBuilder()
             .WithNamespace(DomainNamespace)
-            .Build("DeleteOrderCommandHandler".AsSimpleTypeId());
+            .Build("DeleteOrderCommandHandler".AsSimpleId());
 
         private readonly ClassEntity _helperServiceType = new ClassBuilder()
             .WithNamespace(UtilitiesNamespace)
-            .Build("HelperService".AsSimpleTypeId());
+            .Build("HelperService".AsSimpleId());
 
         private readonly InterfaceEntity _functorServiceType = new InterfaceBuilder()
             .WithNamespace(UtilitiesNamespace)
-            .Build("IFunctor".AsGenericTypeId("TIn", "TOut"));
+            .Build("IFunctor".AsGenericId("TIn", "TOut"));
 
         private static NamespaceIdentifier DomainNamespace => "Application.Domain".AsNamespace();
         private static NamespaceIdentifier UtilitiesNamespace => "Application.Utilities".AsNamespace();

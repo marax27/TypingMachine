@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using TypingMachine.Domain;
 using TypingMachine.Domain.Builders;
@@ -19,10 +20,25 @@ namespace TypingMachine.CodeParsing.Finders
                 .Select(parameter => typeFinder.FindFor(parameter.Type))
                 .ToList();
 
+            var parameters = methodNode.TypeParameterList?.Parameters;
+
+            var methodIdentifier = Identifier.Create(name, GetMethodIdentifierParameters(methodNode));
+
             return new MethodBuilder()
                 .WithArgumentTypes(argumentTypes)
                 .WithAccess(_accessModifierFinder.FindFor(methodNode, AccessModifier.Private))
-                .Build(name, returnType);
+                .Build(methodIdentifier, returnType);
+        }
+
+        private IReadOnlyList<Identifier> GetMethodIdentifierParameters(MethodDeclarationSyntax methodNode)
+        {
+            IEnumerable<TypeParameterSyntax> parameters = methodNode.TypeParameterList?.Parameters.AsEnumerable()
+                                                          ?? new List<TypeParameterSyntax>();
+
+            return parameters
+                .Select(parameter => parameter.Identifier.ValueText)
+                .Select(text => Identifier.Create(text, new List<Identifier>()))
+                .ToList();
         }
     }
 }

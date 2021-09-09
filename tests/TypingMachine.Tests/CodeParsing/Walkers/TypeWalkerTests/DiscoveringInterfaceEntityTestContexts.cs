@@ -22,7 +22,7 @@ namespace TypingMachine.Tests.CodeParsing.Walkers.TypeWalkerTests
             {
                 new InterfaceBuilder()
                     .WithAccess(AccessModifier.Protected)
-                    .Build("IHelloService".AsSimpleTypeId())
+                    .Build("IHelloService".AsSimpleId())
             };
     }
 
@@ -39,8 +39,8 @@ protected interface IFunctor<TIn, TOut>
 
         private IReadOnlyCollection<TypeEntity> GetExpectedResult()
         {
-            var inParameter = "TIn".AsSimpleTypeId();
-            var outParameter = "TOut".AsSimpleTypeId();
+            var inParameter = "TIn".AsSimpleId();
+            var outParameter = "TOut".AsSimpleId();
 
             return new List<TypeEntity>
             {
@@ -50,11 +50,11 @@ protected interface IFunctor<TIn, TOut>
                         {
                             new MethodBuilder()
                                 .WithArgumentTypes(new []{inParameter})
-                                .Build("Compute", outParameter)
+                                .Build("Compute".AsSimpleId(), outParameter)
                         }
                     )
                     .WithAccess(AccessModifier.Protected)
-                    .Build("IFunctor".AsGenericTypeId("TIn", "TOut"))
+                    .Build("IFunctor".AsGenericId("TIn", "TOut"))
             };
         }
     }
@@ -69,20 +69,20 @@ interface IQueryHandler<TQuery, TResult> : IHandler<TQuery, TResult> {}
 
         private IReadOnlyCollection<TypeEntity> GetExpectedResult()
         {
-            var queryParameter = "TQuery".AsSimpleTypeId();
-            var resultParameter = "TResult".AsSimpleTypeId();
+            var queryParameter = "TQuery".AsSimpleId();
+            var resultParameter = "TResult".AsSimpleId();
 
             return new List<TypeEntity>
             {
                 new InterfaceBuilder()
                     .WithBaseTypes(
-                        new List<TypeIdentifier>
+                        new List<Identifier>
                         {
-                            "IHandler".AsGenericTypeId("TQuery", "TResult")
+                            "IHandler".AsGenericId("TQuery", "TResult")
                         }
                     )
                     .WithAccess(AccessModifier.Internal)
-                    .Build("IQueryHandler".AsGenericTypeId("TQuery", "TResult"))
+                    .Build("IQueryHandler".AsGenericId("TQuery", "TResult"))
             };
         }
     }
@@ -101,7 +101,7 @@ namespace Business.Domain.Abstractions
             new InterfaceBuilder()
                 .WithNamespace("Business.Domain.Abstractions".AsNamespace())
                 .WithAccess(AccessModifier.Internal)
-                .Build("IQuery".AsGenericTypeId("TIn"))
+                .Build("IQuery".AsGenericId("TIn"))
         };
     }
 
@@ -123,7 +123,7 @@ public interface IService {}
                     }
                 )
                 .WithAccess(AccessModifier.Public)
-                .Build("IService".AsSimpleTypeId())
+                .Build("IService".AsSimpleId())
         };
     }
 }

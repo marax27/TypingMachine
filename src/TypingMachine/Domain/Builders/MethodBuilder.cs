@@ -4,10 +4,10 @@ namespace TypingMachine.Domain.Builders
 {
     public class MethodBuilder
     {
-        private IReadOnlyList<TypeIdentifier> _argumentTypes = new List<TypeIdentifier>();
+        private IReadOnlyList<Identifier> _argumentTypes = new List<Identifier>();
         private AccessModifier _accessModifier = AccessModifier.Private;
 
-        public MethodBuilder WithArgumentTypes(IReadOnlyList<TypeIdentifier> argumentTypes)
+        public MethodBuilder WithArgumentTypes(IReadOnlyList<Identifier> argumentTypes)
         {
             _argumentTypes = argumentTypes;
             return this;
@@ -19,9 +19,9 @@ namespace TypingMachine.Domain.Builders
             return this;
         }
 
-        public MethodEntity Build(string name, TypeIdentifier returnType)
+        public MethodEntity Build(Identifier methodIdentifier, Identifier returnType)
         {
-            return MethodEntity.Create(name, returnType, _argumentTypes, _accessModifier);
+            return MethodEntity.Create(methodIdentifier, returnType, _argumentTypes, _accessModifier);
         }
     }
 }

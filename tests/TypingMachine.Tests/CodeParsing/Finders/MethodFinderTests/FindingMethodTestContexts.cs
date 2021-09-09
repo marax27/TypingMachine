@@ -8,9 +8,9 @@ namespace TypingMachine.Tests.CodeParsing.Finders.MethodFinderTests
     {
         string GivenSource { get; }
 
-        string ExpectedMethodName { get; }
-        TypeIdentifier ExpectedReturnType { get; }
-        List<TypeIdentifier> ExpectedArgumentTypes { get; }
+        Identifier ExpectedMethodIdentifier { get; }
+        Identifier ExpectedReturnType { get; }
+        List<Identifier> ExpectedArgumentTypes { get; }
         AccessModifier ExpectedAccess { get; }
     }
 
@@ -27,16 +27,16 @@ class MathService
 }
 ";
 
-        public string ExpectedMethodName
-            => "GetSquared";
+        public Identifier ExpectedMethodIdentifier
+            => "GetSquared".AsSimpleId();
 
-        public TypeIdentifier ExpectedReturnType
-            => "float".AsSimpleTypeId();
+        public Identifier ExpectedReturnType
+            => "float".AsSimpleId();
 
-        public List<TypeIdentifier> ExpectedArgumentTypes
-            => new List<TypeIdentifier>
+        public List<Identifier> ExpectedArgumentTypes
+            => new List<Identifier>
                 {
-                    "int".AsSimpleTypeId()
+                    "int".AsSimpleId()
                 };
 
         public AccessModifier ExpectedAccess => AccessModifier.Public;
@@ -53,18 +53,18 @@ class SecondService
 }
 ";
 
-        public string ExpectedMethodName
-            => "Process";
+        public Identifier ExpectedMethodIdentifier
+            => "Process".AsSimpleId();
 
-        public TypeIdentifier ExpectedReturnType
-            => "void".AsSimpleTypeId();
+        public Identifier ExpectedReturnType
+            => "void".AsSimpleId();
 
-        public List<TypeIdentifier> ExpectedArgumentTypes
-            => new List<TypeIdentifier>
+        public List<Identifier> ExpectedArgumentTypes
+            => new List<Identifier>
                 {
-                    "IFunctor".AsSimpleTypeId(),
-                    "double".AsSimpleTypeId(),
-                    "IEnumerable".AsGenericTypeId("int")
+                    "IFunctor".AsSimpleId(),
+                    "double".AsSimpleId(),
+                    "IEnumerable".AsGenericId("int")
                 };
         public AccessModifier ExpectedAccess => AccessModifier.Protected;
     }
@@ -80,14 +80,62 @@ class OtherService
 }
 ";
 
-        public string ExpectedMethodName
-            => "Process";
+        public Identifier ExpectedMethodIdentifier
+            => "Process".AsSimpleId();
 
-        public TypeIdentifier ExpectedReturnType
-            => "int".AsSimpleTypeId();
+        public Identifier ExpectedReturnType
+            => "int".AsSimpleId();
 
-        public List<TypeIdentifier> ExpectedArgumentTypes
+        public List<Identifier> ExpectedArgumentTypes
             => new();
         public AccessModifier ExpectedAccess => AccessModifier.Private;
+    }
+
+    class GenericMethodWith1ParameterContext : IFindingMethodTestContext
+    {
+        public string GivenSource => @"
+class SomeService
+{
+    public IEnumerable<T> GenerateSequence<T>() where T : new()
+    {
+        for (int i = 0; i < 5; ++i)
+            yield return new T();
+    }
+}
+";
+
+        public Identifier ExpectedMethodIdentifier
+            => "GenerateSequence".AsGenericId("T");
+
+        public Identifier ExpectedReturnType
+            => "IEnumerable".AsGenericId("T");
+
+        public List<Identifier> ExpectedArgumentTypes
+            => new();
+
+        public AccessModifier ExpectedAccess
+            => AccessModifier.Public;
+    }
+
+    class GenericMethodWith3ParametersContext : IFindingMethodTestContext
+    {
+        public string GivenSource => @"
+class ICalculator
+{
+    IFunctor<TIn, TOut> Run<TIn, TOut, TAdditional>();
+}
+";
+
+        public Identifier ExpectedMethodIdentifier
+            => "Run".AsGenericId("TIn", "TOut", "TAdditional");
+
+        public Identifier ExpectedReturnType
+            => "IFunctor".AsGenericId("TIn", "TOut");
+
+        public List<Identifier> ExpectedArgumentTypes
+            => new();
+
+        public AccessModifier ExpectedAccess
+            => AccessModifier.Private;
     }
 }

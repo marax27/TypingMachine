@@ -5,20 +5,20 @@ using TypingMachine.Abstractions;
 
 namespace TypingMachine.Domain
 {
-    public class TypeIdentifier : ITypeIdentifier, IEquatable<TypeIdentifier>
+    public class Identifier : IIdentifier, IEquatable<Identifier>
     {
         public string Name { get; }
-        public IReadOnlyList<TypeIdentifier> Parameters { get; }
+        public IReadOnlyList<Identifier> Parameters { get; }
 
         public int Arity => Parameters.Count;
 
-        private TypeIdentifier(string name, IReadOnlyList<TypeIdentifier> parameters)
+        private Identifier(string name, IReadOnlyList<Identifier> parameters)
         {
             Name = name;
             Parameters = parameters;
         }
 
-        public static TypeIdentifier Create(string name, IReadOnlyList<TypeIdentifier> parameters)
+        public static Identifier Create(string name, IReadOnlyList<Identifier> parameters)
         {
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
@@ -29,7 +29,7 @@ namespace TypingMachine.Domain
             if (parameters == null)
                 throw new ArgumentNullException(nameof(parameters));
 
-            return new TypeIdentifier(name, parameters);
+            return new Identifier(name, parameters);
         }
 
         public string GetFullName()
@@ -40,7 +40,7 @@ namespace TypingMachine.Domain
             return Name + parameters;
         }
 
-        public bool Equals(TypeIdentifier other)
+        public bool Equals(Identifier other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -49,9 +49,9 @@ namespace TypingMachine.Domain
                    && Parameters.SequenceEqual(other.Parameters);
         }
 
-        public override bool Equals(object obj) => Equals(obj as TypeIdentifier);
+        public override bool Equals(object obj) => Equals(obj as Identifier);
         public override int GetHashCode() => GetFullName().GetHashCode();
-        public static bool operator ==(TypeIdentifier left, TypeIdentifier right) => Equals(left, right);
-        public static bool operator !=(TypeIdentifier left, TypeIdentifier right) => !Equals(left, right);
+        public static bool operator ==(Identifier left, Identifier right) => Equals(left, right);
+        public static bool operator !=(Identifier left, Identifier right) => !Equals(left, right);
     }
 }

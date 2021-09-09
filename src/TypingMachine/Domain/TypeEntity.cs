@@ -7,16 +7,16 @@ namespace TypingMachine.Domain
 {
     public abstract class TypeEntity
     {
-        public TypeIdentifier Identifier { get; }
+        public Identifier Identifier { get; }
         public NamespaceIdentifier NamespaceId { get; }
         public IReadOnlyList<MethodEntity> Methods { get; }
-        public IReadOnlyList<TypeIdentifier> BaseTypes { get; }
+        public IReadOnlyList<Identifier> BaseTypes { get; }
         public IReadOnlyCollection<UsingEntity> UsingDirectives { get; }
         public AccessModifier AccessModifier { get; }
 
         public abstract void Accept(ITypeVisitor visitor);
 
-        public TypeEntity? FindReferencedType(ITypeIdentifier referencedTypeId, IReadOnlyCollection<TypeEntity> candidates)
+        public TypeEntity? FindReferencedType(IIdentifier referencedTypeId, IReadOnlyCollection<TypeEntity> candidates)
         {
             var accessibleNamespaces = UsingDirectives
                 .Select(u => u.UsedNamespace)
@@ -28,7 +28,7 @@ namespace TypingMachine.Domain
                                          && type.Identifier.Arity == referencedTypeId.Arity);
         }
 
-        protected TypeEntity(TypeIdentifier identifier, NamespaceIdentifier namespaceId, IReadOnlyList<MethodEntity> methods, IReadOnlyList<TypeIdentifier> baseTypes, IReadOnlyCollection<UsingEntity> usingDirectives, AccessModifier accessModifier)
+        protected TypeEntity(Identifier identifier, NamespaceIdentifier namespaceId, IReadOnlyList<MethodEntity> methods, IReadOnlyList<Identifier> baseTypes, IReadOnlyCollection<UsingEntity> usingDirectives, AccessModifier accessModifier)
         {
             Identifier = identifier ?? throw new ArgumentNullException(nameof(identifier));
             NamespaceId = namespaceId ?? throw new ArgumentNullException(nameof(namespaceId));

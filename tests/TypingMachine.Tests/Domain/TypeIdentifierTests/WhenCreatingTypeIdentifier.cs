@@ -15,7 +15,7 @@ namespace TypingMachine.Tests.Domain.TypeIdentifierTests
         {
             Action act = () =>
             {
-                var entity = TypeIdentifier.Create("IService", null);
+                var entity = Identifier.Create("IService", null);
             };
 
             act.Should().Throw<ArgumentNullException>()
@@ -25,7 +25,7 @@ namespace TypingMachine.Tests.Domain.TypeIdentifierTests
         [Fact]
         public void GivenZeroParameters_ContainExpectedName()
         {
-            var entity = "IService".AsSimpleTypeId();
+            var entity = "IService".AsSimpleId();
 
             entity.Name.Should().Be("IService");
         }
@@ -33,15 +33,15 @@ namespace TypingMachine.Tests.Domain.TypeIdentifierTests
         [Fact]
         public void GivenZeroParameters_ContainZeroParameters()
         {
-            var entity = "IService".AsSimpleTypeId();
+            var entity = "IService".AsSimpleId();
 
-            entity.Parameters.Should().BeEquivalentTo(new List<TypeIdentifier>());
+            entity.Parameters.Should().BeEquivalentTo(new List<Identifier>());
         }
 
         [Fact]
         public void GivenZeroParameters_ArityIsZero()
         {
-            var entity = "IService".AsSimpleTypeId();
+            var entity = "IService".AsSimpleId();
 
             entity.Arity.Should().Be(0);
         }
@@ -51,7 +51,7 @@ namespace TypingMachine.Tests.Domain.TypeIdentifierTests
         {
             var givenParameterName = "NestedType";
 
-            var entity = "IService".AsGenericTypeId(givenParameterName);
+            var entity = "IService".AsGenericId(givenParameterName);
 
             entity.Parameters.Should().HaveCount(1);
             entity.Parameters.Single().Name.Should().Be(givenParameterName);
@@ -62,7 +62,7 @@ namespace TypingMachine.Tests.Domain.TypeIdentifierTests
         {
             var givenParameterName = "NestedType";
 
-            var entity = "IService".AsGenericTypeId(givenParameterName);
+            var entity = "IService".AsGenericId(givenParameterName);
 
             entity.Arity.Should().Be(1);
         }
@@ -72,7 +72,7 @@ namespace TypingMachine.Tests.Domain.TypeIdentifierTests
         {
             Action act = () =>
             {
-                var entity = TypeIdentifier.Create(null, new List<TypeIdentifier>());
+                var entity = Identifier.Create(null, new List<Identifier>());
             };
 
             act.Should().Throw<ArgumentNullException>()
@@ -87,7 +87,7 @@ namespace TypingMachine.Tests.Domain.TypeIdentifierTests
         {
             Action act = () =>
             {
-                var entity = givenName.AsSimpleTypeId();
+                var entity = givenName.AsSimpleId();
             };
 
             var thrownException = act.Should().Throw<ArgumentException>().Which;
@@ -105,7 +105,7 @@ namespace TypingMachine.Tests.Domain.TypeIdentifierTests
         {
             Action act = () =>
             {
-                var entity = givenName.AsSimpleTypeId();
+                var entity = givenName.AsSimpleId();
             };
 
             var thrownException = act.Should().Throw<ArgumentException>().Which;

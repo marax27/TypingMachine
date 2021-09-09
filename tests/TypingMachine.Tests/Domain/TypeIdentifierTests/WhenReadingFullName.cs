@@ -9,7 +9,7 @@ namespace TypingMachine.Tests.Domain.TypeIdentifierTests
         [Fact]
         public void GivenZeroParameters_ReturnExpectedResult()
         {
-            var entity = "HelloController".AsSimpleTypeId();
+            var entity = "HelloController".AsSimpleId();
 
             entity.GetFullName().Should().Be("HelloController");
         }
@@ -17,7 +17,7 @@ namespace TypingMachine.Tests.Domain.TypeIdentifierTests
         [Fact]
         public void GivenOneParameter_ReturnExpectedResult()
         {
-            var entity = "IQueryHandler".AsGenericTypeId("TQuery");
+            var entity = "IQueryHandler".AsGenericId("TQuery");
 
             entity.GetFullName().Should().Be("IQueryHandler<TQuery>");
         }
@@ -25,7 +25,7 @@ namespace TypingMachine.Tests.Domain.TypeIdentifierTests
         [Fact]
         public void GivenTwoParameters_ReturnExpectedResult()
         {
-            var entity = "IFunctor".AsGenericTypeId("TIn", "TOut");
+            var entity = "IFunctor".AsGenericId("TIn", "TOut");
 
             entity.GetFullName().Should().Be("IFunctor<TIn, TOut>");
         }

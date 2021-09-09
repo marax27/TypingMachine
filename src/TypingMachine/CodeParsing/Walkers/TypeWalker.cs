@@ -64,13 +64,13 @@ namespace TypingMachine.CodeParsing.Walkers
             _types.Add(newInterface);
         }
 
-        private TypeIdentifier CreateIdentifier(TypeDeclarationSyntax node)
+        private Identifier CreateIdentifier(TypeDeclarationSyntax node)
         {
             var typeName = node.Identifier.ValueText;
             var parameterTypes = node.TypeParameterList?.Parameters
-                .Select(parameter => TypeIdentifier.Create(parameter.Identifier.ValueText, new List<TypeIdentifier>()))
+                .Select(parameter => Identifier.Create(parameter.Identifier.ValueText, new List<Identifier>()))
                 .ToList();
-            return TypeIdentifier.Create(typeName, parameterTypes ?? new List<TypeIdentifier>());
+            return Identifier.Create(typeName, parameterTypes ?? new List<Identifier>());
         }
 
         private IReadOnlyList<MethodEntity> FindMethods(SyntaxNode node)
@@ -81,10 +81,10 @@ namespace TypingMachine.CodeParsing.Walkers
                 .ToList();
         }
 
-        private IReadOnlyList<TypeIdentifier> FindBaseTypes(BaseTypeDeclarationSyntax node)
+        private IReadOnlyList<Identifier> FindBaseTypes(BaseTypeDeclarationSyntax node)
         {
             return node.BaseList == null
-                ? new List<TypeIdentifier>()
+                ? new List<Identifier>()
                 : node.BaseList.Types
                     .Select(baseType => _typeFinder.FindFor(baseType.Type))
                     .ToList();

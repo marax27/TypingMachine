@@ -20,7 +20,7 @@ namespace TypingMachine.Tests.CodeParsing.Walkers.TypeWalkerTests
             {
                 new ClassBuilder()
                     .WithAccess(AccessModifier.Public)
-                    .Build("HelloController".AsSimpleTypeId())
+                    .Build("HelloController".AsSimpleId())
             };
     }
 
@@ -38,14 +38,14 @@ public class HelloController : IController, BaseController<Context>
             {
                 new ClassBuilder()
                     .WithBaseTypes(
-                        new List<TypeIdentifier>
+                        new List<Identifier>
                         {
-                            "IController".AsSimpleTypeId(),
-                            "BaseController".AsGenericTypeId("Context")
+                            "IController".AsSimpleId(),
+                            "BaseController".AsGenericId("Context")
                         }
                     )
                     .WithAccess(AccessModifier.Public)
-                    .Build("HelloController".AsSimpleTypeId())
+                    .Build("HelloController".AsSimpleId())
             };
     }
 
@@ -72,14 +72,14 @@ public class HelloController
                         {
                             new FieldBuilder()
                                 .WithAccess(AccessModifier.Public)
-                                .Build("magicValue", "int".AsSimpleTypeId()),
+                                .Build("magicValue", "int".AsSimpleId()),
                             new FieldBuilder()
                                 .WithAccess(AccessModifier.Private)
-                                .Build("_logger", "ILogger".AsGenericTypeId("HelloController"))
+                                .Build("_logger", "ILogger".AsGenericId("HelloController"))
                         }
                     )
                     .WithAccess(AccessModifier.Public)
-                    .Build("HelloController".AsSimpleTypeId())
+                    .Build("HelloController".AsSimpleId())
             };
     }
 
@@ -97,7 +97,7 @@ namespace Business.Controllers
             new ClassBuilder()
                 .WithNamespace("Business.Controllers".AsNamespace())
                 .WithAccess(AccessModifier.Public)
-                .Build("HelloController".AsSimpleTypeId())
+                .Build("HelloController".AsSimpleId())
         };
     }
 
@@ -123,7 +123,7 @@ class HelloController {}
                     }
                 )
                 .WithAccess(AccessModifier.Internal)
-                .Build("HelloController".AsSimpleTypeId())
+                .Build("HelloController".AsSimpleId())
         };
     }
 }

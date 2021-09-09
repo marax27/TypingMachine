@@ -116,22 +116,22 @@ namespace TypingMachine.Tests.Domain.TypeEntities
             act.Should().Throw<ArgumentNullException>().Which.ParamName.Should().Be("usingDirectives");
         }
 
-        private TypeIdentifier GivenIdentifier => "IService".AsSimpleTypeId();
+        private Identifier GivenIdentifier => "IService".AsSimpleId();
 
         private IReadOnlyList<MethodEntity> GivenMethods => new List<MethodEntity>
         {
             new MethodBuilder()
-                .Build("Calculate", "int".AsSimpleTypeId())
+                .Build("Calculate".AsSimpleId(), "int".AsSimpleId())
         };
 
-        private IReadOnlyList<TypeIdentifier> GivenBaseTypes => new List<TypeIdentifier>
+        private IReadOnlyList<Identifier> GivenBaseTypes => new List<Identifier>
         {
-            "T".AsSimpleTypeId()
+            "T".AsSimpleId()
         };
 
         private IReadOnlyList<FieldEntity> GivenFields => new List<FieldEntity>
         {
-            new FieldBuilder().Build("_logger", "Logger".AsSimpleTypeId())
+            new FieldBuilder().Build("_logger", "Logger".AsSimpleId())
         };
     }
 }

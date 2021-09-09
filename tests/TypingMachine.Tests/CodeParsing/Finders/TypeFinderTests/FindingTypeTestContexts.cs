@@ -7,57 +7,57 @@ namespace TypingMachine.Tests.CodeParsing.Finders.TypeFinderTests
     public interface IFindingTypeTestContext
     {
         string GivenSource { get; }
-        TypeIdentifier ExpectedResult { get; }
+        Identifier ExpectedResult { get; }
     }
 
     class SimpleTypeContext : IFindingTypeTestContext
     {
         public string GivenSource => "IQueryHandler";
-        public TypeIdentifier ExpectedResult =>
-            "IQueryHandler".AsSimpleTypeId();
+        public Identifier ExpectedResult =>
+            "IQueryHandler".AsSimpleId();
     }
 
     class PredefinedTypeContext : IFindingTypeTestContext
     {
         public string GivenSource => "string";
-        public TypeIdentifier ExpectedResult =>
-            "string".AsSimpleTypeId();
+        public Identifier ExpectedResult =>
+            "string".AsSimpleId();
     }
 
     class GenericTypeWithSingleParameterContext : IFindingTypeTestContext
     {
         public string GivenSource => "IEnumerable<float>";
-        public TypeIdentifier ExpectedResult =>
-            "IEnumerable".AsGenericTypeId("float");
+        public Identifier ExpectedResult =>
+            "IEnumerable".AsGenericId("float");
     }
 
     class GenericTypeWithNestedParametersContext : IFindingTypeTestContext
     {
         public string GivenSource => "BaseService<int, ILogger<ApiController>, IFunctor<TIn, TOut>>";
-        public TypeIdentifier ExpectedResult =>
-            TypeIdentifier.Create("BaseService", new List<TypeIdentifier>
+        public Identifier ExpectedResult =>
+            Identifier.Create("BaseService", new List<Identifier>
             {
-                "int".AsSimpleTypeId(),
-                "ILogger".AsGenericTypeId("ApiController"),
-                "IFunctor".AsGenericTypeId("TIn", "TOut")
+                "int".AsSimpleId(),
+                "ILogger".AsGenericId("ApiController"),
+                "IFunctor".AsGenericId("TIn", "TOut")
             });
     }
 
     class NullableTypeContext : IFindingTypeTestContext
     {
         public string GivenSource => "string?";
-        public TypeIdentifier ExpectedResult => "string".AsSimpleTypeId();
+        public Identifier ExpectedResult => "string".AsSimpleId();
     }
 
     class OneDimensionalArrayTypeContext : IFindingTypeTestContext
     {
         public string GivenSource => "int[]";
-        public TypeIdentifier ExpectedResult => "int".AsSimpleTypeId();
+        public Identifier ExpectedResult => "int".AsSimpleId();
     }
 
     class ThreeDimensionalArrayTypeContext : IFindingTypeTestContext
     {
         public string GivenSource => "double[][][]";
-        public TypeIdentifier ExpectedResult => "double".AsSimpleTypeId();
+        public Identifier ExpectedResult => "double".AsSimpleId();
     }
 }

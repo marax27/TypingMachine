@@ -10,8 +10,8 @@ namespace TypingMachine.Tests.Domain.MethodEntityTests
 {
     public class WhenCreatingMethodEntity
     {
-        private TypeIdentifier GivenSampleType => "int".AsSimpleTypeId();
-        private TypeIdentifier GivenOtherType => "IService".AsSimpleTypeId();
+        private Identifier GivenSampleType => "int".AsSimpleId();
+        private Identifier GivenOtherType => "IService".AsSimpleId();
 
         [Fact]
         public void GivenValidParameters_CreateEntity()
@@ -20,7 +20,7 @@ namespace TypingMachine.Tests.Domain.MethodEntityTests
             {
                 var entity = new MethodBuilder()
                     .WithArgumentTypes(new[] {GivenSampleType})
-                    .Build("Foo", GivenSampleType);
+                    .Build("Foo".AsSimpleId(), GivenSampleType);
             };
 
             act.Should().NotThrow();
@@ -29,13 +29,13 @@ namespace TypingMachine.Tests.Domain.MethodEntityTests
         [Fact]
         public void GivenValidParameters_ContainExpectedValues()
         {
-            var expectedArgumentTypes = new List<TypeIdentifier> {GivenOtherType, GivenSampleType};
+            var expectedArgumentTypes = new List<Identifier> {GivenOtherType, GivenSampleType};
 
             var entity = new MethodBuilder()
                 .WithArgumentTypes(new[] {GivenOtherType, GivenSampleType})
-                .Build("Foo", GivenSampleType);
+                .Build("Foo".AsSimpleId(), GivenSampleType);
 
-            entity.Name.Should().Be("Foo");
+            entity.Identifier.Name.Should().Be("Foo");
             entity.ReturnType.Should().Be(GivenSampleType);
             entity.ArgumentTypes
                 .Should().BeEquivalentTo(expectedArgumentTypes, options => options.WithStrictOrdering());
@@ -51,7 +51,7 @@ namespace TypingMachine.Tests.Domain.MethodEntityTests
             };
 
             act.Should().Throw<ArgumentNullException>()
-                .Which.ParamName.Should().Be("name");
+                .Which.ParamName.Should().Be("identifier");
         }
 
         [Theory]
@@ -63,13 +63,13 @@ namespace TypingMachine.Tests.Domain.MethodEntityTests
             Action act = () =>
             {
                 var entity = new MethodBuilder()
-                    .Build(givenName, GivenSampleType);
+                    .Build(givenName.AsSimpleId(), GivenSampleType);
             };
 
-            var thrownException = act.Should().Throw<ArgumentOutOfRangeException>().Which;
+            var thrownException = act.Should().Throw<ArgumentException>().Which;
 
             thrownException.ParamName.Should().Be("name");
-            thrownException.Message.Should().Contain("Method name is empty or whitespace-only.");
+            thrownException.Message.Should().Contain("String is empty or whitespace-only.");
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace TypingMachine.Tests.Domain.MethodEntityTests
             Action act = () =>
             {
                 var entity = new MethodBuilder()
-                    .Build("GetValue", null);
+                    .Build("GetValue".AsSimpleId(), null);
             };
 
             act.Should().Throw<ArgumentNullException>()
@@ -92,7 +92,7 @@ namespace TypingMachine.Tests.Domain.MethodEntityTests
             {
                 var entity = new MethodBuilder()
                     .WithArgumentTypes(null)
-                    .Build("GetValue", GivenSampleType);
+                    .Build("GetValue".AsSimpleId(), GivenSampleType);
             };
 
             act.Should().Throw<ArgumentNullException>()

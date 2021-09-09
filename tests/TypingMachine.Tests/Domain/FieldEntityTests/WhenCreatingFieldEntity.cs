@@ -9,8 +9,8 @@ namespace TypingMachine.Tests.Domain.FieldEntityTests
 {
     public class WhenCreatingFieldEntity
     {
-        private TypeIdentifier GivenSampleType
-            => "IService".AsSimpleTypeId();
+        private Identifier GivenSampleType
+            => "IService".AsSimpleId();
 
         [Fact]
         public void GivenValidParameters_ContainExpectedName()

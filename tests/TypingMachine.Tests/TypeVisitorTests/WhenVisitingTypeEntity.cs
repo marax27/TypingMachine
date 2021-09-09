@@ -13,7 +13,7 @@ namespace TypingMachine.Tests.TypeVisitorTests
         public void GivenClassEntity_VisitClassExactlyOnce()
         {
             var givenEntity = new ClassBuilder()
-                .Build("ConcreteClass".AsSimpleTypeId());
+                .Build("ConcreteClass".AsSimpleId());
             var typeVisitor = new Mock<ITypeVisitor>();
 
             givenEntity.Accept(typeVisitor.Object);
@@ -25,7 +25,7 @@ namespace TypingMachine.Tests.TypeVisitorTests
         public void GivenInterfaceEntity_VisitInterfaceExactlyOnce()
         {
             var givenEntity = new InterfaceBuilder()
-                .Build("IExampleProvider".AsSimpleTypeId());
+                .Build("IExampleProvider".AsSimpleId());
             var typeVisitor = new Mock<ITypeVisitor>();
 
             givenEntity.Accept(typeVisitor.Object);

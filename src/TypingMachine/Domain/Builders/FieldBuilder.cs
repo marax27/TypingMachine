@@ -10,7 +10,7 @@
             return this;
         }
 
-        public FieldEntity Build(string name, TypeIdentifier type)
+        public FieldEntity Build(string name, Identifier type)
         {
             return FieldEntity.Create(name, type, _accessModifier);
         }
